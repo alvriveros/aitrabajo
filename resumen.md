@@ -29,6 +29,12 @@ La ejecución se confirmó en Linux y en la `.venv` de Windows con Python 3.12.1
 
 Próxima tarea: cuando llegue el primer clip, enviar sus eventos reales a `POST /ocupacion` y contrastar los resultados por parada con el conteo manual antes de conectarlos al panel.
 
+## Verificado el 4 de noviembre · Tarea 01
+
+El panel carga un recorrido JSON (sin archivo usa la demo), inicializa los controles con los valores del archivo y recorre el tiempo hasta la última parada o evento, incluidas fracciones. Valida el recorrido completo con la API antes de filtrarlo. Se comprobó con Playwright sobre la API y Streamlit reales: el caso de 22,5 s da 5 pasajeros (25 %) a los 22 s y 4 (20 %) a los 22,5 s. También se comprobaron un recorrido sin eventos y tres archivos inválidos. Las 7 pruebas de la API siguen pasando. En la .venv de Windows pasaron las siete pruebas y los valores de los 14 pasos del navegador coincidieron con los de Linux. [Evidencias](docs/relevo/2026-11-04-claude-tarea01/README.md).
+
+Próxima tarea: [02 · verificar el primer clip](docs/tareas/claude/02-verificar-clip.md), en espera del clip y de los eventos de visión.
+
 ## Cuando llegue el primer clip
 
 Para el trabajo de Claude, consultá la [carpeta de tareas](docs/tareas/claude/README.md). La primera ficha prepara el panel mientras llega el clip y la segunda describe cómo contrastar los eventos reales.

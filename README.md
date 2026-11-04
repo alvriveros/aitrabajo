@@ -24,6 +24,8 @@ En otra terminal en la misma carpeta:
 
 Abrí el panel en http://localhost:8501 y mové el selector de tiempo. Con los valores iniciales, en el segundo 0 hay 3 pasajeros, en el 5 hay 5 y en el 10 quedan 4 (20 %). La API documenta el contrato en http://localhost:8000/docs. Para continuar el trabajo con Claude, empezá por [resumen.md](resumen.md).
 
+Para probar otro recorrido, cargá un JSON con el mismo formato que [el ejemplo](docs/demo/recorrido.json). El selector permite inspeccionar la ocupación al inicio de cada parada y en el instante exacto de cada cruce. Quitá el archivo para volver a la demo.
+
 ## Distribución prevista
 
 Ya están implementados la API de ocupación y el panel con eventos simulados. Los módulos de visión, evaluación y despliegue se incorporan en las siguientes etapas.

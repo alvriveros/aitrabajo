@@ -1,0 +1,6 @@
+{
+  "capacidad": 0,
+  "carga_inicial": 3,
+  "paradas": [{"nombre": "Parada 1", "inicio_s": 0}],
+  "eventos": [{"tiempo_s": 2, "track_id": 1, "sentido": "lateral"}]
+}
