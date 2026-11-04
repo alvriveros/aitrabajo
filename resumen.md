@@ -21,6 +21,14 @@ Prepará pruebas de contrato para la API en `tests/test_ocupacion.py`. Usá el J
 
 Entregá el comando para ejecutar las pruebas y su resultado. Si una prueba descubre un defecto, indicá la entrada, el valor esperado y el obtenido. Después de integrar un cambio, actualizá este resumen con lo verificado y la próxima tarea.
 
+## Verificado el 4 de noviembre
+
+`tests/test_ocupacion.py` cubre los cuatro puntos de la primera tarea (7 pruebas, todas pasan). No apareció ningún defecto en la API. Se agregaron `pytest` y `httpx` a `requirements.txt`. Para ejecutar desde la raíz del repo: `python -m pytest tests -v`.
+
+La ejecución se confirmó en Linux y en la `.venv` de Windows con Python 3.12.14. En ambos entornos pasaron las 7 pruebas con un aviso de obsolescencia de Starlette. [Evidencias](docs/relevo/2026-11-04-claude/README.md).
+
+Próxima tarea: cuando llegue el primer clip, enviar sus eventos reales a `POST /ocupacion` y contrastar los resultados por parada con el conteo manual antes de conectarlos al panel.
+
 ## Cuando llegue el primer clip
 
 El compañero aporta el video, la orientación de la línea y los eventos reales con el mismo formato que el ejemplo. Álvaro conecta esa salida al panel y ambos contrastan el contador con una anotación manual. Las cifras de esta demo sintética sirven para probar la integración. Las métricas del informe se calculan con clips reservados para evaluación.
