@@ -6,9 +6,27 @@ TP final de Inteligencia Aplicada. La meta es mostrar una puerta de bus en video
 
 Álvaro trabaja en `main` e integra la aplicación. Su compañero trabaja en `vision` y entrega el modelo, el conteo y la evaluación mediante pull requests a `main`. La planificación y el contrato entre ambas partes están en [el plan de entrega](docs/PLAN.md). La [consigna original](contexto.md) define la evaluación.
 
+## Ejecutar el prototipo del miércoles
+
+Desde la raíz, en PowerShell con Python 3.12:
+
+```powershell
+py -3.12 -m venv .venv
+.\.venv\Scripts\python.exe -m pip install -r requirements.txt
+.\.venv\Scripts\python.exe -m uvicorn api.main:app --port 8000
+```
+
+En otra terminal en la misma carpeta:
+
+```powershell
+.\.venv\Scripts\python.exe -m streamlit run ui/app.py
+```
+
+Abrí el panel en http://localhost:8501 y mové el selector de tiempo. Con los valores iniciales, en el segundo 0 hay 3 pasajeros, en el 5 hay 5 y en el 10 quedan 4 (20 %). La API documenta el contrato en http://localhost:8000/docs. Para continuar el trabajo con Claude, empezá por [resumen.md](resumen.md).
+
 ## Distribución prevista
 
-Los módulos se incorporan al implementarlos. Este primer commit contiene la consigna y el plan.
+Ya están implementados la API de ocupación y el panel con eventos simulados. Los módulos de visión, evaluación y despliegue se incorporan en las siguientes etapas.
 
 ```text
 api/main.py                   API de procesamiento y consulta (Álvaro)
