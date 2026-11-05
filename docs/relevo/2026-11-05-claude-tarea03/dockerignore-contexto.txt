@@ -1,0 +1,9 @@
+./.dockerignore
+./Dockerfile
+./api/main.py
+./docker-compose.yml
+./docs/demo/oficina-00-06-manual.json
+./docs/demo/recorrido.json
+./requirements.txt
+./tests/test_ocupacion.py
+./ui/app.py

@@ -1,0 +1,22 @@
+============================= test session starts ==============================
+platform linux -- Python 3.12.3, pytest-8.4.1, pluggy-1.7.0 -- /root/w/venv/bin/python
+cachedir: .pytest_cache
+rootdir: /root/w/TpFinal
+plugins: anyio-4.16.0
+collecting ... collected 7 items
+
+tests/test_ocupacion.py::test_ejemplo_coincide_con_calculo_manual PASSED [ 14%]
+tests/test_ocupacion.py::test_cruces_simultaneos_y_parada_vacia PASSED   [ 28%]
+tests/test_ocupacion.py::test_bajada_con_bus_vacio_deja_aviso_aunque_se_recupere PASSED [ 42%]
+tests/test_ocupacion.py::test_entradas_invalidas_dan_422[capacidad_cero] PASSED [ 57%]
+tests/test_ocupacion.py::test_entradas_invalidas_dan_422[sentido_desconocido] PASSED [ 71%]
+tests/test_ocupacion.py::test_entradas_invalidas_dan_422[eventos_desordenados] PASSED [ 85%]
+tests/test_ocupacion.py::test_entradas_invalidas_dan_422[inicio_repetido] PASSED [100%]
+
+=============================== warnings summary ===============================
+../venv/lib/python3.12/site-packages/starlette/testclient.py:51
+  /root/w/venv/lib/python3.12/site-packages/starlette/testclient.py:51: DeprecationWarning: The anyio.abc.BlockingPortal alias is deprecated, use anyio.from_thread.BlockingPortal instead.
+    _PortalFactoryType = Callable[[], AbstractContextManager[anyio.abc.BlockingPortal]]
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+========================= 7 passed, 1 warning in 0.26s =========================

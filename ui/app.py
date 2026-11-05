@@ -5,6 +5,7 @@ from pathlib import Path
 from urllib.error import HTTPError, URLError
 from urllib.request import Request, urlopen
 
+import altair as alt
 import streamlit as st
 
 st.set_page_config(page_title="Ocupación del bus")
@@ -38,6 +39,34 @@ def consultar(recorrido):
     except (URLError, TimeoutError) as error:
         st.error(f"No se pudo consultar la API en {url}. Comprobá que esté ejecutándose. {error}")
         st.stop()
+
+
+def graficar(filas):
+    """Barras de ocupación en el orden del recorrido, con numeración para distinguir nombres repetidos."""
+    # "(parcial)" va antes del nombre: el eje recorta los nombres largos por el final.
+    datos = [dict(fila, etiqueta=f"{numero}{' (parcial)' if numero == len(filas) else ''} · {fila['parada']}",
+                  parcial=numero == len(filas), texto=f"{fila['ocupacion_pct']:g} %")
+             for numero, fila in enumerate(filas, start=1)]
+    valores = [fila["ocupacion_pct"] for fila in filas]
+    minimo, maximo = min(0, *valores), max(100, *valores)
+    margen = (maximo - minimo) * 0.1  # deja lugar para el rótulo de cada barra
+    eje_y = alt.Y("ocupacion_pct:Q", title="Ocupación (%)",
+                  scale=alt.Scale(domain=[minimo - margen if minimo < 0 else 0, maximo + margen]))
+    base = alt.Chart(alt.Data(values=datos)).encode(
+        alt.X("etiqueta:N", title="Parada", sort=[d["etiqueta"] for d in datos],
+              axis=alt.Axis(labelAngle=-30, labelLimit=220)),
+        eje_y,
+    )
+    barras = base.mark_bar().encode(opacity=alt.condition("datum.parcial", alt.value(0.55), alt.value(1)))
+    rotulos = base.mark_text(baseline=alt.expr("datum.ocupacion_pct < 0 ? 'top' : 'bottom'"),
+                             dy=alt.expr("datum.ocupacion_pct < 0 ? 4 : -4"),
+                             color="#7a7a7a", fontWeight="bold").encode(text="texto:N")  # legible en ambos temas
+    capacidad = alt.Chart(alt.Data(values=[{"ocupacion_pct": 100}])).encode(eje_y)
+    linea = capacidad.mark_rule(color="#d62728", strokeDash=[6, 4], strokeWidth=2)
+    # El rótulo va fuera del área de barras para que ninguna lo tape.
+    rotulo = capacidad.mark_text(x=alt.expr("width"), align="left", dx=6, color="#d62728").encode(
+        text=alt.value("Capacidad 100 %"))
+    return (barras + rotulos + linea + rotulo).properties(height=340, padding={"right": 115})
 
 
 subido = st.file_uploader("Recorrido en JSON (sin archivo se usa la demo)", type="json")
@@ -76,5 +105,9 @@ cantidad.metric("Pasajeros a bordo", actual["pasajeros"])
 porcentaje.metric("Ocupación", f"{actual['ocupacion_pct']:g} %")
 for aviso in resultado["avisos"]:
     st.warning(aviso)
+st.subheader("Ocupación por parada")
+st.altair_chart(graficar(resultado["paradas"]), use_container_width=True)
+st.caption(f"Conteo parcial en la parada {len(resultado['paradas'])} ({actual['parada']}): "
+           f"incluye los cruces hasta los {segundo:g} s.")
 st.subheader("Conteo por parada")
 st.dataframe(resultado["paradas"], hide_index=True)

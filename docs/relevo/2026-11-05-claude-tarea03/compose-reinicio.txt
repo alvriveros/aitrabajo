@@ -1,0 +1,19 @@
+$ docker compose stop
+ Container tpfinal-panel-1 Stopping 
+ Container tpfinal-panel-1 Stopped 
+ Container tpfinal-api-1 Stopping 
+ Container tpfinal-api-1 Stopped 
+$ curl panel (detenido)
+curl: (7) Failed to connect to 127.0.0.1 port 8502 after 0 ms: Couldn't connect to server
+
+$ docker compose start
+ Container tpfinal-api-1 Starting 
+ Container tpfinal-api-1 Started 
+ Container tpfinal-api-1 Waiting 
+ Container tpfinal-api-1 Healthy 
+ Container tpfinal-panel-1 Starting 
+ Container tpfinal-panel-1 Started 
+SERVICE   STATUS                    PORTS
+api       Up 48 seconds (healthy)   127.0.0.1:8001->8000/tcp
+panel     Up 43 seconds             127.0.0.1:8502->8501/tcp
+11 pasos, Docker igual a local: True | tras reinicio igual a antes: True 11 11

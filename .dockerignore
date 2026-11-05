@@ -1,0 +1,34 @@
+.git
+.gitignore
+.venv
+.env
+.env.*
+**/.env
+**/.env.*
+**/__pycache__
+**/*.pyc
+.pytest_cache
+pytest-cache-files-*
+.streamlit/secrets.toml
+
+# Videos, pesos y datos crudos
+**/*.mp4
+**/*.avi
+**/*.mov
+**/*.mkv
+**/*.webm
+**/*.pt
+**/*.pth
+**/*.onnx
+**/*.weights
+data/raw
+runs
+
+# Capturas y evidencias de pruebas: de docs/ solo entran los JSON de la demo
+**/*.png
+**/*.jpg
+**/*.jpeg
+docs/*
+!docs/demo/
+docs/demo/*
+!docs/demo/*.json

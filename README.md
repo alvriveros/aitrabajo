@@ -26,9 +26,19 @@ Abrí el panel en http://localhost:8501 y mové el selector de tiempo. Con los v
 
 Para probar otro recorrido, cargá un JSON con el mismo formato que [el ejemplo](docs/demo/recorrido.json). El selector permite inspeccionar la ocupación al inicio de cada parada y en el instante exacto de cada cruce. Quitá el archivo para volver a la demo.
 
+## Ejecutar con Docker
+
+Con Docker Desktop iniciado y el motor Linux disponible, desde la raíz:
+
+```powershell
+docker compose up --build
+```
+
+El panel queda en http://127.0.0.1:8502 y la API en http://127.0.0.1:8001/docs. Estos puertos no chocan con la ejecución manual en 8501 y 8000. Para ver los registros, usá `docker compose logs` (o `docker compose logs -f api panel` para seguirlos). Para cerrar, usá `docker compose down`.
+
 ## Distribución prevista
 
-Ya están implementados la API de ocupación y el panel con eventos simulados. Los módulos de visión, evaluación y despliegue se incorporan en las siguientes etapas.
+Ya están implementados la API de ocupación, el panel con eventos simulados y el arranque con Docker. Los módulos de visión, evaluación y despliegue se incorporan en las siguientes etapas.
 
 ```text
 api/main.py                   API de procesamiento y consulta (Álvaro)
