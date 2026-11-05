@@ -1,0 +1,222 @@
+[
+ {
+  "paso": "1 abrir panel, demo en 10 s",
+  "t_s": 1.8,
+  "metricas": [
+   "4",
+   "20 %"
+  ],
+  "segundo": "10 s",
+  "tabla": [],
+  "capacidad": [
+   "20",
+   "3"
+  ],
+  "recorrido": "demo sintética",
+  "avisos": [],
+  "errores": [],
+  "grafico": true
+ },
+ {
+  "paso": "2 demo en 0 s",
+  "t_s": 11.4,
+  "metricas": [
+   "3",
+   "15 %"
+  ],
+  "segundo": "0 s",
+  "tabla": [
+   "Parada 1",
+   "0",
+   "0",
+   "3",
+   "15"
+  ],
+  "capacidad": [
+   "20",
+   "3"
+  ],
+  "recorrido": "demo sintética",
+  "avisos": [],
+  "errores": [],
+  "grafico": true
+ },
+ {
+  "paso": "3 demo en 5 s",
+  "t_s": 23.4,
+  "metricas": [
+   "5",
+   "25 %"
+  ],
+  "segundo": "5 s",
+  "tabla": [
+   "Parada 1",
+   "2",
+   "0",
+   "5",
+   "25"
+  ],
+  "capacidad": [
+   "20",
+   "3"
+  ],
+  "recorrido": "demo sintética",
+  "avisos": [],
+  "errores": [],
+  "grafico": true
+ },
+ {
+  "paso": "4 demo en 10 s",
+  "t_s": 26.3,
+  "metricas": [
+   "4",
+   "20 %"
+  ],
+  "segundo": "10 s",
+  "tabla": [
+   "Parada 1",
+   "2",
+   "0",
+   "5",
+   "25",
+   "Parada 2",
+   "0",
+   "1",
+   "4",
+   "20"
+  ],
+  "capacidad": [
+   "20",
+   "3"
+  ],
+  "recorrido": "demo sintética",
+  "avisos": [],
+  "errores": [],
+  "grafico": true
+ },
+ {
+  "paso": "5 demo capacidad 40",
+  "t_s": 29.6,
+  "metricas": [
+   "4",
+   "10 %"
+  ],
+  "segundo": "10 s",
+  "tabla": [
+   "Parada 1",
+   "2",
+   "0",
+   "5",
+   "12.5",
+   "Parada 2",
+   "0",
+   "1",
+   "4",
+   "10"
+  ],
+  "capacidad": [
+   "40",
+   "3"
+  ],
+  "recorrido": "demo sintética",
+  "avisos": [],
+  "errores": [],
+  "grafico": true
+ },
+ {
+  "paso": "6 oficina cargada, 4 s",
+  "t_s": 46.7,
+  "metricas": [
+   "0",
+   "0 %"
+  ],
+  "segundo": "4 s",
+  "tabla": [
+   "Puerta de oficina · prueba manual 0–6 s",
+   "1",
+   "1",
+   "0",
+   "0"
+  ],
+  "capacidad": [
+   "20",
+   "0"
+  ],
+  "recorrido": "oficina-00-06-manual.json",
+  "avisos": [],
+  "errores": [],
+  "grafico": true
+ },
+ {
+  "paso": "7 oficina en 0 s",
+  "t_s": 50.4,
+  "metricas": [
+   "0",
+   "0 %"
+  ],
+  "segundo": "0 s",
+  "tabla": [
+   "Puerta de oficina · prueba manual 0–6 s",
+   "0",
+   "0",
+   "0",
+   "0"
+  ],
+  "capacidad": [
+   "20",
+   "0"
+  ],
+  "recorrido": "oficina-00-06-manual.json",
+  "avisos": [],
+  "errores": [],
+  "grafico": true
+ },
+ {
+  "paso": "8 oficina en 2 s",
+  "t_s": 53.3,
+  "metricas": [
+   "1",
+   "5 %"
+  ],
+  "segundo": "2 s",
+  "tabla": [
+   "Puerta de oficina · prueba manual 0–6 s",
+   "1",
+   "0",
+   "1",
+   "5"
+  ],
+  "capacidad": [
+   "20",
+   "0"
+  ],
+  "recorrido": "oficina-00-06-manual.json",
+  "avisos": [],
+  "errores": [],
+  "grafico": true
+ },
+ {
+  "paso": "9 oficina en 4 s",
+  "t_s": 56.0,
+  "metricas": [
+   "0",
+   "0 %"
+  ],
+  "segundo": "4 s",
+  "tabla": [
+   "Puerta de oficina · prueba manual 0–6 s",
+   "1",
+   "1",
+   "0",
+   "0"
+  ],
+  "capacidad": [
+   "20",
+   "0"
+  ],
+  "recorrido": "oficina-00-06-manual.json",
+  "avisos": [],
+  "errores": [],
+  "grafico": true
+ }
+]

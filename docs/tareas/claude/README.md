@@ -1,10 +1,12 @@
-# Tareas para Claude · 4 de noviembre de 2026
+# Tareas para Claude · 5 de noviembre de 2026
 
 Trabajás con Álvaro sobre la copia de `main` del repositorio privado [aitrabajo](https://github.com/alvriveros/aitrabajo). Su compañero lleva detección y seguimiento en `vision`. La entrega interna es el domingo 8 a las 18:00 de Paraguay.
 
-La API ya calcula la ocupación por parada y sus siete pruebas pasan en Linux y Windows. El panel todavía lee un único archivo y termina en el segundo 15. Para integrar el primer clip queremos poder cambiar de recorrido desde el panel.
+La API calcula la ocupación por parada y sus siete pruebas pasan en Linux y Windows. El panel carga recorridos JSON, muestra el gráfico y arranca junto con la API usando Docker. El siguiente avance es preparar el borrador del informe y el guion de defensa.
 
-1. **Disponible hoy.** Implementá [la carga de un recorrido en el panel](01-cargar-recorrido.md). Usá el ejemplo del repositorio y el caso manual incluido en la ficha. Se puede completar con datos simulados.
-2. **Al recibir el primer clip.** Seguí [la verificación con eventos reales](02-verificar-clip.md). Esta tarea requiere los eventos de visión y un conteo manual independiente.
+1. **Completada y verificada.** [Carga de un recorrido en el panel](01-cargar-recorrido.md), comprobada en Linux y Windows.
+2. **Pendiente de eventos de visión.** [Verificación del primer clip](02-verificar-clip.md). Ya existe una referencia manual aproximada del video de oficina.
+3. **Completada y revisada, sin commit.** [Gráfico del panel y arranque con Docker](03-panel-docker.md). Once registros del panel coinciden en Windows y Linux.
+4. **Disponible ahora.** Prepará [el informe IEEE y el guion de demo](04-informe-demo.md). Documentá el sistema disponible y los resultados que falta recibir de visión.
 
 Leé [el resumen del proyecto](../../../resumen.md) antes de editar. Guardá tu devolución en una carpeta nueva bajo `docs/relevo/` con la tarea realizada, archivos cambiados, entorno, comando y salida de las pruebas, diferencias observadas y pendientes. Dejá los cambios listos para que Álvaro los revise y publique.

@@ -1,0 +1,248 @@
+diff --git a/README.md b/README.md
+index f566730..3846cd5 100644
+--- a/README.md
++++ b/README.md
+@@ -26,9 +26,19 @@ Abrí el panel en http://localhost:8501 y mové el selector de tiempo. Con los v
+ 
+ Para probar otro recorrido, cargá un JSON con el mismo formato que [el ejemplo](docs/demo/recorrido.json). El selector permite inspeccionar la ocupación al inicio de cada parada y en el instante exacto de cada cruce. Quitá el archivo para volver a la demo.
+ 
++## Ejecutar con Docker
++
++Con Docker Desktop iniciado y el motor Linux disponible, desde la raíz:
++
++```powershell
++docker compose up --build
++```
++
++El panel queda en http://127.0.0.1:8502 y la API en http://127.0.0.1:8001/docs. Estos puertos no chocan con la ejecución manual en 8501 y 8000. Para ver los registros, usá `docker compose logs` (o `docker compose logs -f api panel` para seguirlos). Para cerrar, usá `docker compose down`.
++
+ ## Distribución prevista
+ 
+-Ya están implementados la API de ocupación y el panel con eventos simulados. Los módulos de visión, evaluación y despliegue se incorporan en las siguientes etapas.
++Ya están implementados la API de ocupación, el panel con eventos simulados y el arranque con Docker. Los módulos de visión, evaluación y despliegue se incorporan en las siguientes etapas.
+ 
+ ```text
+ api/main.py                   API de procesamiento y consulta (Álvaro)
+diff --git a/docs/tareas/claude/README.md b/docs/tareas/claude/README.md
+index 543dcbb..9be31f3 100644
+--- a/docs/tareas/claude/README.md
++++ b/docs/tareas/claude/README.md
+@@ -1,10 +1,12 @@
+-# Tareas para Claude · 4 de noviembre de 2026
++# Tareas para Claude · 5 de noviembre de 2026
+ 
+ Trabajás con Álvaro sobre la copia de `main` del repositorio privado [aitrabajo](https://github.com/alvriveros/aitrabajo). Su compañero lleva detección y seguimiento en `vision`. La entrega interna es el domingo 8 a las 18:00 de Paraguay.
+ 
+-La API ya calcula la ocupación por parada y sus siete pruebas pasan en Linux y Windows. El panel todavía lee un único archivo y termina en el segundo 15. Para integrar el primer clip queremos poder cambiar de recorrido desde el panel.
++La API calcula la ocupación por parada y sus siete pruebas pasan en Linux y Windows. El panel carga recorridos JSON, muestra el gráfico y arranca junto con la API usando Docker. El siguiente avance es preparar el borrador del informe y el guion de defensa.
+ 
+-1. **Disponible hoy.** Implementá [la carga de un recorrido en el panel](01-cargar-recorrido.md). Usá el ejemplo del repositorio y el caso manual incluido en la ficha. Se puede completar con datos simulados.
+-2. **Al recibir el primer clip.** Seguí [la verificación con eventos reales](02-verificar-clip.md). Esta tarea requiere los eventos de visión y un conteo manual independiente.
++1. **Completada y verificada.** [Carga de un recorrido en el panel](01-cargar-recorrido.md), comprobada en Linux y Windows.
++2. **Pendiente de eventos de visión.** [Verificación del primer clip](02-verificar-clip.md). Ya existe una referencia manual aproximada del video de oficina.
++3. **Completada y revisada, sin commit.** [Gráfico del panel y arranque con Docker](03-panel-docker.md). Once registros del panel coinciden en Windows y Linux.
++4. **Disponible ahora.** Prepará [el informe IEEE y el guion de demo](04-informe-demo.md). Documentá el sistema disponible y los resultados que falta recibir de visión.
+ 
+ Leé [el resumen del proyecto](../../../resumen.md) antes de editar. Guardá tu devolución en una carpeta nueva bajo `docs/relevo/` con la tarea realizada, archivos cambiados, entorno, comando y salida de las pruebas, diferencias observadas y pendientes. Dejá los cambios listos para que Álvaro los revise y publique.
+diff --git a/resumen.md b/resumen.md
+index 60f0f11..002227d 100644
+--- a/resumen.md
++++ b/resumen.md
+@@ -1,4 +1,10 @@
+-# Relevo para Claude · 4 de noviembre de 2026
++# Relevo para Claude · 5 de noviembre de 2026
++
++## Tarea actual · 5 de noviembre
++
++La [tarea 04, informe IEEE y guion](docs/tareas/claude/04-informe-demo.md) está entregada sin commit, a la espera de la revisión de Álvaro y de las mediciones de visión. La [tarea 03](docs/tareas/claude/03-panel-docker.md) está completada y revisada, también sin commit. La tarea 01 está completada y la tarea 02 sigue pendiente de los eventos de visión. Ya existe la referencia manual aproximada del clip de oficina en `docs/demo/oficina-00-06-manual.json`.
++
++Revisión del 5 de noviembre de la tarea 03: siete pruebas de API aprobadas y 11 registros del panel Docker en Windows idénticos a Linux. Capturas y valores guardados en `docs/relevo/2026-11-05-claude-tarea03/revision-windows/`. La entrega queda revisada, con los cambios sin commit.
+ 
+ Álvaro trabaja en `main` y su compañero en `vision`. El cierre interno es el domingo 8 a las 18:00 (Paraguay). Lean [la consigna](contexto.md), [el plan](docs/PLAN.md) y [el arranque en Windows](README.md). La prioridad es integrar el primer clip el jueves 5.
+ 
+@@ -6,7 +12,7 @@
+ 
+ - `api/main.py` expone `POST /ocupacion`. Recibe capacidad, carga inicial, paradas y eventos. Devuelve filas con subidas, bajadas, pasajeros y porcentaje, además de avisos si el conteo resulta negativo. El cálculo es independiente para cada solicitud.
+ - `docs/demo/recorrido.json` es un ejemplo sintético editable. Cada evento tiene segundo, ID de seguimiento y sentido. Los eventos llegan ordenados y pueden compartir segundo. Un cruce justo al comenzar una parada pertenece a esa parada.
+-- `ui/app.py` consulta la API por HTTP. Se puede cambiar la capacidad, la carga inicial y el segundo del recorrido. El panel representa los cruces ocurridos hasta ese instante. Falta la integración con video, el modelo, la evaluación, Docker y el informe.
++- `ui/app.py` consulta la API por HTTP. Se puede cambiar la capacidad, la carga inicial y el segundo del recorrido. El panel representa los cruces ocurridos hasta ese instante. Falta la integración con video, el modelo y la evaluación. El arranque con Docker y el borrador del informe se agregaron después.
+ 
+ Verificación realizada: con la API corriendo y el panel de Streamlit consultándola por HTTP, se movió el selector a los segundos 0, 5 y 10. Se observaron 3, 5 y 4 pasajeros respectivamente (15 %, 25 % y 20 %). La bajada quedó en la segunda parada.
+ 
+@@ -33,7 +39,23 @@ Próxima tarea: cuando llegue el primer clip, enviar sus eventos reales a `POST
+ 
+ El panel carga un recorrido JSON (sin archivo usa la demo), inicializa los controles con los valores del archivo y recorre el tiempo hasta la última parada o evento, incluidas fracciones. Valida el recorrido completo con la API antes de filtrarlo. Se comprobó con Playwright sobre la API y Streamlit reales: el caso de 22,5 s da 5 pasajeros (25 %) a los 22 s y 4 (20 %) a los 22,5 s. También se comprobaron un recorrido sin eventos y tres archivos inválidos. Las 7 pruebas de la API siguen pasando. En la .venv de Windows pasaron las siete pruebas y los valores de los 14 pasos del navegador coincidieron con los de Linux. [Evidencias](docs/relevo/2026-11-04-claude-tarea01/README.md).
+ 
+-Próxima tarea: [02 · verificar el primer clip](docs/tareas/claude/02-verificar-clip.md), en espera del clip y de los eventos de visión.
++La [tarea 02](docs/tareas/claude/02-verificar-clip.md) espera los eventos de visión. Mientras tanto, revisá la tarea 03.
++
++## Verificado el 5 de noviembre · Tarea 03
++
++El panel muestra un gráfico de barras de ocupación por parada con Altair, usando los mismos resultados de `POST /ocupacion` que la tabla. Numera las paradas, marca la última como parcial, dibuja la línea de capacidad del 100 % y ajusta la escala a valores negativos o superiores a 100 %. Se agregaron `Dockerfile`, `docker-compose.yml`, `.dockerignore` y la sección de Docker del README.
++
++Comprobado en Linux (Ubuntu 24.04, Python 3.12.3, Docker 29.9.2, Compose 5.7.0): pasan las 7 pruebas y los 11 pasos del navegador dan los valores de la ficha, iguales en local, en Docker y tras detener y arrancar los servicios. El navegador también cargó la demo y `oficina-00-06-manual.json`. La API respondió en 8001 y el panel en 8502.
++
++En Linux la imagen se construyó sobre una base local sustituta, porque Docker Hub no era accesible. En Windows pasaron las 7 pruebas en la `.venv` y Docker Desktop construyó y arrancó ambos servicios con la imagen oficial `python:3.12-slim`; el panel consultó la API sin errores y volvió a hacerlo después de detener y arrancar los servicios (4 respuestas 200). Una revisión posterior recorrió el panel en Docker sobre Windows: los 11 registros, incluida la demo de oficina, coinciden campo por campo con los de Linux. [Evidencias](docs/relevo/2026-11-05-claude-tarea03/README.md).
++
++## Verificado el 5 de noviembre · Tarea 04
++
++`docs/informe/` contiene el borrador IEEEtran con sus referencias y `informe-borrador.pdf`: 3 páginas A4, resumen de 138 palabras y revisión visual sin defectos pendientes. Documenta la ruta implementada, las pruebas funcionales y deja las métricas de visión marcadas como pendientes, sin cifras. `docs/demo/guion.md` tiene tiempos, responsables, material del compañero y seis preguntas.
++
++El bloque de Álvaro se ensayó contra Docker en Windows sin errores: la demo dio 3 → 5 → 4 pasajeros, capacidad 40 dio 10 % y la oficina dio 0 → 1 → 0. El ensayo fue automático, sin voz. Falta cronometrar a Álvaro y hacer el ensayo completo con el compañero.
++
++El ensayo detectó que, en tema oscuro, el rótulo de valor de las barras casi no se leía. Se corrigió el color en `ui/app.py` y el tema claro quedó como predeterminado con `.streamlit/config.toml`. En Linux, los 11 registros no cambiaron en ninguno de los dos temas y pasan las 7 pruebas. Falta reconstruir la imagen en Windows y comprobarlo. Siguen pendientes la lista de datos de [docs/informe/README.md](docs/informe/README.md) y volver a comprobar las 3 páginas al incorporar métricas. [Evidencias](docs/relevo/2026-11-05-claude-tarea04/README.md).
+ 
+ ## Cuando llegue el primer clip
+ 
+diff --git a/ui/app.py b/ui/app.py
+index 2646803..4e18b1e 100644
+--- a/ui/app.py
++++ b/ui/app.py
+@@ -5,6 +5,7 @@ from pathlib import Path
+ from urllib.error import HTTPError, URLError
+ from urllib.request import Request, urlopen
+ 
++import altair as alt
+ import streamlit as st
+ 
+ st.set_page_config(page_title="Ocupación del bus")
+@@ -40,6 +41,34 @@ def consultar(recorrido):
+         st.stop()
+ 
+ 
++def graficar(filas):
++    """Barras de ocupación en el orden del recorrido, con numeración para distinguir nombres repetidos."""
++    # "(parcial)" va antes del nombre: el eje recorta los nombres largos por el final.
++    datos = [dict(fila, etiqueta=f"{numero}{' (parcial)' if numero == len(filas) else ''} · {fila['parada']}",
++                  parcial=numero == len(filas), texto=f"{fila['ocupacion_pct']:g} %")
++             for numero, fila in enumerate(filas, start=1)]
++    valores = [fila["ocupacion_pct"] for fila in filas]
++    minimo, maximo = min(0, *valores), max(100, *valores)
++    margen = (maximo - minimo) * 0.1  # deja lugar para el rótulo de cada barra
++    eje_y = alt.Y("ocupacion_pct:Q", title="Ocupación (%)",
++                  scale=alt.Scale(domain=[minimo - margen if minimo < 0 else 0, maximo + margen]))
++    base = alt.Chart(alt.Data(values=datos)).encode(
++        alt.X("etiqueta:N", title="Parada", sort=[d["etiqueta"] for d in datos],
++              axis=alt.Axis(labelAngle=-30, labelLimit=220)),
++        eje_y,
++    )
++    barras = base.mark_bar().encode(opacity=alt.condition("datum.parcial", alt.value(0.55), alt.value(1)))
++    rotulos = base.mark_text(baseline=alt.expr("datum.ocupacion_pct < 0 ? 'top' : 'bottom'"),
++                             dy=alt.expr("datum.ocupacion_pct < 0 ? 4 : -4"),
++                             color="#7a7a7a", fontWeight="bold").encode(text="texto:N")  # legible en ambos temas
++    capacidad = alt.Chart(alt.Data(values=[{"ocupacion_pct": 100}])).encode(eje_y)
++    linea = capacidad.mark_rule(color="#d62728", strokeDash=[6, 4], strokeWidth=2)
++    # El rótulo va fuera del área de barras para que ninguna lo tape.
++    rotulo = capacidad.mark_text(x=alt.expr("width"), align="left", dx=6, color="#d62728").encode(
++        text=alt.value("Capacidad 100 %"))
++    return (barras + rotulos + linea + rotulo).properties(height=340, padding={"right": 115})
++
++
+ subido = st.file_uploader("Recorrido en JSON (sin archivo se usa la demo)", type="json")
+ origen = subido.file_id if subido else "demo"
+ st.caption(f"Recorrido: {subido.name if subido else 'demo sintética · docs/demo/recorrido.json'}")
+@@ -76,5 +105,9 @@ cantidad.metric("Pasajeros a bordo", actual["pasajeros"])
+ porcentaje.metric("Ocupación", f"{actual['ocupacion_pct']:g} %")
+ for aviso in resultado["avisos"]:
+     st.warning(aviso)
++st.subheader("Ocupación por parada")
++st.altair_chart(graficar(resultado["paradas"]), use_container_width=True)
++st.caption(f"Conteo parcial en la parada {len(resultado['paradas'])} ({actual['parada']}): "
++           f"incluye los cruces hasta los {segundo:g} s.")
+ st.subheader("Conteo por parada")
+ st.dataframe(resultado["paradas"], hide_index=True)
+diff --git a/.dockerignore b/.dockerignore
+new file mode 100755
+index 0000000..b570e3b
+--- /dev/null
++++ b/.dockerignore
+@@ -0,0 +1,34 @@
++.git
++.gitignore
++.venv
++.env
++.env.*
++**/.env
++**/.env.*
++**/__pycache__
++**/*.pyc
++.pytest_cache
++pytest-cache-files-*
++.streamlit/secrets.toml
++
++# Videos, pesos y datos crudos
++**/*.mp4
++**/*.avi
++**/*.mov
++**/*.mkv
++**/*.webm
++**/*.pt
++**/*.pth
++**/*.onnx
++**/*.weights
++data/raw
++runs
++
++# Capturas y evidencias de pruebas: de docs/ solo entran los JSON de la demo
++**/*.png
++**/*.jpg
++**/*.jpeg
++docs/*
++!docs/demo/
++docs/demo/*
++!docs/demo/*.json
+diff --git a/Dockerfile b/Dockerfile
+new file mode 100755
+index 0000000..cc62c1d
+--- /dev/null
++++ b/Dockerfile
+@@ -0,0 +1,10 @@
++FROM python:3.12-slim
++
++WORKDIR /app
++COPY requirements.txt .
++RUN pip install --no-cache-dir -r requirements.txt
++
++COPY api/ api/
++COPY ui/ ui/
++COPY .streamlit/config.toml .streamlit/config.toml
++COPY docs/demo/ docs/demo/
+diff --git a/docker-compose.yml b/docker-compose.yml
+new file mode 100755
+index 0000000..ffa0be0
+--- /dev/null
++++ b/docker-compose.yml
+@@ -0,0 +1,25 @@
++services:
++  api:
++    build: .
++    image: aitrabajo
++    command: python -m uvicorn api.main:app --host 0.0.0.0 --port 8000
++    ports:
++      - "127.0.0.1:8001:8000"
++    healthcheck:
++      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/openapi.json', timeout=2)"]
++      interval: 5s
++      timeout: 3s
++      start_period: 10s
++      retries: 12
++
++  panel:
++    build: .
++    image: aitrabajo
++    command: python -m streamlit run ui/app.py --server.address 0.0.0.0 --server.port 8501 --server.headless true --browser.gatherUsageStats false
++    environment:
++      API_URL: http://api:8000
++    ports:
++      - "127.0.0.1:8502:8501"
++    depends_on:
++      api:
++        condition: service_healthy
+diff --git a/.streamlit/config.toml b/.streamlit/config.toml
+new file mode 100755
+index 0000000..49f7885
+--- /dev/null
++++ b/.streamlit/config.toml
+@@ -0,0 +1,2 @@
++[theme]
++base = "light"
