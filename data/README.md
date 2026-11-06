@@ -6,9 +6,16 @@ Los videos van en `data/raw/`, que git ignora. Acá se documenta de dónde sale 
 
 | Archivo | Origen | Contexto | Duración | Partición |
 |---|---|---|---|---|
-| `data/raw/oficina.mp4` | YouTube, ver abajo | Real, pero es una oficina que hace de puerta de bus | 52,64 s | Calibración. Solo como ensayo de integración, no para métricas del informe. |
+| `data/raw/oficina.mp4` | YouTube, ver abajo | Real, pero es una oficina que hace de puerta de bus | 52,64 s | Entrenamiento y calibración. No sirve para métricas del informe. |
 
-Faltan grabaciones independientes para entrenamiento, validación y prueba.
+Faltan grabaciones independientes para validación y prueba.
+
+## Anotaciones
+
+- [`annotations/oficina-cajas.json`](annotations/oficina-cajas.json): cajas de personas para ajustar el detector. Dentro de la grabación separa `entrenamiento` (6–43 s) y `reserva` (desde 43 s), y deja fuera el ensayo de 0 a 6 s. Esa separación solo orienta el trabajo, porque todo viene de la misma grabación.
+- [`annotations/oficina-cruces.json`](annotations/oficina-cruces.json): los 20 cruces del video, con el esquema de `POST /ocupacion`. Salen del centro de las cajas revisadas. Sus totales coinciden con el contador comercial del video.
+
+**Las revisó Claude; falta la revisión de una persona.** Cómo revisarlas y qué se corrigió está en [el relevo del ajuste](../docs/relevo/vision-ajuste-detector/README.md).
 
 ## `oficina.mp4`
 

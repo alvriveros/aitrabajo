@@ -2,6 +2,8 @@
 
 **Resultado: el ensayo de 0 a 6 s produce una subida y una bajada, y el panel pasa de 0 a 1 pasajero (5 %) y vuelve a 0. El detector todavía no es confiable.** En el video completo detecta 12 cruces donde el contador comercial registra 20, y la configuración se calibró sobre este mismo clip. Estas cifras no sirven como métricas del informe.
 
+**Actualización:** el detector ya se ajustó con cajas anotadas. Ver [el relevo del ajuste](../vision-ajuste-detector/README.md). Este archivo documenta la primera entrega, con el detector base.
+
 - **Clip:** [`data/raw/oficina.mp4`](../../../data/README.md), real, una oficina que hace de puerta de bus.
 - **Predicción:** [`evaluation/results/oficina-00-06-prediccion.json`](../../../evaluation/results/oficina-00-06-prediccion.json), con su [configuración](../../../evaluation/results/oficina-00-06-prediccion.config.json).
 - **Video anotado:** `runs/oficina-00-06-anotado.mp4`. Git lo ignora, así que se regenera con el comando de abajo.

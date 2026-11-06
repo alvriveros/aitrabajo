@@ -19,6 +19,7 @@ from vision.pipeline import main  # noqa: E402
 RAIZ = Path(__file__).parents[1]
 PESOS = RAIZ / "yolo11n.pt"
 OFICINA = RAIZ / "data/raw/oficina.mp4"
+AJUSTADO = RAIZ / "runs/oficina-ajuste/oficina-ajustado.pt"
 FPS = 30
 pytestmark = pytest.mark.skipif(not PESOS.exists(), reason="Faltan los pesos yolo11n.pt en la raíz.")
 
@@ -96,3 +97,13 @@ def test_ensayo_de_oficina_sigue_dentro_de_la_tolerancia_de_la_referencia_manual
     assert [evento["sentido"] for evento in eventos] == [evento["sentido"] for evento in manual]
     for predicho, referencia in zip(eventos, manual):
         assert abs(predicho["tiempo_s"] - referencia["tiempo_s"]) <= 1
+
+
+@pytest.mark.skipif(not (OFICINA.exists() and AJUSTADO.exists()), reason="Faltan el clip o los pesos ajustados.")
+def test_detector_ajustado_cuenta_el_ensayo_con_el_rastreador_por_defecto(tmp_path):
+    # El ensayo no se usó para entrenar, pero es la misma grabación: protege el ajuste, no mide su desempeño.
+    eventos = ejecutar_pipeline(OFICINA, tmp_path / "prediccion.json", "--recorte", "228,2,222,176",
+                                "--linea", "0,90,221,90", "--dispositivo", "cpu", "--pesos", str(AJUSTADO))
+    assert [evento["sentido"] for evento in eventos] == ["subida", "bajada"]
+    assert abs(eventos[0]["tiempo_s"] - 2.16) < 0.3
+    assert abs(eventos[1]["tiempo_s"] - 4.68) < 0.3

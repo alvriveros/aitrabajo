@@ -1,0 +1,357 @@
+{
+  "aviso": "Una sola grabación, también usada para entrenar y calibrar: orienta, pero no sirve para el informe.",
+  "referencia": "data/annotations/oficina-cruces.json",
+  "configuraciones": {
+    "base-defecto": {
+      "opciones": [
+        "--pesos",
+        "yolo11n.pt"
+      ],
+      "fps_procesados": 40.7,
+      "resumen": {
+        "ensayo": {
+          "subidas": "0/1",
+          "bajadas": "0/1",
+          "falsos_positivos": 0,
+          "f1": 0.0
+        },
+        "entrenamiento": {
+          "subidas": "0/7",
+          "bajadas": "0/7",
+          "falsos_positivos": 0,
+          "f1": 0.0
+        },
+        "reserva": {
+          "subidas": "0/2",
+          "bajadas": "0/2",
+          "falsos_positivos": 0,
+          "f1": 0.0
+        },
+        "completo": {
+          "subidas": "0/10",
+          "bajadas": "0/10",
+          "falsos_positivos": 0,
+          "f1": 0.0
+        }
+      },
+      "detalle_completo": {
+        "tolerancia_s": 1.0,
+        "tramo_s": {
+          "desde": 0.0,
+          "hasta": null
+        },
+        "sentidos": {
+          "subida": {
+            "referencia": 10,
+            "predichos": 0,
+            "aciertos": 0,
+            "omisiones": 10,
+            "falsos_positivos": 0,
+            "precision": null,
+            "exhaustividad": 0.0,
+            "f1": 0.0,
+            "error_conteo_abs": 10,
+            "error_tiempo_medio_s": null,
+            "tiempos_omitidos_s": [
+              2.16,
+              7.2,
+              11.88,
+              17.04,
+              22.44,
+              27.72,
+              32.76,
+              38.28,
+              43.8,
+              48.36
+            ],
+            "tiempos_falsos_s": []
+          },
+          "bajada": {
+            "referencia": 10,
+            "predichos": 0,
+            "aciertos": 0,
+            "omisiones": 10,
+            "falsos_positivos": 0,
+            "precision": null,
+            "exhaustividad": 0.0,
+            "f1": 0.0,
+            "error_conteo_abs": 10,
+            "error_tiempo_medio_s": null,
+            "tiempos_omitidos_s": [
+              4.68,
+              9.6,
+              14.52,
+              19.92,
+              25.2,
+              30.36,
+              35.28,
+              41.16,
+              45.96,
+              50.88
+            ],
+            "tiempos_falsos_s": []
+          }
+        },
+        "total": {
+          "aciertos": 0,
+          "omisiones": 20,
+          "falsos_positivos": 0,
+          "f1": 0.0
+        }
+      }
+    },
+    "base-calibrado": {
+      "opciones": [
+        "--pesos",
+        "yolo11n.pt",
+        "--rastreador",
+        "vision/bytetrack-cenital.yaml",
+        "--conf",
+        "0.05",
+        "--confirmacion",
+        "2"
+      ],
+      "fps_procesados": 40.96,
+      "resumen": {
+        "ensayo": {
+          "subidas": "1/1",
+          "bajadas": "1/1",
+          "falsos_positivos": 0,
+          "f1": 1.0
+        },
+        "entrenamiento": {
+          "subidas": "6/7",
+          "bajadas": "3/7",
+          "falsos_positivos": 0,
+          "f1": 0.7826
+        },
+        "reserva": {
+          "subidas": "0/2",
+          "bajadas": "1/2",
+          "falsos_positivos": 0,
+          "f1": 0.4
+        },
+        "completo": {
+          "subidas": "7/10",
+          "bajadas": "5/10",
+          "falsos_positivos": 0,
+          "f1": 0.75
+        }
+      },
+      "detalle_completo": {
+        "tolerancia_s": 1.0,
+        "tramo_s": {
+          "desde": 0.0,
+          "hasta": null
+        },
+        "sentidos": {
+          "subida": {
+            "referencia": 10,
+            "predichos": 7,
+            "aciertos": 7,
+            "omisiones": 3,
+            "falsos_positivos": 0,
+            "precision": 1.0,
+            "exhaustividad": 0.7,
+            "f1": 0.8235,
+            "error_conteo_abs": 3,
+            "error_tiempo_medio_s": 0.0343,
+            "tiempos_omitidos_s": [
+              11.88,
+              43.8,
+              48.36
+            ],
+            "tiempos_falsos_s": []
+          },
+          "bajada": {
+            "referencia": 10,
+            "predichos": 5,
+            "aciertos": 5,
+            "omisiones": 5,
+            "falsos_positivos": 0,
+            "precision": 1.0,
+            "exhaustividad": 0.5,
+            "f1": 0.6667,
+            "error_conteo_abs": 5,
+            "error_tiempo_medio_s": 0.088,
+            "tiempos_omitidos_s": [
+              9.6,
+              14.52,
+              19.92,
+              30.36,
+              45.96
+            ],
+            "tiempos_falsos_s": []
+          }
+        },
+        "total": {
+          "aciertos": 12,
+          "omisiones": 8,
+          "falsos_positivos": 0,
+          "f1": 0.75
+        }
+      }
+    },
+    "ajustado-defecto": {
+      "opciones": [
+        "--pesos",
+        "runs/oficina-ajuste/oficina-ajustado.pt"
+      ],
+      "fps_procesados": 40.97,
+      "resumen": {
+        "ensayo": {
+          "subidas": "1/1",
+          "bajadas": "1/1",
+          "falsos_positivos": 0,
+          "f1": 1.0
+        },
+        "entrenamiento": {
+          "subidas": "7/7",
+          "bajadas": "7/7",
+          "falsos_positivos": 0,
+          "f1": 1.0
+        },
+        "reserva": {
+          "subidas": "2/2",
+          "bajadas": "2/2",
+          "falsos_positivos": 0,
+          "f1": 1.0
+        },
+        "completo": {
+          "subidas": "10/10",
+          "bajadas": "10/10",
+          "falsos_positivos": 0,
+          "f1": 1.0
+        }
+      },
+      "detalle_completo": {
+        "tolerancia_s": 1.0,
+        "tramo_s": {
+          "desde": 0.0,
+          "hasta": null
+        },
+        "sentidos": {
+          "subida": {
+            "referencia": 10,
+            "predichos": 10,
+            "aciertos": 10,
+            "omisiones": 0,
+            "falsos_positivos": 0,
+            "precision": 1.0,
+            "exhaustividad": 1.0,
+            "f1": 1.0,
+            "error_conteo_abs": 0,
+            "error_tiempo_medio_s": 0.036,
+            "tiempos_omitidos_s": [],
+            "tiempos_falsos_s": []
+          },
+          "bajada": {
+            "referencia": 10,
+            "predichos": 10,
+            "aciertos": 10,
+            "omisiones": 0,
+            "falsos_positivos": 0,
+            "precision": 1.0,
+            "exhaustividad": 1.0,
+            "f1": 1.0,
+            "error_conteo_abs": 0,
+            "error_tiempo_medio_s": 0.028,
+            "tiempos_omitidos_s": [],
+            "tiempos_falsos_s": []
+          }
+        },
+        "total": {
+          "aciertos": 20,
+          "omisiones": 0,
+          "falsos_positivos": 0,
+          "f1": 1.0
+        }
+      }
+    },
+    "ajustado-calibrado": {
+      "opciones": [
+        "--pesos",
+        "runs/oficina-ajuste/oficina-ajustado.pt",
+        "--rastreador",
+        "vision/bytetrack-cenital.yaml",
+        "--conf",
+        "0.05",
+        "--confirmacion",
+        "2"
+      ],
+      "fps_procesados": 42.85,
+      "resumen": {
+        "ensayo": {
+          "subidas": "1/1",
+          "bajadas": "1/1",
+          "falsos_positivos": 1,
+          "f1": 0.8
+        },
+        "entrenamiento": {
+          "subidas": "7/7",
+          "bajadas": "7/7",
+          "falsos_positivos": 1,
+          "f1": 0.9655
+        },
+        "reserva": {
+          "subidas": "2/2",
+          "bajadas": "2/2",
+          "falsos_positivos": 0,
+          "f1": 1.0
+        },
+        "completo": {
+          "subidas": "10/10",
+          "bajadas": "10/10",
+          "falsos_positivos": 2,
+          "f1": 0.9524
+        }
+      },
+      "detalle_completo": {
+        "tolerancia_s": 1.0,
+        "tramo_s": {
+          "desde": 0.0,
+          "hasta": null
+        },
+        "sentidos": {
+          "subida": {
+            "referencia": 10,
+            "predichos": 12,
+            "aciertos": 10,
+            "omisiones": 0,
+            "falsos_positivos": 2,
+            "precision": 0.8333,
+            "exhaustividad": 1.0,
+            "f1": 0.9091,
+            "error_conteo_abs": 2,
+            "error_tiempo_medio_s": 0.04,
+            "tiempos_omitidos_s": [],
+            "tiempos_falsos_s": [
+              2.68,
+              17.8
+            ]
+          },
+          "bajada": {
+            "referencia": 10,
+            "predichos": 10,
+            "aciertos": 10,
+            "omisiones": 0,
+            "falsos_positivos": 0,
+            "precision": 1.0,
+            "exhaustividad": 1.0,
+            "f1": 1.0,
+            "error_conteo_abs": 0,
+            "error_tiempo_medio_s": 0.028,
+            "tiempos_omitidos_s": [],
+            "tiempos_falsos_s": []
+          }
+        },
+        "total": {
+          "aciertos": 20,
+          "omisiones": 0,
+          "falsos_positivos": 2,
+          "f1": 0.9524
+        }
+      }
+    }
+  }
+}
