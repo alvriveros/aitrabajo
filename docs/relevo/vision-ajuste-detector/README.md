@@ -2,6 +2,8 @@
 
 **Resultado: con el detector ajustado, el video de oficina da 10 de 10 subidas y 10 de 10 bajadas, sin falsos positivos. Eso no mide cuánto generaliza.** Todo sale de una sola grabación, con una sola persona, y el ajuste empeoró la detección de personas de frente. Estas cifras no sirven como métricas del informe.
 
+El texto listo para el informe, con estos resultados y sus advertencias, está en [`aportes-vision.md`](../../informe/aportes-vision.md).
+
 ## Comparación
 
 Con [`evaluation/comparar_oficina.py`](../../../evaluation/comparar_oficina.py) y tolerancia de ±1 s. Cada celda es aciertos sobre cruces de referencia.

@@ -12,6 +12,7 @@ Convierte un tramo de video de una puerta en eventos de subida y bajada con el f
 | API y panel | Primer clip probado por HTTP y en el panel: 0 → 1 pasajero (5 %) → 0. Las demás predicciones pasan el contrato de la API en las pruebas. |
 | Ajuste del detector (`train.py`) | **Hecho sobre el video de oficina: 20 de 20 cruces, sin falsos positivos, pero en una sola grabación.** Ver [su relevo](../docs/relevo/vision-ajuste-detector/README.md). |
 | Evaluador (`evaluation/evaluate.py`) | Probado. |
+| Material para el informe | Redactado para Álvaro en [`aportes-vision.md`](../docs/informe/aportes-vision.md): metodología, tabla, caso de pérdida de ID, limitaciones y referencias. Falta compilarlo. |
 | Métricas para el informe | **Pendientes.** Faltan grabaciones independientes y casos con varias personas a la vez. |
 | Revisión humana de las cajas y los cruces | **Pendiente.** |
 
