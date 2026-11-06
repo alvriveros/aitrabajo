@@ -1,0 +1,46 @@
+  1 pred-v1-0s                      0 % [('0 %', 0.07)] OK
+  2 pred-v1-2s                      0 % [('0 %', 0.07)] OK
+  3 pred-v1-2.16s                   5 % [('1 %', 5.07)] ['barra 1: rótulo 1 % frente a tabla 5']
+  4 pred-v1-4s                      5 % [('1 %', 5.07)] ['barra 1: rótulo 1 % frente a tabla 5']
+  5 pred-v1-4.6s                    0 % [('0 %', 0.07)] OK
+  6 pred-v1-4s                      5 % [('1 %', 5.07)] ['barra 1: rótulo 1 % frente a tabla 5']
+  7 pred-v1-2.16s                   5 % [('1 %', 5.07)] ['barra 1: rótulo 1 % frente a tabla 5']
+  8 pred-v1-2s                      0 % [('0 %', 0.07)] OK
+  9 pred-v1-0s                      0 % [('0 %', 0.07)] OK
+ 10 pred-v2-2s                      0 % [('0 %', 0.07)] OK
+ 11 pred-v2-2.16s                   5 % [('1 %', 5.07)] ['barra 1: rótulo 1 % frente a tabla 5']
+ 12 pred-v2-4s                      5 % [('1 %', 5.07)] ['barra 1: rótulo 1 % frente a tabla 5']
+ 13 pred-v2-4.6s                    0 % [('0 %', 0.07)] OK
+ 14 pred-v2-4s                      5 % [('1 %', 5.07)] ['barra 1: rótulo 1 % frente a tabla 5']
+ 15 pred-v2-2.16s                   5 % [('1 %', 5.07)] ['barra 1: rótulo 1 % frente a tabla 5']
+ 16 pred-v2-2s                      0 % [('0 %', 0.07)] OK
+ 17 pred-v2-0s                      0 % [('0 %', 0.07)] OK
+ 18 pred-v3-2s                      0 % [('0 %', 0.07)] OK
+ 19 pred-v3-2.16s                   5 % [('1 %', 5.07)] ['barra 1: rótulo 1 % frente a tabla 5']
+ 20 pred-v3-4s                      5 % [('1 %', 5.07)] ['barra 1: rótulo 1 % frente a tabla 5']
+ 21 pred-v3-4.6s                    0 % [('0 %', 0.07)] OK
+ 22 pred-v3-4s                      5 % [('1 %', 5.07)] ['barra 1: rótulo 1 % frente a tabla 5']
+ 23 pred-v3-2.16s                   5 % [('1 %', 5.07)] ['barra 1: rótulo 1 % frente a tabla 5']
+ 24 pred-v3-2s                      0 % [('0 %', 0.07)] OK
+ 25 pred-v3-0s                      0 % [('0 %', 0.07)] OK
+ 26 pred-v4-2s                      0 % [('0 %', 0.07)] OK
+ 27 pred-v4-2.16s                   5 % [('1 %', 5.07)] ['barra 1: rótulo 1 % frente a tabla 5']
+ 28 pred-v4-4s                      5 % [('1 %', 5.07)] ['barra 1: rótulo 1 % frente a tabla 5']
+ 29 pred-v4-4.6s                    0 % [('0 %', 0.07)] OK
+ 30 pred-v4-4s                      5 % [('1 %', 5.07)] ['barra 1: rótulo 1 % frente a tabla 5']
+ 31 pred-v4-2.16s                   5 % [('1 %', 5.07)] ['barra 1: rótulo 1 % frente a tabla 5']
+ 32 pred-v4-2s                      0 % [('0 %', 0.07)] OK
+ 33 pred-capacidad10-2.16s         10 % [('1 %', 10.07)] ['barra 1: rótulo 1 % frente a tabla 10']
+ 34 demo-10s                       20 % [('5 %', 25.07), ('4 %', 20.07)] ['barra 1: rótulo 5 % frente a tabla 25', 'barra 2: rótulo 4 % frente a tabla 20']
+ 35 demo-0s                        15 % [('3 %', 15.07)] ['barra 1: rótulo 3 % frente a tabla 15']
+ 36 demo-5s                        25 % [('5 %', 25.07)] ['barra 1: rótulo 5 % frente a tabla 25']
+ 37 demo-10s-otra-vez              20 % [('5 %', 25.07), ('4 %', 20.07)] ['barra 1: rótulo 5 % frente a tabla 25', 'barra 2: rótulo 4 % frente a tabla 20']
+ 38 demo-capacidad40               10 % [('5 %', 12.57), ('4 %', 10.07)] ['barra 1: rótulo 5 % frente a tabla 12.5', 'barra 2: rótulo 4 % frente a tabla 10']
+ 39 alternar-1-pred                 0 % [('0 %', 0.07)] OK
+ 40 alternar-1-demo                20 % [('5 %', 25.07), ('4 %', 20.07)] ['barra 1: rótulo 5 % frente a tabla 25', 'barra 2: rótulo 4 % frente a tabla 20']
+ 41 alternar-2-pred                 0 % [('0 %', 0.07)] OK
+ 42 alternar-2-demo                20 % [('5 %', 25.07), ('4 %', 20.07)] ['barra 1: rótulo 5 % frente a tabla 25', 'barra 2: rótulo 4 % frente a tabla 20']
+ 43 nombres-repetidos              15 % [('3 %', 15.07), ('4 %', 20.07), ('3 %', 15.07)] ['barra 1: rótulo 3 % frente a tabla 15', 'barra 2: rótulo 4 % frente a tabla 20', 'barra 3: rótulo 3 % frente a tabla 15']
+ 44 sobreocupacion-150            150 % [('3 %', 150.11)] ['barra 1: rótulo 3 % frente a tabla 150']
+ 45 conteo-negativo                -5 % [('-1 %', -4.91)] ['barra 1: rótulo -1 % frente a tabla -5']
+{"estados": 45, "transiciones_prediccion": 32, "fallos": ["pred-v1-2.16s: barra 1: rótulo 1 % frente a tabla 5", "pred-v1-4s: barra 1: rótulo 1 % frente a tabla 5", "pred-v1-4s: barra 1: rótulo 1 % frente a tabla 5", "pred-v1-2.16s: barra 1: rótulo 1 % frente a tabla 5", "pred-v2-2.16s: barra 1: rótulo 1 % frente a tabla 5", "pred-v2-4s: barra 1: rótulo 1 % frente a tabla 5", "pred-v2-4s: barra 1: rótulo 1 % frente a tabla 5", "pred-v2-2.16s: barra 1: rótulo 1 % frente a tabla 5", "pred-v3-2.16s: barra 1: rótulo 1 % frente a tabla 5", "pred-v3-4s: barra 1: rótulo 1 % frente a tabla 5", "pred-v3-4s: barra 1: rótulo 1 % frente a tabla 5", "pred-v3-2.16s: barra 1: rótulo 1 % frente a tabla 5", "pred-v4-2.16s: barra 1: rótulo 1 % frente a tabla 5", "pred-v4-4s: barra 1: rótulo 1 % frente a tabla 5", "pred-v4-4s: barra 1: rótulo 1 % frente a tabla 5", "pred-v4-2.16s: barra 1: rótulo 1 % frente a tabla 5", "pred-capacidad10-2.16s: barra 1: rótulo 1 % frente a tabla 10", "demo-10s: barra 1: rótulo 5 % frente a tabla 25", "demo-10s: barra 2: rótulo 4 % frente a tabla 20", "demo-0s: barra 1: rótulo 3 % frente a tabla 15", "demo-5s: barra 1: rótulo 5 % frente a tabla 25", "demo-10s-otra-vez: barra 1: rótulo 5 % frente a tabla 25", "demo-10s-otra-vez: barra 2: rótulo 4 % frente a tabla 20", "demo-capacidad40: barra 1: rótulo 5 % frente a tabla 12.5", "demo-capacidad40: barra 2: rótulo 4 % frente a tabla 10", "alternar-1-demo: barra 1: rótulo 5 % frente a tabla 25", "alternar-1-demo: barra 2: rótulo 4 % frente a tabla 20", "alternar-2-demo: barra 1: rótulo 5 % frente a tabla 25", "alternar-2-demo: barra 2: rótulo 4 % frente a tabla 20", "nombres-repetidos: barra 1: rótulo 3 % frente a tabla 15", "nombres-repetidos: barra 2: rótulo 4 % frente a tabla 20", "nombres-repetidos: barra 3: rótulo 3 % frente a tabla 15", "sobreocupacion-150: barra 1: rótulo 3 % frente a tabla 150", "conteo-negativo: barra 1: rótulo -1 % frente a tabla -5"]}

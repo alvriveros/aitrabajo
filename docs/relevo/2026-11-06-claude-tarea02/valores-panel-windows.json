@@ -1,0 +1,8 @@
+[
+ {"paso":"carga, selector al final","segundo":"4.6 s","metricas":["0","0 %"],"tabla":["Puerta de oficina · 0-6 s","1","1","0","0"],"grafico_visual":"0 %","avisos":[],"errores":[]},
+ {"paso":"0 s","segundo":"0 s","metricas":["0","0 %"],"tabla":["Puerta de oficina · 0-6 s","0","0","0","0"],"grafico_visual":"0 %","avisos":[],"errores":[]},
+ {"paso":"2 s (manual)","segundo":"2 s","metricas":["0","0 %"],"tabla":["Puerta de oficina · 0-6 s","0","0","0","0"],"grafico_visual":"0 %","avisos":[],"errores":[]},
+ {"paso":"2.16 s (subida predicha)","segundo":"2.16 s","metricas":["1","5 %"],"tabla":["Puerta de oficina · 0-6 s","1","0","1","5"],"grafico_visual":"0 % (no coincide)","avisos":[],"errores":[]},
+ {"paso":"4 s (manual)","segundo":"4 s","metricas":["1","5 %"],"tabla":["Puerta de oficina · 0-6 s","1","0","1","5"],"grafico_visual":"0 % (no coincide)","avisos":[],"errores":[]},
+ {"paso":"4.6 s (bajada predicha)","segundo":"4.6 s","metricas":["0","0 %"],"tabla":["Puerta de oficina · 0-6 s","1","1","0","0"],"grafico_visual":"0 %","avisos":[],"errores":[]}
+]

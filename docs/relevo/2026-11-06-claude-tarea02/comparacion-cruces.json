@@ -1,0 +1,25 @@
+{
+  "tolerancia_s": 1,
+  "emparejados": [
+    {
+      "sentido": "subida",
+      "manual_s": 2,
+      "predicho_s": 2.16,
+      "diferencia_s": 0.16,
+      "track_manual": 1,
+      "track_predicho": 1,
+      "emparejado": true
+    },
+    {
+      "sentido": "bajada",
+      "manual_s": 4,
+      "predicho_s": 4.6,
+      "diferencia_s": 0.6,
+      "track_manual": 1,
+      "track_predicho": 5,
+      "emparejado": true
+    }
+  ],
+  "omitidos": [],
+  "extra": []
+}

@@ -1,6 +1,28 @@
 # Relevo para Claude · 5 de noviembre de 2026
 
-## Tarea actual · 5 de noviembre
+## Tarea actual · 6 de noviembre
+
+Álvaro pospuso todo el trabajo del informe hasta el cierre del proyecto. La prioridad siguiente es la [tarea 07 · Conectar el video con el conteo automático](docs/tareas/claude/07-demo-video.md). Las menciones anteriores a figuras y PDF son históricas.
+
+Acuerdo con Álvaro: hasta completar el proyecto, cada revisión de Codex termina con la próxima tarea para Claude y un mensaje listo para copiar. Al cerrar la última revisión, indicar que el proyecto está completo.
+
+Verificación técnica final de las tareas 05–06 en Windows: se reconstruyeron ambos servicios con Docker Desktop y pasaron las siete pruebas de la API. En Chromium el gráfico coincidió con tabla e indicadores en los 45 estados, incluidas las 32 transiciones de la predicción. A los 2,16 s la barra y su rótulo muestran 5 %. [Resultados de Windows](docs/relevo/2026-11-06-claude-tarea06/windows/resultado.json).
+
+### Verificado el 6 de noviembre · Tarea 06
+
+La figura 2 del informe se reemplazó con una captura del gráfico corregido: demo a 10 s, capacidad 20 y carga 3, con barras de 25 % y 20 %, nombres de parada y la línea del 100 %. Para que se lea a ancho de columna, `ui/app.py` agranda la letra del gráfico a 15 px y reduce el área de datos. Con eso, el texto mide unos 6 pt en el PDF, antes unos 4 pt. `informe-borrador.pdf` sigue en 3 páginas, sin desbordes y con un resumen de 138 palabras. Con este código, en Linux pasan los 45 estados de `verificar_grafico.py` sin fallos, con 32 transiciones, y pasan las 7 pruebas. **Windows sigue pendiente:** Álvaro debe reconstruir Docker y ejecutar el verificador con el bloque de PowerShell del relevo. [Evidencias](docs/relevo/2026-11-06-claude-tarea06/README.md).
+
+### Verificado el 6 de noviembre · Tarea 05
+
+Se corrigió el gráfico que conservaba valores anteriores. `ui/app.py` ahora dibuja la misma especificación de Altair como SVG en el servidor, con `vl-convert-python==1.8.0`, agregado a `requirements.txt`. Lo inserta en la página con las mismas filas que la tabla. En Linux con Docker, en una sesión de Chromium, 32 transiciones del recorrido predicho más 13 estados adicionales dieron barra y rótulo dibujados iguales a la tabla. Los estados adicionales incluyen demo, cambio de capacidad, alternancia de archivos, nombres repetidos, 150 % y −5 %. La prueba falla si se altera el rótulo, el render funciona sin red y pasan las 7 pruebas. Falta reconstruir y verificar en Windows, y actualizar la Fig. 2 del informe, porque cambiaron los colores. [Evidencias](docs/relevo/2026-11-06-claude-tarea05/README.md).
+
+### Verificado el 6 de noviembre · Tarea 02
+
+Ensayo de integración del detector base `yolo11n.pt` con ByteTrack calibrado, desde `origin/vision` en `dd5a19a`. La predicción tiene una subida a 2,16 s (+0,16 s respecto de la referencia manual de 2 s) y una bajada a 4,60 s (+0,60 s respecto de 4 s), ambas dentro de ±1 s, sin eventos extra ni omitidos. `POST /ocupacion` en Docker sobre Windows respondió 200: 1 subida, 1 bajada, 0 pasajeros, 0 % y sin avisos. En el panel, indicadores y tabla dieron 0, 1 y 0 pasajeros (0, 5 y 0 %) a 0, 2,16 y 4,60 s.
+
+**El gráfico no coincidió:** a 2,16 s y 4 s mostró 0 % con indicadores y tabla en 5 %. El defecto se reprodujo en Linux: el gráfico de Streamlit a veces conserva valores anteriores al mover el selector. La verificación de la tarea 03 solo había comprobado que el gráfico estuviera presente. No se cambió el código; falta decidir la corrección. Quedan pendientes la revisión visual del video, la reproducción local de la inferencia y la evaluación en grabaciones independientes. [Evidencias](docs/relevo/2026-11-06-claude-tarea02/README.md).
+
+## Estado histórico · 5 de noviembre
 
 La [tarea 04, informe IEEE y guion](docs/tareas/claude/04-informe-demo.md) está entregada sin commit, a la espera de la revisión de Álvaro y de las mediciones de visión. La [tarea 03](docs/tareas/claude/03-panel-docker.md) está completada y revisada, también sin commit. La tarea 01 está completada y la tarea 02 sigue pendiente de los eventos de visión. Ya existe la referencia manual aproximada del clip de oficina en `docs/demo/oficina-00-06-manual.json`.
 

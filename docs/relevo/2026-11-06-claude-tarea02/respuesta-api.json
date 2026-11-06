@@ -1,0 +1,17 @@
+{
+    "status": 200,
+    "content_type": "application/json",
+    "url": "http://127.0.0.1:8001/ocupacion",
+    "body": {
+        "paradas": [
+            {
+                "parada": "Puerta de oficina · 0-6 s",
+                "subidas": 1,
+                "bajadas": 1,
+                "pasajeros": 0,
+                "ocupacion_pct": 0.0
+            }
+        ],
+        "avisos": []
+    }
+}

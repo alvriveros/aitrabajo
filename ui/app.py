@@ -7,6 +7,7 @@ from urllib.request import Request, urlopen
 
 import altair as alt
 import streamlit as st
+import vl_convert as vlc
 
 st.set_page_config(page_title="Ocupación del bus")
 st.title("Ocupación del bus")
@@ -41,6 +42,9 @@ def consultar(recorrido):
         st.stop()
 
 
+LETRA = 15  # px; con el ancho de columna del informe equivale a unos 6 pt
+
+
 def graficar(filas):
     """Barras de ocupación en el orden del recorrido, con numeración para distinguir nombres repetidos."""
     # "(parcial)" va antes del nombre: el eje recorta los nombres largos por el final.
@@ -54,19 +58,34 @@ def graficar(filas):
                   scale=alt.Scale(domain=[minimo - margen if minimo < 0 else 0, maximo + margen]))
     base = alt.Chart(alt.Data(values=datos)).encode(
         alt.X("etiqueta:N", title="Parada", sort=[d["etiqueta"] for d in datos],
-              axis=alt.Axis(labelAngle=-30, labelLimit=220)),
+              axis=alt.Axis(labelAngle=-30, labelLimit=400)),
         eje_y,
     )
     barras = base.mark_bar().encode(opacity=alt.condition("datum.parcial", alt.value(0.55), alt.value(1)))
     rotulos = base.mark_text(baseline=alt.expr("datum.ocupacion_pct < 0 ? 'top' : 'bottom'"),
                              dy=alt.expr("datum.ocupacion_pct < 0 ? 4 : -4"),
-                             color="#7a7a7a", fontWeight="bold").encode(text="texto:N")  # legible en ambos temas
+                             color="#7a7a7a", fontWeight="bold", fontSize=LETRA).encode(text="texto:N")  # legible en ambos temas
     capacidad = alt.Chart(alt.Data(values=[{"ocupacion_pct": 100}])).encode(eje_y)
     linea = capacidad.mark_rule(color="#d62728", strokeDash=[6, 4], strokeWidth=2)
     # El rótulo va fuera del área de barras para que ninguna lo tape.
-    rotulo = capacidad.mark_text(x=alt.expr("width"), align="left", dx=6, color="#d62728").encode(
+    rotulo = capacidad.mark_text(x=alt.expr("width"), align="left", dx=6, color="#d62728", fontSize=LETRA).encode(
         text=alt.value("Capacidad 100 %"))
-    return (barras + rotulos + linea + rotulo).properties(height=340, padding={"right": 115})
+    # Letra grande y área de datos acotada: el texto sigue legible al reducir el gráfico en el informe.
+    return ((barras + rotulos + linea + rotulo)
+            .properties(width=380, height=280, padding={"right": 150})
+            .configure_axis(labelFontSize=LETRA, titleFontSize=LETRA))
+
+
+def svg_del_grafico(filas):
+    """Dibuja el gráfico en el servidor y devuelve el SVG completo.
+
+    El componente de gráficos de Streamlit a veces conservaba los valores anteriores al mover el
+    selector. Con el SVG, cada ejecución entrega al navegador el dibujo terminado del instante elegido.
+    """
+    version = alt.SCHEMA_VERSION.lstrip("v").rsplit(".", 1)[0].replace(".", "_")  # p. ej. 5_20
+    svg = vlc.vegalite_to_svg(graficar(filas).to_json(), vl_version=version)
+    # Ocupa el ancho de la columna sin deformarse.
+    return svg.replace("<svg ", '<svg style="width:100%;max-width:720px;height:auto" ', 1)
 
 
 subido = st.file_uploader("Recorrido en JSON (sin archivo se usa la demo)", type="json")
@@ -106,7 +125,7 @@ porcentaje.metric("Ocupación", f"{actual['ocupacion_pct']:g} %")
 for aviso in resultado["avisos"]:
     st.warning(aviso)
 st.subheader("Ocupación por parada")
-st.altair_chart(graficar(resultado["paradas"]), use_container_width=True)
+st.markdown(f'<div class="grafico-ocupacion">{svg_del_grafico(resultado["paradas"])}</div>', unsafe_allow_html=True)
 st.caption(f"Conteo parcial en la parada {len(resultado['paradas'])} ({actual['parada']}): "
            f"incluye los cruces hasta los {segundo:g} s.")
 st.subheader("Conteo por parada")
