@@ -1,0 +1,10 @@
+# ByteTrack para detecciones de baja confianza en cámara cenital.
+# Calibrado sobre el ensayo de oficina (0-6 s): no es una configuración validada.
+# Con los valores por defecto de Ultralytics el ensayo no produce ningún evento.
+tracker_type: bytetrack
+track_high_thresh: 0.1 # Por defecto 0.25. Vista desde arriba, la persona rara vez supera ese valor.
+track_low_thresh: 0.05 # Por defecto 0.1. En los cuadros vacíos del ensayo la confianza no pasó de 0.068.
+new_track_thresh: 0.1 # Por defecto 0.25.
+track_buffer: 30 # Igual que por defecto.
+match_thresh: 0.95 # Por defecto 0.8. Tolera poco solape entre cuadros porque la persona se mueve rápido.
+fuse_score: False # Por defecto True. Con confianzas cercanas a 0.1 impide casi todo emparejamiento.
