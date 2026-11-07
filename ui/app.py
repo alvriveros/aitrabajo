@@ -12,6 +12,7 @@ import vl_convert as vlc
 st.set_page_config(page_title="Ocupación del bus")
 st.title("Ocupación del bus")
 DEMO = Path(__file__).resolve().parents[1] / "docs/demo/recorrido.json"
+MANUAL = DEMO.with_name("oficina-00-06-manual.json")
 url = os.getenv("API_URL", "http://127.0.0.1:8000").rstrip("/")
 
 
@@ -88,14 +89,63 @@ def svg_del_grafico(filas):
     return svg.replace("<svg ", '<svg style="width:100%;max-width:720px;height:auto" ', 1)
 
 
-subido = st.file_uploader("Recorrido en JSON (sin archivo se usa la demo)", type="json")
-origen = subido.file_id if subido else "demo"
-st.caption(f"Recorrido: {subido.name if subido else 'demo sintética · docs/demo/recorrido.json'}")
-try:
-    recorrido = json.loads(subido.getvalue() if subido else DEMO.read_text(encoding="utf-8"))
-except ValueError as error:  # incluye JSON mal formado y texto que no es UTF-8
-    st.error(f"No se pudo leer el archivo como JSON ({error}). Corregilo o cargá otro.")
+def pedir(ruta, metodo="GET", timeout=10):
+    """Llama a la API y devuelve el cuerpo en bytes. Ante un error muestra el detalle y detiene el panel."""
+    try:
+        with urlopen(Request(url + ruta, method=metodo), timeout=timeout) as respuesta:
+            return respuesta.read()
+    except HTTPError as error:
+        try:
+            detalle = json.load(error)["detail"]
+        except (ValueError, KeyError):
+            detalle = str(error)
+        st.error(f"La API respondió {error.code}: {detalle}")
+    except (URLError, TimeoutError) as error:
+        st.error(f"No se pudo consultar la API en {url}. Comprobá que esté ejecutándose. {error}")
     st.stop()
+
+
+def eventos_en_tabla(eventos):
+    return [{"tiempo (s)": e["tiempo_s"], "sentido": e["sentido"], "track": e["track_id"]} for e in eventos]
+
+
+fuente = st.radio("Origen de los eventos", ["Archivo JSON o demo", "Predicción automática del video de oficina"],
+                  horizontal=True)
+if fuente == "Archivo JSON o demo":
+    subido = st.file_uploader("Recorrido en JSON (sin archivo se usa la demo)", type="json")
+    origen = subido.file_id if subido else "demo"
+    st.caption(f"Recorrido: {subido.name if subido else 'demo sintética · docs/demo/recorrido.json'}")
+    try:
+        recorrido = json.loads(subido.getvalue() if subido else DEMO.read_text(encoding="utf-8"))
+    except ValueError as error:  # incluye JSON mal formado y texto que no es UTF-8
+        st.error(f"No se pudo leer el archivo como JSON ({error}). Corregilo o cargá otro.")
+        st.stop()
+else:
+    st.caption("Clip `data/raw/oficina.mp4`, tramo 0–6 s, cuadrante superior derecho y línea de "
+               "`evaluation/results/oficina-00-06-prediccion.config.json`.")
+    if st.button("Procesar clip de oficina (0–6 s)"):
+        with st.spinner("Detectando y siguiendo personas…"):
+            st.session_state["ejecucion"] = json.loads(pedir("/procesamientos", "POST", timeout=660))["id"]
+    ejecuciones = json.loads(pedir("/procesamientos"))
+    if not ejecuciones:
+        st.info("Todavía no hay ejecuciones. Procesá el clip para ver el video anotado y su ocupación.")
+        st.stop()
+    elegida = st.session_state.get("ejecucion")
+    elegida = st.selectbox("Ejecución", ejecuciones, index=ejecuciones.index(elegida) if elegida in ejecuciones else 0)
+    ejecucion = json.loads(pedir(f"/procesamientos/{elegida}"))
+    recorrido, config = ejecucion["recorrido"], ejecucion["configuracion"]
+    origen = f"video-{elegida}"
+    st.video(pedir(f"/procesamientos/{elegida}/video"), format="video/webm")
+    medicion = config["medicion"]
+    st.caption(f"Video anotado por el modelo · pesos `{config['pesos']}` · {medicion['cuadros']} cuadros en "
+               f"{medicion['segundos']:g} s ({medicion['fps_procesados']:g} FPS).")
+    prediccion, referencia = st.columns(2)
+    prediccion.markdown("**Predicción automática** (ejecución del modelo)")
+    prediccion.dataframe(eventos_en_tabla(recorrido["eventos"]), hide_index=True)
+    manual = json.loads(MANUAL.read_text(encoding="utf-8"))
+    referencia.markdown("**Referencia manual** (aprox., solo para comparar)")
+    referencia.dataframe(eventos_en_tabla(manual["eventos"]), hide_index=True)
+    st.caption("La ocupación de abajo usa únicamente la predicción automática.")
 consultar(recorrido)  # valida el recorrido completo antes de filtrarlo por tiempo
 
 # Las claves llevan el origen para que los controles tomen los valores de cada archivo nuevo.

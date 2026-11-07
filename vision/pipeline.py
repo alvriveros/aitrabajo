@@ -296,7 +296,8 @@ class VideoAnotado:
         if self._escritor is None:
             self.destino.parent.mkdir(parents=True, exist_ok=True)
             alto, ancho = lienzo.shape[:2]
-            formato = cv2.VideoWriter_fourcc(*"mp4v")
+            # Los navegadores no reproducen mp4v; el panel pide .webm (VP8).
+            formato = cv2.VideoWriter_fourcc(*("VP80" if self.destino.suffix == ".webm" else "mp4v"))
             self._escritor = cv2.VideoWriter(str(self.destino), formato, self.fps, (ancho, alto))
             if not self._escritor.isOpened():
                 raise SystemExit(f"No se pudo crear el video anotado: {self.destino}")

@@ -8,6 +8,14 @@ Acuerdo con Álvaro: hasta completar el proyecto, cada revisión de Codex termin
 
 Verificación técnica final de las tareas 05–06 en Windows: se reconstruyeron ambos servicios con Docker Desktop y pasaron las siete pruebas de la API. En Chromium el gráfico coincidió con tabla e indicadores en los 45 estados, incluidas las 32 transiciones de la predicción. A los 2,16 s la barra y su rótulo muestran 5 %. [Resultados de Windows](docs/relevo/2026-11-06-claude-tarea06/windows/resultado.json).
 
+### Verificado el 7 de noviembre · Tarea 07
+
+Esto es en la rama `integracion-video`: `d0a658a` más `origin/vision` en `dd5a19a`, sin commit de la integración.
+
+El panel procesa el clip de oficina (0–6 s) mediante `POST /procesamientos`, muestra el video anotado y separa la predicción automática de la referencia manual. Con los eventos de esa ejecución calcula la ocupación.
+
+En Linux x86 el detector base predijo la subida a 2,16 s pero **omitió la bajada**: la persona cruza sin caja entre 4,44 y 4,80 s. La ocupación queda en 0 → 1 pasajero (5 %) y no vuelve a 0. El código de `vision` sin cambios da lo mismo, y su prueba del ensayo falla acá. La carga de JSON y los 45 estados del gráfico pasan sin fallos. En Windows, Álvaro observó lo mismo desde el panel: subida contada, bajada sin detectar. **Pendiente:** guardar la salida del script en Windows. [Evidencias](docs/relevo/2026-11-07-claude-tarea07/README.md) y [análisis del caso](docs/casos-deteccion/oficina-bajada-omitida/README.md).
+
 ### Verificado el 6 de noviembre · Tarea 06
 
 La figura 2 del informe se reemplazó con una captura del gráfico corregido: demo a 10 s, capacidad 20 y carga 3, con barras de 25 % y 20 %, nombres de parada y la línea del 100 %. Para que se lea a ancho de columna, `ui/app.py` agranda la letra del gráfico a 15 px y reduce el área de datos. Con eso, el texto mide unos 6 pt en el PDF, antes unos 4 pt. `informe-borrador.pdf` sigue en 3 páginas, sin desbordes y con un resumen de 138 palabras. Con este código, en Linux pasan los 45 estados de `verificar_grafico.py` sin fallos, con 32 transiciones, y pasan las 7 pruebas. **Windows sigue pendiente:** Álvaro debe reconstruir Docker y ejecutar el verificador con el bloque de PowerShell del relevo. [Evidencias](docs/relevo/2026-11-06-claude-tarea06/README.md).

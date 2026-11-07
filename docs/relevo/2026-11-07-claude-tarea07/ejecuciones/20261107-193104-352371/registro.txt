@@ -1,0 +1,5 @@
+1 eventos: 1 subidas y 0 bajadas.
+Predicciones: /home/claude/tp/runs/panel/20261107-193104-352371/prediccion.json
+Configuración: /home/claude/tp/runs/panel/20261107-193104-352371/prediccion.config.json
+Video anotado: /home/claude/tp/runs/panel/20261107-193104-352371/anotado.webm
+OpenCV: FFMPEG: tag 0x30385056/'VP80' is not supported with codec id 139 and format 'webm / WebM'

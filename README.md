@@ -26,6 +26,16 @@ Abrí el panel en http://localhost:8501 y mové el selector de tiempo. Con los v
 
 Para probar otro recorrido, cargá un JSON con el mismo formato que [el ejemplo](docs/demo/recorrido.json). El selector permite inspeccionar la ocupación al inicio de cada parada y en el instante exacto de cada cruce. Quitá el archivo para volver a la demo.
 
+## Procesar el video desde el panel
+
+Requiere las dependencias de visión y dos archivos que git no versiona, ambos descritos en [vision/README.md](vision/README.md): `data/raw/oficina.mp4` y `yolo11n.pt` en la raíz.
+
+```powershell
+.\.venv\Scripts\python.exe -m pip install -r requirements.txt -r vision\requirements.txt
+```
+
+Arrancá API y panel como arriba, elegí **Predicción automática del video de oficina** y pulsá **Procesar clip de oficina (0–6 s)**. La API (`POST /procesamientos`) ejecuta `vision.pipeline` con la configuración guardada en `evaluation/results/oficina-00-06-prediccion.config.json` y deja predicción, configuración, registro y video anotado (`.webm`) en `runs/panel/<id>/`. El panel muestra el video, la predicción junto a la referencia manual y carga la predicción en los controles de ocupación. Las ejecuciones anteriores se consultan con el selector o con `GET /procesamientos/<id>`. Si falta un insumo, la API responde 503 indicando cuál. La imagen de Docker no incluye las dependencias de visión, así que ahí el procesamiento responde 503.
+
 ## Ejecutar con Docker
 
 Con Docker Desktop iniciado y el motor Linux disponible, desde la raíz:

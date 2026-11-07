@@ -1,0 +1,6 @@
+{
+  "procesado": false,
+  "mensajes": [
+    "La API respondió 503: Faltan insumos para procesar el video: data/raw/oficina.mp4, yolo11n.pt."
+  ]
+}
