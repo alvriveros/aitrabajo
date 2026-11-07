@@ -1,0 +1,1891 @@
+{
+  "video": "data/raw/oficina.mp4",
+  "sha256": "02666c2e567f45015a2e73fe802db8f39c6c568d41ef42efc63997de4d15fc95",
+  "recorte": {
+    "x": 228,
+    "y": 2,
+    "ancho": 222,
+    "alto": 176
+  },
+  "sistema_de_coordenadas": "Píxeles del recorte: origen arriba a la izquierda, x hacia la derecha, y hacia abajo.",
+  "clase": "person",
+  "metodo": "Propuestas de vision.proponer_cajas, revisadas cuadro por cuadro. 'corregida' se ajustó a mano; 'vacio' y 'sombra' no tienen persona.",
+  "revision": "Revisadas por Claude el 6 de noviembre de 2026. Falta la revisión de una persona.",
+  "particiones": {
+    "ensayo": "t < 6 s, fuera del entrenamiento",
+    "entrenamiento": "6 s <= t < 43 s",
+    "reserva": "t >= 43 s, misma grabación: solo orienta"
+  },
+  "cuadros": [
+    {
+      "cuadro": 150,
+      "tiempo_s": 6.0,
+      "particion": "entrenamiento",
+      "caja": null,
+      "origen": "vacio"
+    },
+    {
+      "cuadro": 159,
+      "tiempo_s": 6.36,
+      "particion": "entrenamiento",
+      "caja": null,
+      "origen": "sombra"
+    },
+    {
+      "cuadro": 162,
+      "tiempo_s": 6.48,
+      "particion": "entrenamiento",
+      "caja": null,
+      "origen": "sombra"
+    },
+    {
+      "cuadro": 168,
+      "tiempo_s": 6.72,
+      "particion": "entrenamiento",
+      "caja": [
+        70,
+        142,
+        135,
+        176
+      ],
+      "origen": "propuesta"
+    },
+    {
+      "cuadro": 171,
+      "tiempo_s": 6.84,
+      "particion": "entrenamiento",
+      "caja": [
+        64,
+        120,
+        133,
+        176
+      ],
+      "origen": "corregida"
+    },
+    {
+      "cuadro": 174,
+      "tiempo_s": 6.96,
+      "particion": "entrenamiento",
+      "caja": [
+        62,
+        77,
+        130,
+        159
+      ],
+      "origen": "propuesta"
+    },
+    {
+      "cuadro": 177,
+      "tiempo_s": 7.08,
+      "particion": "entrenamiento",
+      "caja": [
+        59,
+        47,
+        131,
+        134
+      ],
+      "origen": "propuesta"
+    },
+    {
+      "cuadro": 180,
+      "tiempo_s": 7.2,
+      "particion": "entrenamiento",
+      "caja": [
+        57,
+        0,
+        133,
+        106
+      ],
+      "origen": "propuesta"
+    },
+    {
+      "cuadro": 183,
+      "tiempo_s": 7.32,
+      "particion": "entrenamiento",
+      "caja": [
+        59,
+        0,
+        134,
+        95
+      ],
+      "origen": "propuesta"
+    },
+    {
+      "cuadro": 186,
+      "tiempo_s": 7.44,
+      "particion": "entrenamiento",
+      "caja": [
+        67,
+        0,
+        134,
+        71
+      ],
+      "origen": "propuesta"
+    },
+    {
+      "cuadro": 189,
+      "tiempo_s": 7.56,
+      "particion": "entrenamiento",
+      "caja": [
+        68,
+        0,
+        118,
+        47
+      ],
+      "origen": "propuesta"
+    },
+    {
+      "cuadro": 225,
+      "tiempo_s": 9.0,
+      "particion": "entrenamiento",
+      "caja": [
+        54,
+        0,
+        106,
+        33
+      ],
+      "origen": "propuesta"
+    },
+    {
+      "cuadro": 228,
+      "tiempo_s": 9.12,
+      "particion": "entrenamiento",
+      "caja": [
+        44,
+        0,
+        109,
+        36
+      ],
+      "origen": "propuesta"
+    },
+    {
+      "cuadro": 231,
+      "tiempo_s": 9.24,
+      "particion": "entrenamiento",
+      "caja": [
+        41,
+        0,
+        114,
+        73
+      ],
+      "origen": "propuesta"
+    },
+    {
+      "cuadro": 234,
+      "tiempo_s": 9.36,
+      "particion": "entrenamiento",
+      "caja": [
+        46,
+        14,
+        119,
+        80
+      ],
+      "origen": "propuesta"
+    },
+    {
+      "cuadro": 237,
+      "tiempo_s": 9.48,
+      "particion": "entrenamiento",
+      "caja": [
+        43,
+        46,
+        122,
+        108
+      ],
+      "origen": "propuesta"
+    },
+    {
+      "cuadro": 240,
+      "tiempo_s": 9.6,
+      "particion": "entrenamiento",
+      "caja": [
+        45,
+        64,
+        115,
+        153
+      ],
+      "origen": "propuesta"
+    },
+    {
+      "cuadro": 243,
+      "tiempo_s": 9.72,
+      "particion": "entrenamiento",
+      "caja": [
+        47,
+        78,
+        125,
+        176
+      ],
+      "origen": "corregida"
+    },
+    {
+      "cuadro": 246,
+      "tiempo_s": 9.84,
+      "particion": "entrenamiento",
+      "caja": [
+        48,
+        112,
+        121,
+        176
+      ],
+      "origen": "corregida"
+    },
+    {
+      "cuadro": 249,
+      "tiempo_s": 9.96,
+      "particion": "entrenamiento",
+      "caja": [
+        70,
+        143,
+        122,
+        176
+      ],
+      "origen": "propuesta"
+    },
+    {
+      "cuadro": 276,
+      "tiempo_s": 11.04,
+      "particion": "entrenamiento",
+      "caja": null,
+      "origen": "sombra"
+    },
+    {
+      "cuadro": 279,
+      "tiempo_s": 11.16,
+      "particion": "entrenamiento",
+      "caja": null,
+      "origen": "sombra"
+    },
+    {
+      "cuadro": 285,
+      "tiempo_s": 11.4,
+      "particion": "entrenamiento",
+      "caja": [
+        79,
+        142,
+        144,
+        176
+      ],
+      "origen": "propuesta"
+    },
+    {
+      "cuadro": 288,
+      "tiempo_s": 11.52,
+      "particion": "entrenamiento",
+      "caja": [
+        78,
+        131,
+        147,
+        176
+      ],
+      "origen": "propuesta"
+    },
+    {
+      "cuadro": 291,
+      "tiempo_s": 11.64,
+      "particion": "entrenamiento",
+      "caja": [
+        66,
+        77,
+        142,
+        170
+      ],
+      "origen": "propuesta"
+    },
+    {
+      "cuadro": 294,
+      "tiempo_s": 11.76,
+      "particion": "entrenamiento",
+      "caja": [
+        70,
+        69,
+        136,
+        147
+      ],
+      "origen": "propuesta"
+    },
+    {
+      "cuadro": 297,
+      "tiempo_s": 11.88,
+      "particion": "entrenamiento",
+      "caja": [
+        67,
+        29,
+        140,
+        115
+      ],
+      "origen": "propuesta"
+    },
+    {
+      "cuadro": 300,
+      "tiempo_s": 12.0,
+      "particion": "entrenamiento",
+      "caja": [
+        66,
+        0,
+        141,
+        110
+      ],
+      "origen": "propuesta"
+    },
+    {
+      "cuadro": 303,
+      "tiempo_s": 12.12,
+      "particion": "entrenamiento",
+      "caja": [
+        70,
+        0,
+        140,
+        96
+      ],
+      "origen": "propuesta"
+    },
+    {
+      "cuadro": 306,
+      "tiempo_s": 12.24,
+      "particion": "entrenamiento",
+      "caja": [
+        71,
+        0,
+        137,
+        65
+      ],
+      "origen": "propuesta"
+    },
+    {
+      "cuadro": 309,
+      "tiempo_s": 12.36,
+      "particion": "entrenamiento",
+      "caja": [
+        72,
+        0,
+        123,
+        54
+      ],
+      "origen": "propuesta"
+    },
+    {
+      "cuadro": 351,
+      "tiempo_s": 14.04,
+      "particion": "entrenamiento",
+      "caja": [
+        40,
+        0,
+        108,
+        52
+      ],
+      "origen": "propuesta"
+    },
+    {
+      "cuadro": 354,
+      "tiempo_s": 14.16,
+      "particion": "entrenamiento",
+      "caja": [
+        45,
+        0,
+        112,
+        61
+      ],
+      "origen": "propuesta"
+    },
+    {
+      "cuadro": 357,
+      "tiempo_s": 14.28,
+      "particion": "entrenamiento",
+      "caja": [
+        43,
+        13,
+        117,
+        85
+      ],
+      "origen": "propuesta"
+    },
+    {
+      "cuadro": 360,
+      "tiempo_s": 14.4,
+      "particion": "entrenamiento",
+      "caja": [
+        39,
+        42,
+        118,
+        112
+      ],
+      "origen": "propuesta"
+    },
+    {
+      "cuadro": 363,
+      "tiempo_s": 14.52,
+      "particion": "entrenamiento",
+      "caja": [
+        48,
+        58,
+        114,
+        147
+      ],
+      "origen": "propuesta"
+    },
+    {
+      "cuadro": 366,
+      "tiempo_s": 14.64,
+      "particion": "entrenamiento",
+      "caja": [
+        49,
+        77,
+        120,
+        176
+      ],
+      "origen": "propuesta"
+    },
+    {
+      "cuadro": 369,
+      "tiempo_s": 14.76,
+      "particion": "entrenamiento",
+      "caja": [
+        53,
+        114,
+        124,
+        176
+      ],
+      "origen": "corregida"
+    },
+    {
+      "cuadro": 372,
+      "tiempo_s": 14.88,
+      "particion": "entrenamiento",
+      "caja": [
+        74,
+        130,
+        125,
+        176
+      ],
+      "origen": "propuesta"
+    },
+    {
+      "cuadro": 396,
+      "tiempo_s": 15.84,
+      "particion": "entrenamiento",
+      "caja": null,
+      "origen": "vacio"
+    },
+    {
+      "cuadro": 405,
+      "tiempo_s": 16.2,
+      "particion": "entrenamiento",
+      "caja": null,
+      "origen": "sombra"
+    },
+    {
+      "cuadro": 408,
+      "tiempo_s": 16.32,
+      "particion": "entrenamiento",
+      "caja": null,
+      "origen": "sombra"
+    },
+    {
+      "cuadro": 417,
+      "tiempo_s": 16.68,
+      "particion": "entrenamiento",
+      "caja": [
+        81,
+        128,
+        150,
+        176
+      ],
+      "origen": "propuesta"
+    },
+    {
+      "cuadro": 420,
+      "tiempo_s": 16.8,
+      "particion": "entrenamiento",
+      "caja": [
+        72,
+        77,
+        146,
+        176
+      ],
+      "origen": "propuesta"
+    },
+    {
+      "cuadro": 423,
+      "tiempo_s": 16.92,
+      "particion": "entrenamiento",
+      "caja": [
+        77,
+        77,
+        139,
+        151
+      ],
+      "origen": "propuesta"
+    },
+    {
+      "cuadro": 426,
+      "tiempo_s": 17.04,
+      "particion": "entrenamiento",
+      "caja": [
+        74,
+        32,
+        146,
+        133
+      ],
+      "origen": "propuesta"
+    },
+    {
+      "cuadro": 429,
+      "tiempo_s": 17.16,
+      "particion": "entrenamiento",
+      "caja": [
+        67,
+        0,
+        140,
+        124
+      ],
+      "origen": "propuesta"
+    },
+    {
+      "cuadro": 432,
+      "tiempo_s": 17.28,
+      "particion": "entrenamiento",
+      "caja": [
+        67,
+        0,
+        136,
+        97
+      ],
+      "origen": "propuesta"
+    },
+    {
+      "cuadro": 435,
+      "tiempo_s": 17.4,
+      "particion": "entrenamiento",
+      "caja": [
+        66,
+        0,
+        137,
+        76
+      ],
+      "origen": "propuesta"
+    },
+    {
+      "cuadro": 438,
+      "tiempo_s": 17.52,
+      "particion": "entrenamiento",
+      "caja": [
+        69,
+        0,
+        135,
+        67
+      ],
+      "origen": "propuesta"
+    },
+    {
+      "cuadro": 441,
+      "tiempo_s": 17.64,
+      "particion": "entrenamiento",
+      "caja": [
+        84,
+        0,
+        120,
+        47
+      ],
+      "origen": "propuesta"
+    },
+    {
+      "cuadro": 486,
+      "tiempo_s": 19.44,
+      "particion": "entrenamiento",
+      "caja": [
+        53,
+        0,
+        119,
+        57
+      ],
+      "origen": "propuesta"
+    },
+    {
+      "cuadro": 489,
+      "tiempo_s": 19.56,
+      "particion": "entrenamiento",
+      "caja": [
+        55,
+        0,
+        123,
+        67
+      ],
+      "origen": "propuesta"
+    },
+    {
+      "cuadro": 492,
+      "tiempo_s": 19.68,
+      "particion": "entrenamiento",
+      "caja": [
+        53,
+        0,
+        126,
+        83
+      ],
+      "origen": "propuesta"
+    },
+    {
+      "cuadro": 495,
+      "tiempo_s": 19.8,
+      "particion": "entrenamiento",
+      "caja": [
+        46,
+        40,
+        125,
+        107
+      ],
+      "origen": "propuesta"
+    },
+    {
+      "cuadro": 498,
+      "tiempo_s": 19.92,
+      "particion": "entrenamiento",
+      "caja": [
+        46,
+        57,
+        117,
+        139
+      ],
+      "origen": "propuesta"
+    },
+    {
+      "cuadro": 501,
+      "tiempo_s": 20.04,
+      "particion": "entrenamiento",
+      "caja": [
+        50,
+        96,
+        121,
+        176
+      ],
+      "origen": "corregida"
+    },
+    {
+      "cuadro": 504,
+      "tiempo_s": 20.16,
+      "particion": "entrenamiento",
+      "caja": [
+        57,
+        102,
+        123,
+        176
+      ],
+      "origen": "corregida"
+    },
+    {
+      "cuadro": 528,
+      "tiempo_s": 21.12,
+      "particion": "entrenamiento",
+      "caja": null,
+      "origen": "vacio"
+    },
+    {
+      "cuadro": 549,
+      "tiempo_s": 21.96,
+      "particion": "entrenamiento",
+      "caja": [
+        84,
+        145,
+        145,
+        176
+      ],
+      "origen": "propuesta"
+    },
+    {
+      "cuadro": 552,
+      "tiempo_s": 22.08,
+      "particion": "entrenamiento",
+      "caja": [
+        81,
+        124,
+        149,
+        176
+      ],
+      "origen": "corregida"
+    },
+    {
+      "cuadro": 555,
+      "tiempo_s": 22.2,
+      "particion": "entrenamiento",
+      "caja": [
+        73,
+        77,
+        148,
+        176
+      ],
+      "origen": "propuesta"
+    },
+    {
+      "cuadro": 558,
+      "tiempo_s": 22.32,
+      "particion": "entrenamiento",
+      "caja": [
+        82,
+        61,
+        150,
+        140
+      ],
+      "origen": "propuesta"
+    },
+    {
+      "cuadro": 561,
+      "tiempo_s": 22.44,
+      "particion": "entrenamiento",
+      "caja": [
+        74,
+        17,
+        147,
+        134
+      ],
+      "origen": "propuesta"
+    },
+    {
+      "cuadro": 564,
+      "tiempo_s": 22.56,
+      "particion": "entrenamiento",
+      "caja": [
+        74,
+        0,
+        143,
+        112
+      ],
+      "origen": "propuesta"
+    },
+    {
+      "cuadro": 567,
+      "tiempo_s": 22.68,
+      "particion": "entrenamiento",
+      "caja": [
+        73,
+        0,
+        143,
+        82
+      ],
+      "origen": "propuesta"
+    },
+    {
+      "cuadro": 570,
+      "tiempo_s": 22.8,
+      "particion": "entrenamiento",
+      "caja": [
+        76,
+        0,
+        144,
+        70
+      ],
+      "origen": "propuesta"
+    },
+    {
+      "cuadro": 573,
+      "tiempo_s": 22.92,
+      "particion": "entrenamiento",
+      "caja": [
+        89,
+        0,
+        130,
+        55
+      ],
+      "origen": "propuesta"
+    },
+    {
+      "cuadro": 621,
+      "tiempo_s": 24.84,
+      "particion": "entrenamiento",
+      "caja": [
+        51,
+        0,
+        118,
+        61
+      ],
+      "origen": "propuesta"
+    },
+    {
+      "cuadro": 624,
+      "tiempo_s": 24.96,
+      "particion": "entrenamiento",
+      "caja": [
+        52,
+        0,
+        122,
+        75
+      ],
+      "origen": "propuesta"
+    },
+    {
+      "cuadro": 627,
+      "tiempo_s": 25.08,
+      "particion": "entrenamiento",
+      "caja": [
+        46,
+        36,
+        123,
+        102
+      ],
+      "origen": "propuesta"
+    },
+    {
+      "cuadro": 630,
+      "tiempo_s": 25.2,
+      "particion": "entrenamiento",
+      "caja": [
+        46,
+        58,
+        115,
+        137
+      ],
+      "origen": "propuesta"
+    },
+    {
+      "cuadro": 633,
+      "tiempo_s": 25.32,
+      "particion": "entrenamiento",
+      "caja": [
+        53,
+        90,
+        124,
+        176
+      ],
+      "origen": "corregida"
+    },
+    {
+      "cuadro": 636,
+      "tiempo_s": 25.44,
+      "particion": "entrenamiento",
+      "caja": [
+        58,
+        122,
+        126,
+        176
+      ],
+      "origen": "corregida"
+    },
+    {
+      "cuadro": 657,
+      "tiempo_s": 26.28,
+      "particion": "entrenamiento",
+      "caja": null,
+      "origen": "vacio"
+    },
+    {
+      "cuadro": 675,
+      "tiempo_s": 27.0,
+      "particion": "entrenamiento",
+      "caja": null,
+      "origen": "sombra"
+    },
+    {
+      "cuadro": 678,
+      "tiempo_s": 27.12,
+      "particion": "entrenamiento",
+      "caja": null,
+      "origen": "sombra"
+    },
+    {
+      "cuadro": 687,
+      "tiempo_s": 27.48,
+      "particion": "entrenamiento",
+      "caja": [
+        83,
+        134,
+        152,
+        176
+      ],
+      "origen": "propuesta"
+    },
+    {
+      "cuadro": 690,
+      "tiempo_s": 27.6,
+      "particion": "entrenamiento",
+      "caja": [
+        78,
+        77,
+        149,
+        168
+      ],
+      "origen": "propuesta"
+    },
+    {
+      "cuadro": 693,
+      "tiempo_s": 27.72,
+      "particion": "entrenamiento",
+      "caja": [
+        85,
+        55,
+        150,
+        118
+      ],
+      "origen": "propuesta"
+    },
+    {
+      "cuadro": 696,
+      "tiempo_s": 27.84,
+      "particion": "entrenamiento",
+      "caja": [
+        73,
+        14,
+        144,
+        114
+      ],
+      "origen": "propuesta"
+    },
+    {
+      "cuadro": 699,
+      "tiempo_s": 27.96,
+      "particion": "entrenamiento",
+      "caja": [
+        69,
+        0,
+        137,
+        103
+      ],
+      "origen": "propuesta"
+    },
+    {
+      "cuadro": 702,
+      "tiempo_s": 28.08,
+      "particion": "entrenamiento",
+      "caja": [
+        69,
+        0,
+        132,
+        74
+      ],
+      "origen": "propuesta"
+    },
+    {
+      "cuadro": 705,
+      "tiempo_s": 28.2,
+      "particion": "entrenamiento",
+      "caja": [
+        67,
+        0,
+        122,
+        51
+      ],
+      "origen": "propuesta"
+    },
+    {
+      "cuadro": 708,
+      "tiempo_s": 28.32,
+      "particion": "entrenamiento",
+      "caja": [
+        85,
+        0,
+        115,
+        40
+      ],
+      "origen": "propuesta"
+    },
+    {
+      "cuadro": 747,
+      "tiempo_s": 29.88,
+      "particion": "entrenamiento",
+      "caja": [
+        55,
+        0,
+        114,
+        39
+      ],
+      "origen": "propuesta"
+    },
+    {
+      "cuadro": 750,
+      "tiempo_s": 30.0,
+      "particion": "entrenamiento",
+      "caja": [
+        45,
+        0,
+        115,
+        47
+      ],
+      "origen": "propuesta"
+    },
+    {
+      "cuadro": 753,
+      "tiempo_s": 30.12,
+      "particion": "entrenamiento",
+      "caja": [
+        43,
+        0,
+        118,
+        81
+      ],
+      "origen": "propuesta"
+    },
+    {
+      "cuadro": 756,
+      "tiempo_s": 30.24,
+      "particion": "entrenamiento",
+      "caja": [
+        47,
+        44,
+        122,
+        109
+      ],
+      "origen": "propuesta"
+    },
+    {
+      "cuadro": 759,
+      "tiempo_s": 30.36,
+      "particion": "entrenamiento",
+      "caja": [
+        46,
+        77,
+        115,
+        142
+      ],
+      "origen": "propuesta"
+    },
+    {
+      "cuadro": 762,
+      "tiempo_s": 30.48,
+      "particion": "entrenamiento",
+      "caja": [
+        47,
+        100,
+        122,
+        176
+      ],
+      "origen": "corregida"
+    },
+    {
+      "cuadro": 765,
+      "tiempo_s": 30.6,
+      "particion": "entrenamiento",
+      "caja": [
+        56,
+        114,
+        123,
+        176
+      ],
+      "origen": "corregida"
+    },
+    {
+      "cuadro": 789,
+      "tiempo_s": 31.56,
+      "particion": "entrenamiento",
+      "caja": null,
+      "origen": "vacio"
+    },
+    {
+      "cuadro": 801,
+      "tiempo_s": 32.04,
+      "particion": "entrenamiento",
+      "caja": null,
+      "origen": "sombra"
+    },
+    {
+      "cuadro": 810,
+      "tiempo_s": 32.4,
+      "particion": "entrenamiento",
+      "caja": [
+        74,
+        137,
+        142,
+        176
+      ],
+      "origen": "propuesta"
+    },
+    {
+      "cuadro": 813,
+      "tiempo_s": 32.52,
+      "particion": "entrenamiento",
+      "caja": [
+        66,
+        77,
+        138,
+        176
+      ],
+      "origen": "propuesta"
+    },
+    {
+      "cuadro": 816,
+      "tiempo_s": 32.64,
+      "particion": "entrenamiento",
+      "caja": [
+        76,
+        77,
+        134,
+        144
+      ],
+      "origen": "propuesta"
+    },
+    {
+      "cuadro": 819,
+      "tiempo_s": 32.76,
+      "particion": "entrenamiento",
+      "caja": [
+        64,
+        27,
+        141,
+        131
+      ],
+      "origen": "propuesta"
+    },
+    {
+      "cuadro": 822,
+      "tiempo_s": 32.88,
+      "particion": "entrenamiento",
+      "caja": [
+        66,
+        0,
+        141,
+        122
+      ],
+      "origen": "propuesta"
+    },
+    {
+      "cuadro": 825,
+      "tiempo_s": 33.0,
+      "particion": "entrenamiento",
+      "caja": [
+        68,
+        0,
+        137,
+        94
+      ],
+      "origen": "propuesta"
+    },
+    {
+      "cuadro": 828,
+      "tiempo_s": 33.12,
+      "particion": "entrenamiento",
+      "caja": [
+        67,
+        0,
+        126,
+        70
+      ],
+      "origen": "propuesta"
+    },
+    {
+      "cuadro": 831,
+      "tiempo_s": 33.24,
+      "particion": "entrenamiento",
+      "caja": [
+        66,
+        0,
+        119,
+        55
+      ],
+      "origen": "propuesta"
+    },
+    {
+      "cuadro": 867,
+      "tiempo_s": 34.68,
+      "particion": "entrenamiento",
+      "caja": [
+        54,
+        0,
+        111,
+        33
+      ],
+      "origen": "propuesta"
+    },
+    {
+      "cuadro": 870,
+      "tiempo_s": 34.8,
+      "particion": "entrenamiento",
+      "caja": [
+        55,
+        0,
+        117,
+        48
+      ],
+      "origen": "propuesta"
+    },
+    {
+      "cuadro": 873,
+      "tiempo_s": 34.92,
+      "particion": "entrenamiento",
+      "caja": [
+        52,
+        0,
+        120,
+        64
+      ],
+      "origen": "propuesta"
+    },
+    {
+      "cuadro": 876,
+      "tiempo_s": 35.04,
+      "particion": "entrenamiento",
+      "caja": [
+        47,
+        0,
+        123,
+        87
+      ],
+      "origen": "propuesta"
+    },
+    {
+      "cuadro": 879,
+      "tiempo_s": 35.16,
+      "particion": "entrenamiento",
+      "caja": [
+        49,
+        49,
+        124,
+        104
+      ],
+      "origen": "propuesta"
+    },
+    {
+      "cuadro": 882,
+      "tiempo_s": 35.28,
+      "particion": "entrenamiento",
+      "caja": [
+        51,
+        77,
+        118,
+        143
+      ],
+      "origen": "propuesta"
+    },
+    {
+      "cuadro": 885,
+      "tiempo_s": 35.4,
+      "particion": "entrenamiento",
+      "caja": [
+        52,
+        96,
+        122,
+        176
+      ],
+      "origen": "corregida"
+    },
+    {
+      "cuadro": 888,
+      "tiempo_s": 35.52,
+      "particion": "entrenamiento",
+      "caja": [
+        52,
+        114,
+        124,
+        176
+      ],
+      "origen": "corregida"
+    },
+    {
+      "cuadro": 924,
+      "tiempo_s": 36.96,
+      "particion": "entrenamiento",
+      "caja": null,
+      "origen": "vacio"
+    },
+    {
+      "cuadro": 936,
+      "tiempo_s": 37.44,
+      "particion": "entrenamiento",
+      "caja": null,
+      "origen": "sombra"
+    },
+    {
+      "cuadro": 939,
+      "tiempo_s": 37.56,
+      "particion": "entrenamiento",
+      "caja": null,
+      "origen": "sombra"
+    },
+    {
+      "cuadro": 945,
+      "tiempo_s": 37.8,
+      "particion": "entrenamiento",
+      "caja": [
+        65,
+        133,
+        131,
+        176
+      ],
+      "origen": "propuesta"
+    },
+    {
+      "cuadro": 948,
+      "tiempo_s": 37.92,
+      "particion": "entrenamiento",
+      "caja": [
+        64,
+        120,
+        133,
+        176
+      ],
+      "origen": "corregida"
+    },
+    {
+      "cuadro": 951,
+      "tiempo_s": 38.04,
+      "particion": "entrenamiento",
+      "caja": [
+        60,
+        77,
+        133,
+        149
+      ],
+      "origen": "propuesta"
+    },
+    {
+      "cuadro": 954,
+      "tiempo_s": 38.16,
+      "particion": "entrenamiento",
+      "caja": [
+        57,
+        42,
+        134,
+        140
+      ],
+      "origen": "propuesta"
+    },
+    {
+      "cuadro": 957,
+      "tiempo_s": 38.28,
+      "particion": "entrenamiento",
+      "caja": [
+        60,
+        11,
+        132,
+        113
+      ],
+      "origen": "propuesta"
+    },
+    {
+      "cuadro": 960,
+      "tiempo_s": 38.4,
+      "particion": "entrenamiento",
+      "caja": [
+        57,
+        0,
+        130,
+        93
+      ],
+      "origen": "propuesta"
+    },
+    {
+      "cuadro": 963,
+      "tiempo_s": 38.52,
+      "particion": "entrenamiento",
+      "caja": [
+        58,
+        0,
+        127,
+        80
+      ],
+      "origen": "propuesta"
+    },
+    {
+      "cuadro": 966,
+      "tiempo_s": 38.64,
+      "particion": "entrenamiento",
+      "caja": [
+        63,
+        0,
+        121,
+        54
+      ],
+      "origen": "propuesta"
+    },
+    {
+      "cuadro": 969,
+      "tiempo_s": 38.76,
+      "particion": "entrenamiento",
+      "caja": [
+        81,
+        0,
+        118,
+        41
+      ],
+      "origen": "propuesta"
+    },
+    {
+      "cuadro": 1014,
+      "tiempo_s": 40.56,
+      "particion": "entrenamiento",
+      "caja": [
+        64,
+        0,
+        122,
+        40
+      ],
+      "origen": "propuesta"
+    },
+    {
+      "cuadro": 1017,
+      "tiempo_s": 40.68,
+      "particion": "entrenamiento",
+      "caja": [
+        58,
+        0,
+        124,
+        68
+      ],
+      "origen": "propuesta"
+    },
+    {
+      "cuadro": 1020,
+      "tiempo_s": 40.8,
+      "particion": "entrenamiento",
+      "caja": [
+        57,
+        0,
+        126,
+        70
+      ],
+      "origen": "propuesta"
+    },
+    {
+      "cuadro": 1023,
+      "tiempo_s": 40.92,
+      "particion": "entrenamiento",
+      "caja": [
+        50,
+        26,
+        123,
+        95
+      ],
+      "origen": "propuesta"
+    },
+    {
+      "cuadro": 1026,
+      "tiempo_s": 41.04,
+      "particion": "entrenamiento",
+      "caja": [
+        44,
+        46,
+        115,
+        126
+      ],
+      "origen": "propuesta"
+    },
+    {
+      "cuadro": 1029,
+      "tiempo_s": 41.16,
+      "particion": "entrenamiento",
+      "caja": [
+        46,
+        78,
+        110,
+        160
+      ],
+      "origen": "corregida"
+    },
+    {
+      "cuadro": 1032,
+      "tiempo_s": 41.28,
+      "particion": "entrenamiento",
+      "caja": [
+        47,
+        108,
+        114,
+        176
+      ],
+      "origen": "corregida"
+    },
+    {
+      "cuadro": 1035,
+      "tiempo_s": 41.4,
+      "particion": "entrenamiento",
+      "caja": [
+        47,
+        118,
+        120,
+        176
+      ],
+      "origen": "corregida"
+    },
+    {
+      "cuadro": 1059,
+      "tiempo_s": 42.36,
+      "particion": "entrenamiento",
+      "caja": null,
+      "origen": "vacio"
+    },
+    {
+      "cuadro": 1080,
+      "tiempo_s": 43.2,
+      "particion": "reserva",
+      "caja": null,
+      "origen": "sombra"
+    },
+    {
+      "cuadro": 1083,
+      "tiempo_s": 43.32,
+      "particion": "reserva",
+      "caja": null,
+      "origen": "sombra"
+    },
+    {
+      "cuadro": 1089,
+      "tiempo_s": 43.56,
+      "particion": "reserva",
+      "caja": [
+        75,
+        129,
+        143,
+        176
+      ],
+      "origen": "propuesta"
+    },
+    {
+      "cuadro": 1092,
+      "tiempo_s": 43.68,
+      "particion": "reserva",
+      "caja": [
+        68,
+        77,
+        140,
+        159
+      ],
+      "origen": "propuesta"
+    },
+    {
+      "cuadro": 1095,
+      "tiempo_s": 43.8,
+      "particion": "reserva",
+      "caja": [
+        71,
+        57,
+        142,
+        117
+      ],
+      "origen": "propuesta"
+    },
+    {
+      "cuadro": 1098,
+      "tiempo_s": 43.92,
+      "particion": "reserva",
+      "caja": [
+        65,
+        21,
+        141,
+        109
+      ],
+      "origen": "propuesta"
+    },
+    {
+      "cuadro": 1101,
+      "tiempo_s": 44.04,
+      "particion": "reserva",
+      "caja": [
+        66,
+        0,
+        140,
+        79
+      ],
+      "origen": "propuesta"
+    },
+    {
+      "cuadro": 1104,
+      "tiempo_s": 44.16,
+      "particion": "reserva",
+      "caja": [
+        70,
+        0,
+        139,
+        58
+      ],
+      "origen": "propuesta"
+    },
+    {
+      "cuadro": 1107,
+      "tiempo_s": 44.28,
+      "particion": "reserva",
+      "caja": [
+        82,
+        0,
+        128,
+        33
+      ],
+      "origen": "propuesta"
+    },
+    {
+      "cuadro": 1137,
+      "tiempo_s": 45.48,
+      "particion": "reserva",
+      "caja": [
+        66,
+        0,
+        121,
+        47
+      ],
+      "origen": "propuesta"
+    },
+    {
+      "cuadro": 1140,
+      "tiempo_s": 45.6,
+      "particion": "reserva",
+      "caja": [
+        62,
+        0,
+        125,
+        50
+      ],
+      "origen": "propuesta"
+    },
+    {
+      "cuadro": 1143,
+      "tiempo_s": 45.72,
+      "particion": "reserva",
+      "caja": [
+        59,
+        0,
+        128,
+        69
+      ],
+      "origen": "propuesta"
+    },
+    {
+      "cuadro": 1146,
+      "tiempo_s": 45.84,
+      "particion": "reserva",
+      "caja": [
+        58,
+        25,
+        131,
+        94
+      ],
+      "origen": "propuesta"
+    },
+    {
+      "cuadro": 1149,
+      "tiempo_s": 45.96,
+      "particion": "reserva",
+      "caja": [
+        59,
+        69,
+        128,
+        122
+      ],
+      "origen": "propuesta"
+    },
+    {
+      "cuadro": 1152,
+      "tiempo_s": 46.08,
+      "particion": "reserva",
+      "caja": [
+        56,
+        86,
+        127,
+        176
+      ],
+      "origen": "corregida"
+    },
+    {
+      "cuadro": 1155,
+      "tiempo_s": 46.2,
+      "particion": "reserva",
+      "caja": [
+        60,
+        118,
+        128,
+        176
+      ],
+      "origen": "corregida"
+    },
+    {
+      "cuadro": 1194,
+      "tiempo_s": 47.76,
+      "particion": "reserva",
+      "caja": null,
+      "origen": "sombra"
+    },
+    {
+      "cuadro": 1200,
+      "tiempo_s": 48.0,
+      "particion": "reserva",
+      "caja": [
+        70,
+        143,
+        135,
+        176
+      ],
+      "origen": "propuesta"
+    },
+    {
+      "cuadro": 1203,
+      "tiempo_s": 48.12,
+      "particion": "reserva",
+      "caja": [
+        62,
+        77,
+        133,
+        176
+      ],
+      "origen": "propuesta"
+    },
+    {
+      "cuadro": 1206,
+      "tiempo_s": 48.24,
+      "particion": "reserva",
+      "caja": [
+        68,
+        75,
+        132,
+        146
+      ],
+      "origen": "propuesta"
+    },
+    {
+      "cuadro": 1209,
+      "tiempo_s": 48.36,
+      "particion": "reserva",
+      "caja": [
+        60,
+        24,
+        139,
+        132
+      ],
+      "origen": "propuesta"
+    },
+    {
+      "cuadro": 1212,
+      "tiempo_s": 48.48,
+      "particion": "reserva",
+      "caja": [
+        65,
+        0,
+        138,
+        117
+      ],
+      "origen": "propuesta"
+    },
+    {
+      "cuadro": 1215,
+      "tiempo_s": 48.6,
+      "particion": "reserva",
+      "caja": [
+        68,
+        0,
+        131,
+        79
+      ],
+      "origen": "propuesta"
+    },
+    {
+      "cuadro": 1218,
+      "tiempo_s": 48.72,
+      "particion": "reserva",
+      "caja": [
+        70,
+        0,
+        123,
+        67
+      ],
+      "origen": "propuesta"
+    },
+    {
+      "cuadro": 1221,
+      "tiempo_s": 48.84,
+      "particion": "reserva",
+      "caja": [
+        72,
+        0,
+        122,
+        42
+      ],
+      "origen": "propuesta"
+    },
+    {
+      "cuadro": 1239,
+      "tiempo_s": 49.56,
+      "particion": "reserva",
+      "caja": null,
+      "origen": "vacio"
+    },
+    {
+      "cuadro": 1257,
+      "tiempo_s": 50.28,
+      "particion": "reserva",
+      "caja": [
+        87,
+        0,
+        137,
+        31
+      ],
+      "origen": "propuesta"
+    },
+    {
+      "cuadro": 1260,
+      "tiempo_s": 50.4,
+      "particion": "reserva",
+      "caja": [
+        78,
+        0,
+        140,
+        36
+      ],
+      "origen": "propuesta"
+    },
+    {
+      "cuadro": 1263,
+      "tiempo_s": 50.52,
+      "particion": "reserva",
+      "caja": [
+        72,
+        0,
+        141,
+        71
+      ],
+      "origen": "propuesta"
+    },
+    {
+      "cuadro": 1266,
+      "tiempo_s": 50.64,
+      "particion": "reserva",
+      "caja": [
+        71,
+        0,
+        142,
+        84
+      ],
+      "origen": "propuesta"
+    },
+    {
+      "cuadro": 1269,
+      "tiempo_s": 50.76,
+      "particion": "reserva",
+      "caja": [
+        65,
+        46,
+        139,
+        101
+      ],
+      "origen": "propuesta"
+    },
+    {
+      "cuadro": 1272,
+      "tiempo_s": 50.88,
+      "particion": "reserva",
+      "caja": [
+        59,
+        59,
+        123,
+        149
+      ],
+      "origen": "propuesta"
+    },
+    {
+      "cuadro": 1275,
+      "tiempo_s": 51.0,
+      "particion": "reserva",
+      "caja": [
+        55,
+        73,
+        128,
+        176
+      ],
+      "origen": "propuesta"
+    },
+    {
+      "cuadro": 1278,
+      "tiempo_s": 51.12,
+      "particion": "reserva",
+      "caja": [
+        58,
+        118,
+        125,
+        176
+      ],
+      "origen": "corregida"
+    }
+  ]
+}

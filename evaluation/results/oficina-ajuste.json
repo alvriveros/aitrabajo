@@ -1,0 +1,58 @@
+{
+  "comando": "python -m vision.train --anotaciones data/annotations/oficina-cajas.json --salida runs/oficina-ajuste --resumen evaluation/results/oficina-ajuste.json --pesos yolo11n.pt --epocas 40 --tamano 640 --lote 16 --semilla 0 --dispositivo cpu",
+  "anotaciones": {
+    "ruta": "data/annotations/oficina-cajas.json",
+    "sha256": "95ce9391b939b5f9561819a1353e0317bcb8f4c396d3cfead76092be38b7c2ff",
+    "revision": "Revisadas por Claude el 6 de noviembre de 2026. Falta la revisión de una persona."
+  },
+  "video_sha256": "02666c2e567f45015a2e73fe802db8f39c6c568d41ef42efc63997de4d15fc95",
+  "dataset": {
+    "entrenamiento": {
+      "con_persona": 113,
+      "sin_persona": 18
+    },
+    "reserva": {
+      "con_persona": 30,
+      "sin_persona": 4
+    }
+  },
+  "pesos_iniciales": {
+    "ruta": "yolo11n.pt",
+    "sha256": "0ebbc80d4a7680d14987a577cd21342b65ecfd94632bd9a8da63ae6417644ee1"
+  },
+  "parametros": {
+    "epochs": 40,
+    "imgsz": 640,
+    "batch": 16,
+    "seed": 0,
+    "device": "cpu",
+    "deterministic": true,
+    "workers": 0,
+    "amp": false,
+    "plots": false,
+    "flipud": 0.5,
+    "degrees": 15.0
+  },
+  "pesos_ajustados": {
+    "ruta": "runs/oficina-ajuste/oficina-ajustado.pt",
+    "sha256": "783d16c01b9dc4995ac4809dcbd0bd794fd96ad2edaf509aa296f682622d93e1",
+    "bytes": 5497434
+  },
+  "metricas_reserva": {
+    "map50": 0.995,
+    "map50_95": 0.819,
+    "precision": 1.0,
+    "exhaustividad": 0.9897,
+    "aviso": "Misma grabación que el entrenamiento: orienta, pero no sirve para el informe."
+  },
+  "segundos_de_entrenamiento": 517.0,
+  "entorno": {
+    "python": "3.12.16",
+    "plataforma": "macOS-26.6.2-arm64-arm-64bit",
+    "procesador": "arm",
+    "ultralytics": "8.4.203",
+    "torch": "2.15.0",
+    "opencv-python": "5.0.0.93",
+    "lap": "0.5.14"
+  }
+}
