@@ -1,0 +1,77 @@
+# Caso de detección · bajada omitida en el ensayo de oficina (0–6 s)
+
+**Qué pasa.** En el tramo de 0–6 s del clip de oficina, una persona entra (subida, ≈ 2 s) y vuelve a salir (bajada, ≈ 4 s). El sistema cuenta la subida a 2,16 s, pero **no cuenta la bajada**. El panel termina con 1 pasajero (5 %) en lugar de 0.
+
+**Por qué pasa.** Al salir, la persona cruza la línea en momentos en que el detector la ve con muy poca confianza. El rastreador nunca llega a seguirla del lado de adentro. La primera vez que la sigue, a 4,92 s, ya está afuera y con un ID nuevo. Sin un lado de origen confirmado, la regla de conteo no emite el evento.
+
+No es un defecto de la API ni del panel: el código de `vision` sin modificar da el mismo resultado.
+
+## Configuración
+
+Es la configuración guardada con la predicción de 0–6 s (`evaluation/results/oficina-00-06-prediccion.config.json`):
+
+- **Clip:** `data/raw/oficina.mp4`, SHA-256 `02666c2e…15fc95`, cuadrante superior derecho (`--recorte 228,2,222,176`).
+- **Línea:** horizontal en y = 90 del recorte. Arriba es adentro, así que de abajo hacia arriba es `subida`.
+- **Detector:** `yolo11n.pt` (base COCO, sin ajustar), `--conf 0.05`, en CPU.
+- **Rastreador:** `vision/bytetrack-cenital.yaml`. Los valores que importan acá: `track_high_thresh 0.1`, `new_track_thresh 0.1` y `track_low_thresh 0.05`.
+- **Conteo:** el centro de la caja decide el lado, con `--margen 5` px y `--confirmacion 2` cuadros.
+
+## Lo observado
+
+| Plataforma | Subida | Bajada | Ocupación final |
+|---|---|---|---|
+| macOS, Apple M4 (compañero, `dd5a19a`) | 2,16 s, ID 1 | 4,60 s, ID 5 | 0 pasajeros |
+| Linux x86, Intel Xeon (Claude, 7 nov.) | 2,16 s, ID 1 | **omitida** | 1 pasajero (5 %) |
+| Windows, máquina de defensa (Álvaro, 7 nov.) | contada | **omitida** | 1 pasajero (5 %) |
+
+En Linux, dos ejecuciones desde el panel y una por terminal dieron el mismo JSON. La prueba `test_ensayo_de_oficina_sigue_dentro_de_la_tolerancia_de_la_referencia_manual` falla en Linux por esta omisión. Las predicciones y la configuración están en [`../../relevo/2026-11-07-claude-tarea07/ejecuciones/`](../../relevo/2026-11-07-claude-tarea07/ejecuciones/).
+
+![Cuadros del video anotado](cuadros.png)
+
+[`cuadros.png`](cuadros.png): video anotado por el sistema, un cuadro de cada tres. Las cajas son los tracks que entrega el rastreador.
+
+- **Arriba (subida):** el track 1 aparece debajo de la línea a 1,92 s, la cruza y a 2,28 s se marca en verde.
+- **Abajo (bajada):** entre 4,32 y 4,80 s la persona atraviesa la línea **sin ninguna caja**. Recién a 4,92 s aparece el ID 9, ya debajo.
+
+## Por qué pasa, paso a paso
+
+![Confianza del detector por cuadro](confianza.png)
+
+[`confianza.png`](confianza.png) muestra la mayor confianza de "persona" que da `yolo11n.pt` en cada cuadro del recorte, sin rastreador y sin umbral. El color indica el lado de la línea donde cae el centro de esa caja. Datos en [`confianza.json`](confianza.json), generados con [`medir_confianza.py`](medir_confianza.py).
+
+**La subida funciona porque hay detecciones claras de los dos lados.** Debajo de la línea, de 1,72 a 1,92 s, la confianza está entre 0,18 y 0,39. Supera 0,10 en varios cuadros seguidos, así que nace el track 1 y queda confirmado del lado de afuera. Durante el cruce, de 2,00 a 2,16 s, baja a 0,06–0,15, pero ByteTrack la mantiene con el mismo ID: acepta detecciones débiles, hasta 0,05, para tracks que ya existen. Arriba, de 2,20 a 2,28 s, sube a 0,60–0,88. Hay dos cuadros confirmados de cada lado y el mismo ID, así que se emite la subida.
+
+**La bajada falla en tres pasos:**
+
+1. **Arriba de la línea nunca nace un track.** Antes de salir, de 4,04 a 4,36 s, la persona está adentro, pero vista desde arriba casi siempre queda por debajo de 0,10: 0,06, 0,08, 0,09. Solo el cuadro de 4,32 s llega a 0,23. Un track nuevo necesita superar `new_track_thresh` (0,10) y otro cuadro fuerte que lo confirme. El cuadro siguiente da 0,093 y no alcanza, así que ByteTrack descarta ese track sin entregarlo.
+2. **Mientras cruza, el detector no la ve.** De 4,40 a 4,56 s, justo sobre la línea, la confianza cae a 0,02–0,03. Está por debajo incluso del mínimo de 0,05, así que no hay ninguna detección para seguir.
+3. **Cuando reaparece, ya está afuera.** A partir de 4,60 s vuelve a haber detecciones, todas debajo de la línea (y ≈ 111–158). El primer track que el rastreador confirma es el 9, ya del lado de afuera. Para la regla de conteo, el primer lado de un track no cuenta: aparecer junto a la línea no alcanza. Por eso no hay bajada.
+
+La causa de fondo es que `yolo11n.pt` está entrenado con COCO, donde casi todas las personas se ven de frente o de costado. Desde una cámara cenital, una cabeza y unos hombros vistos desde arriba se parecen poco a esas imágenes, y la confianza queda cerca de cero justo en la puerta. La configuración del rastreador ya se había calibrado para aceptar confianzas bajas, pero en este cruce no alcanza.
+
+**Por qué en macOS sí se contaba.** Varias confianzas del paso 1 quedan a centésimas del umbral: 0,081, 0,088 y 0,093 contra 0,10. Diferencias numéricas mínimas entre CPUs (ARM contra x86) o bibliotecas pueden mover un cuadro por encima o por debajo de 0,10. Eso decide si el track de adentro llega a confirmarse. Es la explicación más probable, pero no está medida en la Mac: para confirmarlo, el compañero puede ejecutar `medir_confianza.py` allá y comparar los valores entre 4,04 y 4,60 s. En cualquier caso, un resultado que cambia según el procesador indica que esta configuración está en el límite y no es robusta.
+
+## Efecto en la ocupación
+
+Con capacidad 20 y carga inicial 0, `POST /ocupacion` sobre la predicción da 1 subida, 0 bajadas, 1 pasajero y 5 %, sin avisos. Ver [`ocupacion-api.json`](../../relevo/2026-11-07-claude-tarea07/ocupacion-api.json). El error no genera ningún aviso porque una bajada omitida nunca deja el conteo en negativo: el pasajero "fantasma" queda a bordo hasta el final del recorrido. En un bus real estos errores se acumulan parada tras parada.
+
+## Cómo reproducirlo
+
+Desde la raíz, con el clip, `yolo11n.pt` y las dependencias de `vision/requirements.txt`:
+
+```sh
+python -m vision.pipeline --video data/raw/oficina.mp4 --inicio 0 --fin 6 --recorte 228,2,222,176 \
+  --linea 0,90,221,90 --interior arriba --rastreador vision/bytetrack-cenital.yaml --conf 0.05 \
+  --confirmacion 2 --dispositivo cpu --pesos yolo11n.pt --salida runs/caso.json --video-anotado runs/caso.mp4
+python docs/casos-deteccion/oficina-bajada-omitida/medir_confianza.py runs/confianza.json
+```
+
+También se puede reproducir desde el panel: **Predicción automática del video de oficina → Procesar clip de oficina (0–6 s)**.
+
+## Opciones (sin aplicar)
+
+No se cambió ningún parámetro: la decisión es del módulo de visión.
+
+1. **Detector ajustado** (`runs/oficina-ajuste/oficina-ajustado.pt`, con `python -m vision.train`), con el rastreador por defecto. Según [su relevo](../../relevo/vision-ajuste-detector/README.md), cuenta los 20 cruces del video completo. Pero se entrenó con esa misma grabación, así que no prueba que generalice.
+2. **Bajar `new_track_thresh` o `conf`.** Recuperaría este cruce, pero aumenta los falsos positivos. Además, calibrarlo sobre el mismo clip sería ajustar el resultado a la prueba.
+3. **Mostrarlo en la defensa** como ejemplo de pérdida de detección y cambio de ID, con [`cuadros.png`](cuadros.png) y [`confianza.png`](confianza.png).
