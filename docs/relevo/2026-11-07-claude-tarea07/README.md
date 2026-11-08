@@ -1,6 +1,6 @@
 # Tarea 07 · Video conectado con el conteo · relevo de Claude (7 nov.)
 
-Rama `integracion-video`, en el worktree `.worktrees/integracion-video`. Sale de `d0a658a` porque la copia principal tenía cambios sin commit. Incorpora `origin/vision` en `dd5a19a` con una fusión `--no-ff` (`e85fb75`), sin conflictos, así que los dos historiales quedan conservados. No se fusionó nada en `main`. Los cambios de integración quedan **sin commit** para revisión. El informe académico no se tocó.
+Rama `integracion-video`, en el worktree `.worktrees/integracion-video`. Sale de `d0a658a` porque la copia principal tenía cambios sin commit. Incorpora `origin/vision` en `dd5a19a` con una fusión `--no-ff` (`e85fb75`), sin conflictos, así que los dos historiales quedan conservados. No se fusionó nada en `main`. Al entregarse, los cambios de integración quedaron sin commit. Después, a pedido de Álvaro, se registraron localmente en `d2cf58d` (integración) y `b511d91` (caso de detección), sin push (historial verificado en la [tarea 08](../2026-11-07-claude-tarea08/README.md)). El informe académico no se tocó.
 
 > La copia local de `origin/vision` estaba en `3d92072`, sin el pipeline. `dd5a19a` se trajo de GitHub mediante un bundle y quedó en `refs/remotes/origin/vision`. La rama local `vision` (`2078f2a`) no se modificó.
 

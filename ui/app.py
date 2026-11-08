@@ -109,6 +109,7 @@ def eventos_en_tabla(eventos):
     return [{"tiempo (s)": e["tiempo_s"], "sentido": e["sentido"], "track": e["track_id"]} for e in eventos]
 
 
+fin_tramo = None  # los JSON no declaran duración: el selector termina en su última marca
 fuente = st.radio("Origen de los eventos", ["Archivo JSON o demo", "Predicción automática del video de oficina"],
                   horizontal=True)
 if fuente == "Archivo JSON o demo":
@@ -137,6 +138,10 @@ else:
     origen = f"video-{elegida}"
     st.video(pedir(f"/procesamientos/{elegida}/video"), format="video/webm")
     medicion = config["medicion"]
+    tramo = config["tramo_s"]
+    # Misma base que tiempo_s: segundos desde el inicio del tramo. Sin --fin, hasta el último cuadro leído.
+    fin_tramo = (tramo["fin"] - tramo["inicio"] if tramo["fin"] is not None
+                 else medicion["cuadros"] / config["propiedades_del_video"]["fps"])
     st.caption(f"Video anotado por el modelo · pesos `{config['pesos']}` · {medicion['cuadros']} cuadros en "
                f"{medicion['segundos']:g} s ({medicion['fps_procesados']:g} FPS).")
     prediccion, referencia = st.columns(2)
@@ -154,6 +159,8 @@ recorrido["capacidad"] = st.number_input("Capacidad del bus", min_value=1,
 recorrido["carga_inicial"] = st.number_input("Pasajeros al inicio", min_value=0,
                                              value=int(recorrido["carga_inicial"]), key=f"carga-{origen}")
 marcas = {float(p["inicio_s"]) for p in recorrido["paradas"]} | {float(e["tiempo_s"]) for e in recorrido["eventos"]}
+if fin_tramo is not None:
+    marcas.add(float(fin_tramo))
 ultimo_segundo = math.floor(max(marcas))
 # En recorridos largos, limitar las marcas intermedias y conservar cada evento exacto.
 paso = max(1, ultimo_segundo // 1000 + 1)

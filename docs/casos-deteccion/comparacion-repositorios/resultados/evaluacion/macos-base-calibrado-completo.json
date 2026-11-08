@@ -1,0 +1,53 @@
+{
+  "tolerancia_s": 1.0,
+  "tramo_s": {
+    "desde": 0.0,
+    "hasta": null
+  },
+  "sentidos": {
+    "subida": {
+      "referencia": 10,
+      "predichos": 7,
+      "aciertos": 7,
+      "omisiones": 3,
+      "falsos_positivos": 0,
+      "precision": 1.0,
+      "exhaustividad": 0.7,
+      "f1": 0.8235,
+      "error_conteo_abs": 3,
+      "error_tiempo_medio_s": 0.0343,
+      "tiempos_omitidos_s": [
+        11.88,
+        43.8,
+        48.36
+      ],
+      "tiempos_falsos_s": []
+    },
+    "bajada": {
+      "referencia": 10,
+      "predichos": 5,
+      "aciertos": 5,
+      "omisiones": 5,
+      "falsos_positivos": 0,
+      "precision": 1.0,
+      "exhaustividad": 0.5,
+      "f1": 0.6667,
+      "error_conteo_abs": 5,
+      "error_tiempo_medio_s": 0.088,
+      "tiempos_omitidos_s": [
+        9.6,
+        14.52,
+        19.92,
+        30.36,
+        45.96
+      ],
+      "tiempos_falsos_s": []
+    }
+  },
+  "total": {
+    "aciertos": 12,
+    "omisiones": 8,
+    "falsos_positivos": 0,
+    "f1": 0.75
+  }
+}

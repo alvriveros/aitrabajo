@@ -1,0 +1,115 @@
+{
+  "ejecucion": "20261107-204212-090885",
+  "eventos": [
+    {
+      "tiempo_s": 2.16,
+      "track_id": 1,
+      "sentido": "subida"
+    }
+  ],
+  "video": {
+    "duracion_s": 6,
+    "avanzado_s": 1.5158,
+    "error": null,
+    "ancho": 222,
+    "alto": 176
+  },
+  "estados": [
+    {
+      "segundo": 0.0,
+      "pasajeros": "0",
+      "ocupacion": "0 %",
+      "tabla_pasajeros": "0",
+      "tabla_ocupacion": "0",
+      "esperado": [
+        0,
+        0.0
+      ]
+    },
+    {
+      "segundo": 1.0,
+      "pasajeros": "0",
+      "ocupacion": "0 %",
+      "tabla_pasajeros": "0",
+      "tabla_ocupacion": "0",
+      "esperado": [
+        0,
+        0.0
+      ]
+    },
+    {
+      "segundo": 2.0,
+      "pasajeros": "0",
+      "ocupacion": "0 %",
+      "tabla_pasajeros": "0",
+      "tabla_ocupacion": "0",
+      "esperado": [
+        0,
+        0.0
+      ]
+    },
+    {
+      "segundo": 2.16,
+      "pasajeros": "1",
+      "ocupacion": "5 %",
+      "tabla_pasajeros": "1",
+      "tabla_ocupacion": "5",
+      "esperado": [
+        1,
+        5.0
+      ]
+    },
+    {
+      "segundo": 3.0,
+      "pasajeros": "1",
+      "ocupacion": "5 %",
+      "tabla_pasajeros": "1",
+      "tabla_ocupacion": "5",
+      "esperado": [
+        1,
+        5.0
+      ]
+    },
+    {
+      "segundo": 4.0,
+      "pasajeros": "1",
+      "ocupacion": "5 %",
+      "tabla_pasajeros": "1",
+      "tabla_ocupacion": "5",
+      "esperado": [
+        1,
+        5.0
+      ]
+    },
+    {
+      "segundo": 5.0,
+      "pasajeros": "1",
+      "ocupacion": "5 %",
+      "tabla_pasajeros": "1",
+      "tabla_ocupacion": "5",
+      "esperado": [
+        1,
+        5.0
+      ]
+    },
+    {
+      "segundo": 6.0,
+      "pasajeros": "1",
+      "ocupacion": "5 %",
+      "tabla_pasajeros": "1",
+      "tabla_ocupacion": "5",
+      "esperado": [
+        1,
+        5.0
+      ]
+    }
+  ],
+  "instantes_requeridos": [
+    0.0,
+    2.16,
+    4.0,
+    6.0
+  ],
+  "mensajes": [],
+  "fallos": []
+}

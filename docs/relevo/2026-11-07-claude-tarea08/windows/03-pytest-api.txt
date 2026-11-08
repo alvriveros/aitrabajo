@@ -1,0 +1,31 @@
+﻿============================= test session starts =============================
+platform win32 -- Python 3.12.10, pytest-8.4.1, pluggy-1.7.0 -- C:\Users\Alvaro\Desktop\Facultad\4to\IA\TpFinal\.worktrees\integracion-video\.venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\Alvaro\Desktop\Facultad\4to\IA\TpFinal\.worktrees\integracion-video
+plugins: anyio-4.16.0
+collecting ... collected 15 items
+
+tests/test_ocupacion.py::test_ejemplo_coincide_con_calculo_manual PASSED [  6%]
+tests/test_ocupacion.py::test_cruces_simultaneos_y_parada_vacia PASSED   [ 13%]
+tests/test_ocupacion.py::test_bajada_con_bus_vacio_deja_aviso_aunque_se_recupere PASSED [ 20%]
+tests/test_ocupacion.py::test_entradas_invalidas_dan_422[capacidad_cero] PASSED [ 26%]
+tests/test_ocupacion.py::test_entradas_invalidas_dan_422[sentido_desconocido] PASSED [ 33%]
+tests/test_ocupacion.py::test_entradas_invalidas_dan_422[eventos_desordenados] PASSED [ 40%]
+tests/test_ocupacion.py::test_entradas_invalidas_dan_422[inicio_repetido] PASSED [ 46%]
+tests/test_procesamientos.py::test_usa_la_configuracion_guardada_con_destinos_propios PASSED [ 53%]
+tests/test_procesamientos.py::test_sin_video_ni_pesos_responde_503_con_los_archivos_faltantes PASSED [ 60%]
+tests/test_procesamientos.py::test_un_fallo_despues_de_escribir_archivos_no_se_publica PASSED [ 66%]
+tests/test_procesamientos.py::test_un_timeout_no_se_publica_y_conserva_la_salida_parcial PASSED [ 73%]
+tests/test_procesamientos.py::test_un_resultado_ilegible_no_se_publica PASSED [ 80%]
+tests/test_procesamientos.py::test_ids_desconocidos_o_invalidos[/procesamientos/20261107-120000-000000-404] PASSED [ 86%]
+tests/test_procesamientos.py::test_ids_desconocidos_o_invalidos[/procesamientos/..%2F..%2Fapi-404] PASSED [ 93%]
+tests/test_procesamientos.py::test_ids_desconocidos_o_invalidos[/procesamientos/abc/video-422] PASSED [100%]
+
+============================== warnings summary ===============================
+.venv\Lib\site-packages\starlette\testclient.py:51
+  C:\Users\Alvaro\Desktop\Facultad\4to\IA\TpFinal\.worktrees\integracion-video\.venv\Lib\site-packages\starlette\testclient.py:51: DeprecationWarning: The anyio.abc.BlockingPortal alias is deprecated, use anyio.from_thread.BlockingPortal instead.
+    _PortalFactoryType = Callable[[], AbstractContextManager[anyio.abc.BlockingPortal]]
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+======================== 15 passed, 1 warning in 0.77s ========================
+codigo de salida: 0

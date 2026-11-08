@@ -19,6 +19,7 @@ RAIZ = Path(__file__).resolve().parents[1]
 CONFIG_DEMO = RAIZ / "evaluation/results/oficina-00-06-prediccion.config.json"
 EJECUCIONES = RAIZ / "runs/panel"
 ID_EJECUCION = r"^\d{8}-\d{6}-\d{6}$"
+COMPLETA = "completa"  # se escribe al final de una ejecución exitosa y legible; sin ella no se publica
 
 
 class Evento(BaseModel):
@@ -102,12 +103,26 @@ def procesar_demo():
                "--salida", str(carpeta / "prediccion.json"), "--video-anotado", str(carpeta / "anotado.webm")]
     try:
         proceso = subprocess.run(comando, cwd=RAIZ, capture_output=True, text=True, timeout=600)
-    except subprocess.TimeoutExpired:
+    except subprocess.TimeoutExpired as error:
+        guardar_registro(carpeta, error.stdout, error.stderr)
         raise HTTPException(504, "El procesamiento superó los 10 minutos.")
-    (carpeta / "registro.txt").write_text(proceso.stdout + proceso.stderr, encoding="utf-8")
+    guardar_registro(carpeta, proceso.stdout, proceso.stderr)
     if proceso.returncode:
         raise HTTPException(500, f"El pipeline terminó con código {proceso.returncode}: {proceso.stderr[-800:]}")
-    return leer_ejecucion(carpeta)
+    try:
+        datos = leer_ejecucion(carpeta)
+        if (carpeta / "anotado.webm").stat().st_size == 0:
+            raise ValueError("video anotado vacío")
+    except (OSError, ValueError, KeyError) as error:
+        raise HTTPException(500, f"El pipeline terminó sin un resultado legible: {error}")
+    (carpeta / COMPLETA).touch()
+    return datos
+
+
+def guardar_registro(carpeta, salida, error):
+    """Conserva la salida del pipeline para diagnóstico, también si falló o se cortó."""
+    texto = lambda x: x.decode(errors="replace") if isinstance(x, bytes) else (x or "")
+    (carpeta / "registro.txt").write_text(texto(salida) + texto(error), encoding="utf-8")
 
 
 @app.get("/procesamientos")
@@ -115,12 +130,12 @@ def listar_procesamientos():
     """Ejecuciones guardadas, de la más reciente a la más antigua."""
     if not EJECUCIONES.is_dir():
         return []
-    return sorted((c.name for c in EJECUCIONES.iterdir() if (c / "prediccion.json").is_file()), reverse=True)
+    return sorted((c.name for c in EJECUCIONES.iterdir() if (c / COMPLETA).is_file()), reverse=True)
 
 
 def carpeta_de(id_ejecucion):
     carpeta = EJECUCIONES / id_ejecucion
-    if not (carpeta / "prediccion.json").is_file():
+    if not (carpeta / COMPLETA).is_file():
         raise HTTPException(404, f"No existe la ejecución {id_ejecucion}.")
     return carpeta
 

@@ -22,7 +22,7 @@ Es la configuración guardada con la predicción de 0–6 s (`evaluation/results
 |---|---|---|---|
 | macOS, Apple M4 (compañero, `dd5a19a`) | 2,16 s, ID 1 | 4,60 s, ID 5 | 0 pasajeros |
 | Linux x86, Intel Xeon (Claude, 7 nov.) | 2,16 s, ID 1 | **omitida** | 1 pasajero (5 %) |
-| Windows, máquina de defensa (Álvaro, 7 nov.) | contada | **omitida** | 1 pasajero (5 %) |
+| Windows 11, AMD (Álvaro, 7 nov., ejecución `20261107-194239-470039`) | 2,16 s, ID 1 | **omitida** | 1 pasajero (5 %) |
 
 En Linux, dos ejecuciones desde el panel y una por terminal dieron el mismo JSON. La prueba `test_ensayo_de_oficina_sigue_dentro_de_la_tolerancia_de_la_referencia_manual` falla en Linux por esta omisión. Las predicciones y la configuración están en [`../../relevo/2026-11-07-claude-tarea07/ejecuciones/`](../../relevo/2026-11-07-claude-tarea07/ejecuciones/).
 
@@ -47,9 +47,9 @@ En Linux, dos ejecuciones desde el panel y una por terminal dieron el mismo JSON
 2. **Mientras cruza, el detector no la ve.** De 4,40 a 4,56 s, justo sobre la línea, la confianza cae a 0,02–0,03. Está por debajo incluso del mínimo de 0,05, así que no hay ninguna detección para seguir.
 3. **Cuando reaparece, ya está afuera.** A partir de 4,60 s vuelve a haber detecciones, todas debajo de la línea (y ≈ 111–158). El primer track que el rastreador confirma es el 9, ya del lado de afuera. Para la regla de conteo, el primer lado de un track no cuenta: aparecer junto a la línea no alcanza. Por eso no hay bajada.
 
-La causa de fondo es que `yolo11n.pt` está entrenado con COCO, donde casi todas las personas se ven de frente o de costado. Desde una cámara cenital, una cabeza y unos hombros vistos desde arriba se parecen poco a esas imágenes, y la confianza queda cerca de cero justo en la puerta. La configuración del rastreador ya se había calibrado para aceptar confianzas bajas, pero en este cruce no alcanza.
+Lo medido es el mecanismo de los tres pasos: la confianza del detector cae justo en la puerta y la regla de conteo pierde el lado de origen. **Por qué el detector ve tan poco a la persona en esos cuadros no está demostrado.** Una hipótesis es el punto de vista cenital, poco común en los datos con que se entrenó `yolo11n.pt`, pero aquí no se midió la composición de esos datos. La configuración del rastreador ya se había calibrado para aceptar confianzas bajas, y en este cruce no alcanza. Un detector de cabezas externo, probado aparte, sí detecta a la persona en estos cuadros ([comparación](../comparacion-repositorios/README.md)). Eso muestra que el cruce es detectable, no cuál es la causa.
 
-**Por qué en macOS sí se contaba.** Varias confianzas del paso 1 quedan a centésimas del umbral: 0,081, 0,088 y 0,093 contra 0,10. Diferencias numéricas mínimas entre CPUs (ARM contra x86) o bibliotecas pueden mover un cuadro por encima o por debajo de 0,10. Eso decide si el track de adentro llega a confirmarse. Es la explicación más probable, pero no está medida en la Mac: para confirmarlo, el compañero puede ejecutar `medir_confianza.py` allá y comparar los valores entre 4,04 y 4,60 s. En cualquier caso, un resultado que cambia según el procesador indica que esta configuración está en el límite y no es robusta.
+**Por qué en macOS sí se contaba (sin confirmar).** Varias confianzas del paso 1 quedan a centésimas del umbral: 0,081, 0,088 y 0,093 contra 0,10. Una **hipótesis** es que diferencias numéricas mínimas entre CPUs (ARM contra x86) o bibliotecas muevan un cuadro por encima o por debajo de 0,10, y eso decida si el track de adentro llega a confirmarse. No está medido en la Mac: para confirmarlo, el compañero puede ejecutar `medir_confianza.py` allá y comparar los valores entre 4,04 y 4,60 s. En cualquier caso, un resultado que cambia según el procesador indica que esta configuración está en el límite y no es robusta.
 
 ## Efecto en la ocupación
 

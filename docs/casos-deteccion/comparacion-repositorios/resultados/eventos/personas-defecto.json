@@ -1,0 +1,18 @@
+{
+ "capacidad": 20,
+ "carga_inicial": 0,
+ "paradas": [
+  {
+   "nombre": "experimento",
+   "inicio_s": 0
+  }
+ ],
+ "eventos": [],
+ "experimento": {
+  "detecciones": "/home/claude/exp-cabezas/personas-completo.json",
+  "rastreador": "/home/claude/venv/lib/python3.12/site-packages/ultralytics/cfg/trackers/bytetrack.yaml",
+  "conf_min": 0.1,
+  "ids_distintos": 17,
+  "cuadros_con_track": 55
+ }
+}

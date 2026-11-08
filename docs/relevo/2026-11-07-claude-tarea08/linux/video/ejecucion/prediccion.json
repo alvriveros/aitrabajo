@@ -1,0 +1,17 @@
+{
+  "capacidad": 20,
+  "carga_inicial": 0,
+  "paradas": [
+    {
+      "nombre": "Puerta de oficina · 0-6 s",
+      "inicio_s": 0
+    }
+  ],
+  "eventos": [
+    {
+      "tiempo_s": 2.16,
+      "track_id": 1,
+      "sentido": "subida"
+    }
+  ]
+}

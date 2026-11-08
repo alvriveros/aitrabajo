@@ -1,0 +1,74 @@
+{
+ "capacidad": 20,
+ "carga_inicial": 0,
+ "paradas": [
+  {
+   "nombre": "experimento",
+   "inicio_s": 0
+  }
+ ],
+ "eventos": [
+  {
+   "tiempo_s": 2.16,
+   "track_id": 1,
+   "sentido": "subida"
+  },
+  {
+   "tiempo_s": 17.04,
+   "track_id": 21,
+   "sentido": "subida"
+  },
+  {
+   "tiempo_s": 22.4,
+   "track_id": 26,
+   "sentido": "subida"
+  },
+  {
+   "tiempo_s": 25.36,
+   "track_id": 30,
+   "sentido": "bajada"
+  },
+  {
+   "tiempo_s": 27.8,
+   "track_id": 33,
+   "sentido": "subida"
+  },
+  {
+   "tiempo_s": 32.76,
+   "track_id": 42,
+   "sentido": "subida"
+  },
+  {
+   "tiempo_s": 35.2,
+   "track_id": 50,
+   "sentido": "bajada"
+  },
+  {
+   "tiempo_s": 38.32,
+   "track_id": 54,
+   "sentido": "subida"
+  },
+  {
+   "tiempo_s": 41.24,
+   "track_id": 56,
+   "sentido": "bajada"
+  },
+  {
+   "tiempo_s": 48.32,
+   "track_id": 73,
+   "sentido": "subida"
+  },
+  {
+   "tiempo_s": 50.8,
+   "track_id": 80,
+   "sentido": "bajada"
+  }
+ ],
+ "experimento": {
+  "detecciones": "/home/claude/exp-cabezas/personas-completo.json",
+  "rastreador": "vision/bytetrack-cenital.yaml",
+  "conf_min": 0.05,
+  "ids_distintos": 33,
+  "cuadros_con_track": 226
+ }
+}

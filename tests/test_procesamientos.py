@@ -68,10 +68,41 @@ def test_sin_video_ni_pesos_responde_503_con_los_archivos_faltantes(raiz, monkey
     assert "data/raw/oficina.mp4" in respuesta.json()["detail"] and "yolo11n.pt" in respuesta.json()["detail"]
 
 
-def test_un_fallo_del_pipeline_devuelve_500_con_su_error(raiz, monkeypatch):
+def sin_publicar(raiz):
+    """La ejecución no aparece ni se puede consultar, pero conserva su registro."""
+    carpeta, = (raiz / "runs/panel").iterdir()
+    assert cliente.get("/procesamientos").json() == []
+    assert cliente.get(f"/procesamientos/{carpeta.name}").status_code == 404
+    assert cliente.get(f"/procesamientos/{carpeta.name}/video").status_code == 404
+    return (carpeta / "registro.txt").read_text(encoding="utf-8")
+
+
+def test_un_fallo_despues_de_escribir_archivos_no_se_publica(raiz, monkeypatch):
     monkeypatch.setattr(api.subprocess, "run", pipeline_simulado([], codigo=1))
     respuesta = cliente.post("/procesamientos")
     assert respuesta.status_code == 500 and "falló" in respuesta.json()["detail"]
+    assert (next((raiz / "runs/panel").iterdir()) / "prediccion.json").is_file()
+    assert "falló" in sin_publicar(raiz)
+
+
+def test_un_timeout_no_se_publica_y_conserva_la_salida_parcial(raiz, monkeypatch):
+    def cortar(comando, **opciones):
+        pipeline_simulado([])(comando)
+        raise subprocess.TimeoutExpired(comando, 600, output=b"cuadro 120", stderr=None)
+    monkeypatch.setattr(api.subprocess, "run", cortar)
+    assert cliente.post("/procesamientos").status_code == 504
+    assert sin_publicar(raiz) == "cuadro 120"
+
+
+def test_un_resultado_ilegible_no_se_publica(raiz, monkeypatch):
+    def ilegible(comando, **opciones):
+        resultado = pipeline_simulado([])(comando)
+        Path(comando[comando.index("--salida") + 1]).write_text("{incompleto", encoding="utf-8")
+        return resultado
+    monkeypatch.setattr(api.subprocess, "run", ilegible)
+    respuesta = cliente.post("/procesamientos")
+    assert respuesta.status_code == 500 and "legible" in respuesta.json()["detail"]
+    sin_publicar(raiz)
 
 
 @pytest.mark.parametrize("ruta, codigo", [

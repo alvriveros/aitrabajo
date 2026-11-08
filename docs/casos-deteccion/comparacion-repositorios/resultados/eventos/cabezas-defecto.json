@@ -1,0 +1,104 @@
+{
+ "capacidad": 20,
+ "carga_inicial": 0,
+ "paradas": [
+  {
+   "nombre": "experimento",
+   "inicio_s": 0
+  }
+ ],
+ "eventos": [
+  {
+   "tiempo_s": 2.08,
+   "track_id": 1,
+   "sentido": "subida"
+  },
+  {
+   "tiempo_s": 4.64,
+   "track_id": 7,
+   "sentido": "bajada"
+  },
+  {
+   "tiempo_s": 7.04,
+   "track_id": 14,
+   "sentido": "subida"
+  },
+  {
+   "tiempo_s": 9.56,
+   "track_id": 17,
+   "sentido": "bajada"
+  },
+  {
+   "tiempo_s": 11.8,
+   "track_id": 28,
+   "sentido": "subida"
+  },
+  {
+   "tiempo_s": 14.48,
+   "track_id": 30,
+   "sentido": "bajada"
+  },
+  {
+   "tiempo_s": 17.0,
+   "track_id": 39,
+   "sentido": "subida"
+  },
+  {
+   "tiempo_s": 19.88,
+   "track_id": 45,
+   "sentido": "bajada"
+  },
+  {
+   "tiempo_s": 22.36,
+   "track_id": 48,
+   "sentido": "subida"
+  },
+  {
+   "tiempo_s": 25.16,
+   "track_id": 52,
+   "sentido": "bajada"
+  },
+  {
+   "tiempo_s": 27.72,
+   "track_id": 59,
+   "sentido": "subida"
+  },
+  {
+   "tiempo_s": 35.24,
+   "track_id": 76,
+   "sentido": "bajada"
+  },
+  {
+   "tiempo_s": 38.12,
+   "track_id": 81,
+   "sentido": "subida"
+  },
+  {
+   "tiempo_s": 41.08,
+   "track_id": 87,
+   "sentido": "bajada"
+  },
+  {
+   "tiempo_s": 45.96,
+   "track_id": 97,
+   "sentido": "bajada"
+  },
+  {
+   "tiempo_s": 48.28,
+   "track_id": 101,
+   "sentido": "subida"
+  },
+  {
+   "tiempo_s": 50.84,
+   "track_id": 108,
+   "sentido": "bajada"
+  }
+ ],
+ "experimento": {
+  "detecciones": "/home/claude/exp-cabezas/cabezas-completo.json",
+  "rastreador": "/home/claude/venv/lib/python3.12/site-packages/ultralytics/cfg/trackers/bytetrack.yaml",
+  "conf_min": 0.1,
+  "ids_distintos": 31,
+  "cuadros_con_track": 202
+ }
+}
