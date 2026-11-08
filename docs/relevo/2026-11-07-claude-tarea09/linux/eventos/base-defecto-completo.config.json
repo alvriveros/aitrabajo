@@ -1,0 +1,49 @@
+{
+  "comando": "python -m vision.pipeline --video data/raw/oficina.mp4 --recorte 228,2,222,176 --linea 0,90,221,90 --interior arriba --dispositivo cpu --parada 'Puerta de oficina · video completo' --pesos yolo11n.pt --salida /home/claude/ev9/linux/eventos/base-defecto-completo.json",
+  "video": "data/raw/oficina.mp4",
+  "propiedades_del_video": {
+    "fps": 25.0,
+    "ancho": 450,
+    "alto": 360
+  },
+  "tramo_s": {
+    "inicio": 0.0,
+    "fin": null
+  },
+  "recorte": {
+    "x": 228,
+    "y": 2,
+    "ancho": 222,
+    "alto": 176
+  },
+  "linea": {
+    "x1": 0.0,
+    "y1": 90.0,
+    "x2": 221.0,
+    "y2": 90.0,
+    "interior": "arriba"
+  },
+  "sistema_de_coordenadas": "Píxeles: origen arriba a la izquierda, x hacia la derecha, y hacia abajo.",
+  "punto_del_cuerpo": "centro",
+  "margen_px": 5.0,
+  "confirmacion_cuadros": 3,
+  "pesos": "yolo11n.pt",
+  "rastreador": "bytetrack.yaml",
+  "conf": null,
+  "dispositivo": "cpu",
+  "medicion": {
+    "cuadros": 1316,
+    "segundos": 90.444,
+    "fps_procesados": 14.55,
+    "con_video_anotado": false
+  },
+  "entorno": {
+    "python": "3.12.3",
+    "plataforma": "Linux-6.18.44-fc-v310-x86_64-with-glibc2.39",
+    "procesador": "x86_64",
+    "ultralytics": "8.4.203",
+    "torch": "2.15.0",
+    "opencv-python": "5.0.0.93",
+    "lap": "0.5.14"
+  }
+}

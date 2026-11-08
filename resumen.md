@@ -1,6 +1,29 @@
 # Relevo para Claude · 5 de noviembre de 2026
 
-## Tarea actual · 6 de noviembre
+## Tarea actual · 7 de noviembre · Tarea 09
+
+[Tarea 09 · Comparar modelos en Windows](docs/tareas/claude/09-evaluacion-windows.md), en `integracion-video`, sin commit.
+
+- **Comparación reproducible:** `docs/relevo/2026-11-07-claude-tarea09/scripts/evaluar_oficina.py` reúne los TP, FP y FN por sentido, los hashes y los FPS, sin tocar `evaluation/results`.
+- **Linux x86:** en el video completo, el modelo base calibrado da subidas 7/0/3 y bajadas 4/0/6 (TP/FP/FN), y el base por defecto no cuenta ningún cruce.
+- **Windows (Ryzen 5 7535HS):** da los mismos eventos que Linux; solo macOS difiere. Los pesos ajustados del compañero no están en esta máquina.
+- **Video de oficina:** no es una evaluación independiente; se revisó su referencia y falta la revisión humana.
+- **Preparado:** la ficha para una grabación nueva y un mensaje para el compañero.
+- **Sin cambios:** la configuración de la API, que todavía no tiene base para cambiarse.
+
+[Devolución](docs/relevo/2026-11-07-claude-tarea09/README.md).
+
+## Tarea anterior · 7 de noviembre · Tarea 08
+
+[Tarea 08 · Cierre de integración en Windows](docs/tareas/claude/08-cierre-integracion-windows.md), en `integracion-video`, con cambios sin commit para revisión. En Linux quedó verificado lo siguiente:
+
+- El panel permite consultar el tramo completo de un clip procesado: 0, 2,16, 4 y 6 s dan 0, 1, 1 y 1 pasajeros.
+- La API solo publica ejecuciones terminadas y legibles; las fallidas y cortadas conservan su registro.
+- Los 45 estados del gráfico siguen sin fallos.
+
+La verificación en Windows se hace con `docs/relevo/2026-11-07-claude-tarea08/verificar-windows.ps1`. La bajada omitida sigue como limitación del modelo, y el pedido a visión está preparado. La comparación de repositorios externos (experimento, sin cambios en el detector) está en `docs/casos-deteccion/comparacion-repositorios/`. [Devolución](docs/relevo/2026-11-07-claude-tarea08/README.md).
+
+## Tarea anterior · 6 de noviembre
 
 Álvaro pospuso todo el trabajo del informe hasta el cierre del proyecto. La prioridad siguiente es la [tarea 07 · Conectar el video con el conteo automático](docs/tareas/claude/07-demo-video.md). Las menciones anteriores a figuras y PDF son históricas.
 
@@ -10,7 +33,7 @@ Verificación técnica final de las tareas 05–06 en Windows: se reconstruyeron
 
 ### Verificado el 7 de noviembre · Tarea 07
 
-Esto es en la rama `integracion-video`: `d0a658a` más `origin/vision` en `dd5a19a`, sin commit de la integración.
+Esto es en la rama local `integracion-video`: `d0a658a` más `origin/vision` en `dd5a19a` (merge `e85fb75`), con la integración en `d2cf58d` y el caso de detección en `b511d91`, sin push.
 
 El panel procesa el clip de oficina (0–6 s) mediante `POST /procesamientos`, muestra el video anotado y separa la predicción automática de la referencia manual. Con los eventos de esa ejecución calcula la ocupación.
 
@@ -92,3 +115,6 @@ El ensayo detectó que, en tema oscuro, el rótulo de valor de las barras casi n
 Para el trabajo de Claude, consultá la [carpeta de tareas](docs/tareas/claude/README.md). La primera ficha prepara el panel mientras llega el clip y la segunda describe cómo contrastar los eventos reales.
 
 El compañero aporta el video, la orientación de la línea y los eventos reales con el mismo formato que el ejemplo. Álvaro conecta esa salida al panel y ambos contrastan el contador con una anotación manual. Las cifras de esta demo sintética sirven para probar la integración. Las métricas del informe se calculan con clips reservados para evaluación.
+
+## Revisión tarea 08 · 7 de noviembre
+Windows verificado: 15 pruebas API y 84 de visión aprobadas; 1 omitida y 1 fallida por la bajada del modelo. Video reproducible y selector hasta 6 s; gráfico 45 estados sin fallos. Evidencias en docs/relevo/2026-11-07-claude-tarea08/revision-codex-windows.md dentro del worktree integracion-video. Siguiente tarea: docs/tareas/claude/09-evaluacion-windows.md. Informes aplazados; sin commit ni push.
