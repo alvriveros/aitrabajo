@@ -1,0 +1,199 @@
+{
+  "ensayo": {
+    "tolerancia_s": 1.0,
+    "tramo_s": {
+      "desde": 0.0,
+      "hasta": 6.0
+    },
+    "sentidos": {
+      "subida": {
+        "referencia": 1,
+        "predichos": 1,
+        "aciertos": 1,
+        "omisiones": 0,
+        "falsos_positivos": 0,
+        "precision": 1.0,
+        "exhaustividad": 1.0,
+        "f1": 1.0,
+        "error_conteo_abs": 0,
+        "error_tiempo_medio_s": 0.0,
+        "tiempos_omitidos_s": [],
+        "tiempos_falsos_s": []
+      },
+      "bajada": {
+        "referencia": 1,
+        "predichos": 0,
+        "aciertos": 0,
+        "omisiones": 1,
+        "falsos_positivos": 0,
+        "precision": null,
+        "exhaustividad": 0.0,
+        "f1": 0.0,
+        "error_conteo_abs": 1,
+        "error_tiempo_medio_s": null,
+        "tiempos_omitidos_s": [
+          4.68
+        ],
+        "tiempos_falsos_s": []
+      }
+    },
+    "total": {
+      "aciertos": 1,
+      "omisiones": 1,
+      "falsos_positivos": 0,
+      "f1": 0.6667
+    }
+  },
+  "entrenamiento": {
+    "tolerancia_s": 1.0,
+    "tramo_s": {
+      "desde": 6.0,
+      "hasta": 43.0
+    },
+    "sentidos": {
+      "subida": {
+        "referencia": 7,
+        "predichos": 5,
+        "aciertos": 5,
+        "omisiones": 2,
+        "falsos_positivos": 0,
+        "precision": 1.0,
+        "exhaustividad": 0.7143,
+        "f1": 0.8333,
+        "error_conteo_abs": 2,
+        "error_tiempo_medio_s": 0.032,
+        "tiempos_omitidos_s": [
+          7.2,
+          11.88
+        ],
+        "tiempos_falsos_s": []
+      },
+      "bajada": {
+        "referencia": 7,
+        "predichos": 3,
+        "aciertos": 3,
+        "omisiones": 4,
+        "falsos_positivos": 0,
+        "precision": 1.0,
+        "exhaustividad": 0.4286,
+        "f1": 0.6,
+        "error_conteo_abs": 4,
+        "error_tiempo_medio_s": 0.1067,
+        "tiempos_omitidos_s": [
+          9.6,
+          14.52,
+          19.92,
+          30.36
+        ],
+        "tiempos_falsos_s": []
+      }
+    },
+    "total": {
+      "aciertos": 8,
+      "omisiones": 6,
+      "falsos_positivos": 0,
+      "f1": 0.7273
+    }
+  },
+  "reserva": {
+    "tolerancia_s": 1.0,
+    "tramo_s": {
+      "desde": 43.0,
+      "hasta": null
+    },
+    "sentidos": {
+      "subida": {
+        "referencia": 2,
+        "predichos": 1,
+        "aciertos": 1,
+        "omisiones": 1,
+        "falsos_positivos": 0,
+        "precision": 1.0,
+        "exhaustividad": 0.5,
+        "f1": 0.6667,
+        "error_conteo_abs": 1,
+        "error_tiempo_medio_s": 0.04,
+        "tiempos_omitidos_s": [
+          43.8
+        ],
+        "tiempos_falsos_s": []
+      },
+      "bajada": {
+        "referencia": 2,
+        "predichos": 1,
+        "aciertos": 1,
+        "omisiones": 1,
+        "falsos_positivos": 0,
+        "precision": 1.0,
+        "exhaustividad": 0.5,
+        "f1": 0.6667,
+        "error_conteo_abs": 1,
+        "error_tiempo_medio_s": 0.08,
+        "tiempos_omitidos_s": [
+          45.96
+        ],
+        "tiempos_falsos_s": []
+      }
+    },
+    "total": {
+      "aciertos": 2,
+      "omisiones": 2,
+      "falsos_positivos": 0,
+      "f1": 0.6667
+    }
+  },
+  "completo": {
+    "tolerancia_s": 1.0,
+    "tramo_s": {
+      "desde": 0.0,
+      "hasta": null
+    },
+    "sentidos": {
+      "subida": {
+        "referencia": 10,
+        "predichos": 7,
+        "aciertos": 7,
+        "omisiones": 3,
+        "falsos_positivos": 0,
+        "precision": 1.0,
+        "exhaustividad": 0.7,
+        "f1": 0.8235,
+        "error_conteo_abs": 3,
+        "error_tiempo_medio_s": 0.0286,
+        "tiempos_omitidos_s": [
+          7.2,
+          11.88,
+          43.8
+        ],
+        "tiempos_falsos_s": []
+      },
+      "bajada": {
+        "referencia": 10,
+        "predichos": 4,
+        "aciertos": 4,
+        "omisiones": 6,
+        "falsos_positivos": 0,
+        "precision": 1.0,
+        "exhaustividad": 0.4,
+        "f1": 0.5714,
+        "error_conteo_abs": 6,
+        "error_tiempo_medio_s": 0.1,
+        "tiempos_omitidos_s": [
+          4.68,
+          9.6,
+          14.52,
+          19.92,
+          30.36,
+          45.96
+        ],
+        "tiempos_falsos_s": []
+      }
+    },
+    "total": {
+      "aciertos": 11,
+      "omisiones": 9,
+      "falsos_positivos": 0,
+      "f1": 0.7097
+    }
+  }
+}

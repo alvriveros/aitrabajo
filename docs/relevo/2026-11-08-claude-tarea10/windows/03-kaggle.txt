@@ -1,0 +1,20 @@
+﻿2 eventos: 1 subidas y 1 bajadas.
+Predicciones: docs\relevo\2026-11-08-claude-tarea10\windows\kaggle\eventos\base-defecto.json
+Configuración: docs\relevo\2026-11-08-claude-tarea10\windows\kaggle\eventos\base-defecto.config.json
+Video anotado: runs\evaluacion\windows-amd64\kaggle-base-defecto.mp4
+13 eventos: 10 subidas y 3 bajadas.
+Predicciones: docs\relevo\2026-11-08-claude-tarea10\windows\kaggle\eventos\base-calibrado.json
+Configuración: docs\relevo\2026-11-08-claude-tarea10\windows\kaggle\eventos\base-calibrado.config.json
+Video anotado: runs\evaluacion\windows-amd64\kaggle-base-calibrado.mp4
+0 eventos: 0 subidas y 0 bajadas.
+Predicciones: docs\relevo\2026-11-08-claude-tarea10\windows\kaggle\eventos\ajustado-defecto.json
+Configuración: docs\relevo\2026-11-08-claude-tarea10\windows\kaggle\eventos\ajustado-defecto.config.json
+Video anotado: runs\evaluacion\windows-amd64\kaggle-ajustado-defecto.mp4
+0 eventos: 0 subidas y 0 bajadas.
+Predicciones: docs\relevo\2026-11-08-claude-tarea10\windows\kaggle\eventos\ajustado-calibrado.json
+Configuración: docs\relevo\2026-11-08-claude-tarea10\windows\kaggle\eventos\ajustado-calibrado.config.json
+Video anotado: runs\evaluacion\windows-amd64\kaggle-ajustado-calibrado.mp4
+base-defecto ejecutado {'subida': {'TP': 1, 'FP': 0, 'FN': 5, 'error_conteo_abs': 5, 'omitidos_s': [13.2, 14.4, 17.2, 21.4, 28.4], 'extra_s': []}, 'bajada': {'TP': 0, 'FP': 1, 'FN': 0, 'error_conteo_abs': 1, 'omitidos_s': [], 'extra_s': [14.96]}} 20.7
+base-calibrado ejecutado {'subida': {'TP': 5, 'FP': 5, 'FN': 1, 'error_conteo_abs': 4, 'omitidos_s': [17.2], 'extra_s': [14.72, 15.0, 25.76, 25.92, 25.92]}, 'bajada': {'TP': 0, 'FP': 3, 'FN': 0, 'error_conteo_abs': 3, 'omitidos_s': [], 'extra_s': [14.72, 26.44, 27.72]}} 21.4
+ajustado-defecto ejecutado {'subida': {'TP': 0, 'FP': 0, 'FN': 6, 'error_conteo_abs': 6, 'omitidos_s': [13.2, 14.4, 17.2, 21.4, 25.6, 28.4], 'extra_s': []}, 'bajada': {'TP': 0, 'FP': 0, 'FN': 0, 'error_conteo_abs': 0, 'omitidos_s': [], 'extra_s': []}} 22.09
+ajustado-calibrado ejecutado {'subida': {'TP': 0, 'FP': 0, 'FN': 6, 'error_conteo_abs': 6, 'omitidos_s': [13.2, 14.4, 17.2, 21.4, 25.6, 28.4], 'extra_s': []}, 'bajada': {'TP': 0, 'FP': 0, 'FN': 0, 'error_conteo_abs': 0, 'omitidos_s': [], 'extra_s': []}} 22.38

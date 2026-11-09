@@ -51,6 +51,7 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("salida", type=Path)
     parser.add_argument("--ajustado", default=AJUSTADO, help="Ruta de los pesos ajustados del compañero.")
+    parser.add_argument("--sha-ajustado", default=HUELLAS[AJUSTADO], help="SHA-256 esperado de los pesos ajustados.")
     args = parser.parse_args()
     salida = args.salida
     nombre_entorno = f"{platform.system()}-{platform.machine()}".lower()
@@ -59,7 +60,7 @@ def main():
 
     insumos = {ruta: huella(ruta) for ruta in ("data/raw/oficina.mp4", "yolo11n.pt")}
     insumos[args.ajustado] = huella(args.ajustado)
-    validos = {ruta: bool(datos) and datos["sha256"] == HUELLAS.get(ruta if ruta != args.ajustado else AJUSTADO)
+    validos = {ruta: bool(datos) and datos["sha256"] == (args.sha_ajustado if ruta == args.ajustado else HUELLAS.get(ruta))
                for ruta, datos in insumos.items()}
     if not validos["data/raw/oficina.mp4"]:
         raise SystemExit(f"El clip falta o no coincide con el SHA-256 documentado: {insumos['data/raw/oficina.mp4']}")

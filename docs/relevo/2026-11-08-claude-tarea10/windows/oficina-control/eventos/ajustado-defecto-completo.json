@@ -1,0 +1,107 @@
+{
+  "capacidad": 20,
+  "carga_inicial": 0,
+  "paradas": [
+    {
+      "nombre": "Puerta de oficina · video completo",
+      "inicio_s": 0
+    }
+  ],
+  "eventos": [
+    {
+      "tiempo_s": 2.12,
+      "track_id": 5,
+      "sentido": "subida"
+    },
+    {
+      "tiempo_s": 4.68,
+      "track_id": 11,
+      "sentido": "bajada"
+    },
+    {
+      "tiempo_s": 7.12,
+      "track_id": 14,
+      "sentido": "subida"
+    },
+    {
+      "tiempo_s": 9.56,
+      "track_id": 19,
+      "sentido": "bajada"
+    },
+    {
+      "tiempo_s": 11.84,
+      "track_id": 24,
+      "sentido": "subida"
+    },
+    {
+      "tiempo_s": 14.48,
+      "track_id": 30,
+      "sentido": "bajada"
+    },
+    {
+      "tiempo_s": 17.04,
+      "track_id": 34,
+      "sentido": "subida"
+    },
+    {
+      "tiempo_s": 19.92,
+      "track_id": 38,
+      "sentido": "bajada"
+    },
+    {
+      "tiempo_s": 22.4,
+      "track_id": 43,
+      "sentido": "subida"
+    },
+    {
+      "tiempo_s": 25.2,
+      "track_id": 46,
+      "sentido": "bajada"
+    },
+    {
+      "tiempo_s": 27.8,
+      "track_id": 48,
+      "sentido": "subida"
+    },
+    {
+      "tiempo_s": 30.32,
+      "track_id": 50,
+      "sentido": "bajada"
+    },
+    {
+      "tiempo_s": 32.76,
+      "track_id": 57,
+      "sentido": "subida"
+    },
+    {
+      "tiempo_s": 35.24,
+      "track_id": 61,
+      "sentido": "bajada"
+    },
+    {
+      "tiempo_s": 38.2,
+      "track_id": 62,
+      "sentido": "subida"
+    },
+    {
+      "tiempo_s": 41.08,
+      "track_id": 65,
+      "sentido": "bajada"
+    },
+    {
+      "tiempo_s": 43.88,
+      "track_id": 71,
+      "sentido": "subida"
+    },
+    {
+      "tiempo_s": 48.36,
+      "track_id": 79,
+      "sentido": "subida"
+    },
+    {
+      "tiempo_s": 50.84,
+      "track_id": 91,
+      "sentido": "bajada"
+    }
+  ]
+}

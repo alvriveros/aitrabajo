@@ -1,0 +1,341 @@
+{
+  "pesos_ajustados": {
+    "ruta": "runs/oficina-ajuste-windows/oficina-ajustado.pt",
+    "sha256": "69958946ba6d38702566cb6dcc5f48dedde3fc345d8f8cf0ceca25636b32de32"
+  },
+  "referencia": "data\\annotations\\pamela-A-cruces.json",
+  "referencia_sha256": "def143dcf329e496fb21bea2a939912e72b29d9664d6e11ecacffb524fe92244",
+  "tolerancia_s": 1.0,
+  "entorno": {
+    "python": "3.12.10",
+    "plataforma": "Windows-11-10.0.26200-SP0",
+    "procesador": "AMD64 Family 25 Model 68 Stepping 1, AuthenticAMD",
+    "ultralytics": "8.4.203",
+    "torch": "2.15.0",
+    "opencv-python": "5.0.0.93",
+    "lap": "0.5.14"
+  },
+  "configuraciones": {
+    "base-defecto": {
+      "estado": "ejecutado",
+      "opciones": [
+        "--pesos",
+        "yolo11n.pt"
+      ],
+      "medicion": {
+        "cuadros": 760,
+        "segundos": 27.197,
+        "fps_procesados": 27.94,
+        "con_video_anotado": true
+      },
+      "eventos": [
+        [
+          25.96,
+          75,
+          "bajada"
+        ],
+        [
+          26.16,
+          75,
+          "subida"
+        ]
+      ],
+      "por_sentido": {
+        "subida": {
+          "TP": 0,
+          "FP": 1,
+          "FN": 0,
+          "error_conteo_abs": 1,
+          "omitidos_s": [],
+          "extra_s": [
+            26.16
+          ]
+        },
+        "bajada": {
+          "TP": 1,
+          "FP": 0,
+          "FN": 27,
+          "error_conteo_abs": 27,
+          "omitidos_s": [
+            0.2,
+            1.2,
+            2.2,
+            3.6,
+            5.0,
+            6.0,
+            7.4,
+            8.6,
+            9.6,
+            10.4,
+            11.6,
+            12.8,
+            13.2,
+            14.8,
+            16.2,
+            17.2,
+            18.0,
+            19.8,
+            19.8,
+            21.2,
+            22.2,
+            23.4,
+            24.2,
+            26.2,
+            27.8,
+            28.8,
+            30.0
+          ],
+          "extra_s": []
+        }
+      }
+    },
+    "base-calibrado": {
+      "estado": "ejecutado",
+      "opciones": [
+        "--pesos",
+        "yolo11n.pt",
+        "--rastreador",
+        "vision/bytetrack-cenital.yaml",
+        "--conf",
+        "0.05",
+        "--confirmacion",
+        "2"
+      ],
+      "medicion": {
+        "cuadros": 760,
+        "segundos": 26.141,
+        "fps_procesados": 29.07,
+        "con_video_anotado": true
+      },
+      "eventos": [
+        [
+          2.0,
+          6,
+          "bajada"
+        ],
+        [
+          2.44,
+          6,
+          "subida"
+        ],
+        [
+          3.88,
+          13,
+          "bajada"
+        ],
+        [
+          11.04,
+          32,
+          "bajada"
+        ],
+        [
+          11.4,
+          37,
+          "bajada"
+        ],
+        [
+          13.76,
+          47,
+          "bajada"
+        ],
+        [
+          16.16,
+          61,
+          "bajada"
+        ],
+        [
+          18.76,
+          66,
+          "bajada"
+        ],
+        [
+          22.28,
+          76,
+          "bajada"
+        ],
+        [
+          25.88,
+          89,
+          "bajada"
+        ],
+        [
+          28.16,
+          108,
+          "bajada"
+        ]
+      ],
+      "por_sentido": {
+        "subida": {
+          "TP": 0,
+          "FP": 1,
+          "FN": 0,
+          "error_conteo_abs": 1,
+          "omitidos_s": [],
+          "extra_s": [
+            2.44
+          ]
+        },
+        "bajada": {
+          "TP": 10,
+          "FP": 0,
+          "FN": 18,
+          "error_conteo_abs": 18,
+          "omitidos_s": [
+            0.2,
+            2.2,
+            5.0,
+            6.0,
+            7.4,
+            8.6,
+            9.6,
+            13.2,
+            14.8,
+            17.2,
+            19.8,
+            19.8,
+            21.2,
+            23.4,
+            24.2,
+            26.2,
+            28.8,
+            30.0
+          ],
+          "extra_s": []
+        }
+      }
+    },
+    "ajustado-defecto": {
+      "estado": "ejecutado",
+      "opciones": [
+        "--pesos",
+        "runs/oficina-ajuste-windows/oficina-ajustado.pt"
+      ],
+      "medicion": {
+        "cuadros": 760,
+        "segundos": 25.261,
+        "fps_procesados": 30.09,
+        "con_video_anotado": true
+      },
+      "eventos": [],
+      "por_sentido": {
+        "subida": {
+          "TP": 0,
+          "FP": 0,
+          "FN": 0,
+          "error_conteo_abs": 0,
+          "omitidos_s": [],
+          "extra_s": []
+        },
+        "bajada": {
+          "TP": 0,
+          "FP": 0,
+          "FN": 28,
+          "error_conteo_abs": 28,
+          "omitidos_s": [
+            0.2,
+            1.2,
+            2.2,
+            3.6,
+            5.0,
+            6.0,
+            7.4,
+            8.6,
+            9.6,
+            10.4,
+            11.6,
+            12.8,
+            13.2,
+            14.8,
+            16.2,
+            17.2,
+            18.0,
+            19.8,
+            19.8,
+            21.2,
+            22.2,
+            23.4,
+            24.2,
+            25.8,
+            26.2,
+            27.8,
+            28.8,
+            30.0
+          ],
+          "extra_s": []
+        }
+      }
+    },
+    "ajustado-calibrado": {
+      "estado": "ejecutado",
+      "opciones": [
+        "--pesos",
+        "runs/oficina-ajuste-windows/oficina-ajustado.pt",
+        "--rastreador",
+        "vision/bytetrack-cenital.yaml",
+        "--conf",
+        "0.05",
+        "--confirmacion",
+        "2"
+      ],
+      "medicion": {
+        "cuadros": 760,
+        "segundos": 26.558,
+        "fps_procesados": 28.62,
+        "con_video_anotado": true
+      },
+      "eventos": [
+        [
+          28.08,
+          48,
+          "bajada"
+        ]
+      ],
+      "por_sentido": {
+        "subida": {
+          "TP": 0,
+          "FP": 0,
+          "FN": 0,
+          "error_conteo_abs": 0,
+          "omitidos_s": [],
+          "extra_s": []
+        },
+        "bajada": {
+          "TP": 1,
+          "FP": 0,
+          "FN": 27,
+          "error_conteo_abs": 27,
+          "omitidos_s": [
+            0.2,
+            1.2,
+            2.2,
+            3.6,
+            5.0,
+            6.0,
+            7.4,
+            8.6,
+            9.6,
+            10.4,
+            11.6,
+            12.8,
+            13.2,
+            14.8,
+            16.2,
+            17.2,
+            18.0,
+            19.8,
+            19.8,
+            21.2,
+            22.2,
+            23.4,
+            24.2,
+            25.8,
+            26.2,
+            28.8,
+            30.0
+          ],
+          "extra_s": []
+        }
+      }
+    }
+  }
+}

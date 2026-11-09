@@ -1,0 +1,271 @@
+{
+  "pesos_ajustados": {
+    "ruta": "runs/oficina-ajuste-windows/oficina-ajustado.pt",
+    "sha256": "69958946ba6d38702566cb6dcc5f48dedde3fc345d8f8cf0ceca25636b32de32"
+  },
+  "referencia": "data\\annotations\\kaggle-people-boarding-bus-cruces.json",
+  "referencia_sha256": "6ebd660e0ce0831f9d4e718e1a534f2ccd7cf7e1f10973c2f8eeafbc406aaf8e",
+  "tolerancia_s": 1.0,
+  "entorno": {
+    "python": "3.12.10",
+    "plataforma": "Windows-11-10.0.26200-SP0",
+    "procesador": "AMD64 Family 25 Model 68 Stepping 1, AuthenticAMD",
+    "ultralytics": "8.4.203",
+    "torch": "2.15.0",
+    "opencv-python": "5.0.0.93",
+    "lap": "0.5.14"
+  },
+  "configuraciones": {
+    "base-defecto": {
+      "estado": "ejecutado",
+      "opciones": [
+        "--pesos",
+        "yolo11n.pt"
+      ],
+      "medicion": {
+        "cuadros": 1499,
+        "segundos": 72.416,
+        "fps_procesados": 20.7,
+        "con_video_anotado": true
+      },
+      "eventos": [
+        [
+          14.96,
+          41,
+          "bajada"
+        ],
+        [
+          25.76,
+          87,
+          "subida"
+        ]
+      ],
+      "por_sentido": {
+        "subida": {
+          "TP": 1,
+          "FP": 0,
+          "FN": 5,
+          "error_conteo_abs": 5,
+          "omitidos_s": [
+            13.2,
+            14.4,
+            17.2,
+            21.4,
+            28.4
+          ],
+          "extra_s": []
+        },
+        "bajada": {
+          "TP": 0,
+          "FP": 1,
+          "FN": 0,
+          "error_conteo_abs": 1,
+          "omitidos_s": [],
+          "extra_s": [
+            14.96
+          ]
+        }
+      }
+    },
+    "base-calibrado": {
+      "estado": "ejecutado",
+      "opciones": [
+        "--pesos",
+        "yolo11n.pt",
+        "--rastreador",
+        "vision/bytetrack-cenital.yaml",
+        "--conf",
+        "0.05",
+        "--confirmacion",
+        "2"
+      ],
+      "medicion": {
+        "cuadros": 1499,
+        "segundos": 70.038,
+        "fps_procesados": 21.4,
+        "con_video_anotado": true
+      },
+      "eventos": [
+        [
+          13.16,
+          4,
+          "subida"
+        ],
+        [
+          13.8,
+          19,
+          "subida"
+        ],
+        [
+          14.72,
+          19,
+          "bajada"
+        ],
+        [
+          14.72,
+          33,
+          "subida"
+        ],
+        [
+          15.0,
+          3,
+          "subida"
+        ],
+        [
+          21.32,
+          32,
+          "subida"
+        ],
+        [
+          25.0,
+          61,
+          "subida"
+        ],
+        [
+          25.76,
+          69,
+          "subida"
+        ],
+        [
+          25.92,
+          57,
+          "subida"
+        ],
+        [
+          25.92,
+          58,
+          "subida"
+        ],
+        [
+          26.44,
+          69,
+          "bajada"
+        ],
+        [
+          27.44,
+          72,
+          "subida"
+        ],
+        [
+          27.72,
+          72,
+          "bajada"
+        ]
+      ],
+      "por_sentido": {
+        "subida": {
+          "TP": 5,
+          "FP": 5,
+          "FN": 1,
+          "error_conteo_abs": 4,
+          "omitidos_s": [
+            17.2
+          ],
+          "extra_s": [
+            14.72,
+            15.0,
+            25.76,
+            25.92,
+            25.92
+          ]
+        },
+        "bajada": {
+          "TP": 0,
+          "FP": 3,
+          "FN": 0,
+          "error_conteo_abs": 3,
+          "omitidos_s": [],
+          "extra_s": [
+            14.72,
+            26.44,
+            27.72
+          ]
+        }
+      }
+    },
+    "ajustado-defecto": {
+      "estado": "ejecutado",
+      "opciones": [
+        "--pesos",
+        "runs/oficina-ajuste-windows/oficina-ajustado.pt"
+      ],
+      "medicion": {
+        "cuadros": 1499,
+        "segundos": 67.855,
+        "fps_procesados": 22.09,
+        "con_video_anotado": true
+      },
+      "eventos": [],
+      "por_sentido": {
+        "subida": {
+          "TP": 0,
+          "FP": 0,
+          "FN": 6,
+          "error_conteo_abs": 6,
+          "omitidos_s": [
+            13.2,
+            14.4,
+            17.2,
+            21.4,
+            25.6,
+            28.4
+          ],
+          "extra_s": []
+        },
+        "bajada": {
+          "TP": 0,
+          "FP": 0,
+          "FN": 0,
+          "error_conteo_abs": 0,
+          "omitidos_s": [],
+          "extra_s": []
+        }
+      }
+    },
+    "ajustado-calibrado": {
+      "estado": "ejecutado",
+      "opciones": [
+        "--pesos",
+        "runs/oficina-ajuste-windows/oficina-ajustado.pt",
+        "--rastreador",
+        "vision/bytetrack-cenital.yaml",
+        "--conf",
+        "0.05",
+        "--confirmacion",
+        "2"
+      ],
+      "medicion": {
+        "cuadros": 1499,
+        "segundos": 66.968,
+        "fps_procesados": 22.38,
+        "con_video_anotado": true
+      },
+      "eventos": [],
+      "por_sentido": {
+        "subida": {
+          "TP": 0,
+          "FP": 0,
+          "FN": 6,
+          "error_conteo_abs": 6,
+          "omitidos_s": [
+            13.2,
+            14.4,
+            17.2,
+            21.4,
+            25.6,
+            28.4
+          ],
+          "extra_s": []
+        },
+        "bajada": {
+          "TP": 0,
+          "FP": 0,
+          "FN": 0,
+          "error_conteo_abs": 0,
+          "omitidos_s": [],
+          "extra_s": []
+        }
+      }
+    }
+  }
+}

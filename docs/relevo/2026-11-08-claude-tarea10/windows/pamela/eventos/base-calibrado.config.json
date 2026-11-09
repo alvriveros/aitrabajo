@@ -1,0 +1,49 @@
+{
+  "comando": "python -m vision.pipeline --video data/raw/puerta-tren-d800-A.mp4 --recorte 96,64,160,224 --linea 0,96,159,96 --interior arriba --dispositivo cpu --parada 'PAMELA-UANDES A_d800mm_sample · 0-30 s' --pesos yolo11n.pt --rastreador vision/bytetrack-cenital.yaml --conf 0.05 --confirmacion 2 --salida 'docs\\relevo\\2026-11-08-claude-tarea10\\windows\\pamela\\eventos\\base-calibrado.json' --video-anotado 'runs\\evaluacion\\windows-amd64\\pamela-A-base-calibrado.mp4'",
+  "video": "data\\raw\\puerta-tren-d800-A.mp4",
+  "propiedades_del_video": {
+    "fps": 25.0,
+    "ancho": 352,
+    "alto": 288
+  },
+  "tramo_s": {
+    "inicio": 0.0,
+    "fin": null
+  },
+  "recorte": {
+    "x": 96,
+    "y": 64,
+    "ancho": 160,
+    "alto": 224
+  },
+  "linea": {
+    "x1": 0.0,
+    "y1": 96.0,
+    "x2": 159.0,
+    "y2": 96.0,
+    "interior": "arriba"
+  },
+  "sistema_de_coordenadas": "Píxeles: origen arriba a la izquierda, x hacia la derecha, y hacia abajo.",
+  "punto_del_cuerpo": "centro",
+  "margen_px": 5.0,
+  "confirmacion_cuadros": 2,
+  "pesos": "yolo11n.pt",
+  "rastreador": "vision/bytetrack-cenital.yaml",
+  "conf": 0.05,
+  "dispositivo": "cpu",
+  "medicion": {
+    "cuadros": 760,
+    "segundos": 26.141,
+    "fps_procesados": 29.07,
+    "con_video_anotado": true
+  },
+  "entorno": {
+    "python": "3.12.10",
+    "plataforma": "Windows-11-10.0.26200-SP0",
+    "procesador": "AMD64 Family 25 Model 68 Stepping 1, AuthenticAMD",
+    "ultralytics": "8.4.203",
+    "torch": "2.15.0",
+    "opencv-python": "5.0.0.93",
+    "lap": "0.5.14"
+  }
+}

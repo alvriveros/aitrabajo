@@ -1,0 +1,16 @@
+﻿2026-11-07T23:58:00.0923879-03:00
+Microsoft Windows 11 IoT Enterprise LTSC 10.0.26200
+AMD Ryzen 5 7535HS with Radeon Graphics        
+Python 3.12.10
+
+lap                       0.5.14
+numpy                     2.5.4
+opencv-python             5.0.0.93
+torch                     2.15.0
+torchvision               0.29.2
+ultralytics               8.4.203
+data\annotations\oficina-cajas.json  95CE9391B939B5F9561819A1353E0317BCB8F4C396D3CFEAD76092BE38B7C2FF  OK
+yolo11n.pt  0EBBC80D4A7680D14987A577CD21342B65ECFD94632BD9A8DA63AE6417644EE1  OK
+data\raw\oficina.mp4  02666C2E567F45015A2E73FE802DB8F39C6C568D41EF42EFC63997DE4D15FC95  OK
+
+

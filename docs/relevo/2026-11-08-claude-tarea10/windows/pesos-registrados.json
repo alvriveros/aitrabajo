@@ -1,0 +1,13 @@
+﻿{
+    "nombre":  "ajustado reproducido en Windows",
+    "bytes":  5497114,
+    "registrado":  "2026-11-08T00:17:34.9423690-03:00",
+    "sha256":  "69958946ba6d38702566cb6dcc5f48dedde3fc345d8f8cf0ceca25636b32de32",
+    "ruta":  "runs/oficina-ajuste-windows/oficina-ajustado.pt",
+    "configuraciones":  [
+                            "base-defecto",
+                            "base-calibrado",
+                            "ajustado-defecto",
+                            "ajustado-calibrado"
+                        ]
+}

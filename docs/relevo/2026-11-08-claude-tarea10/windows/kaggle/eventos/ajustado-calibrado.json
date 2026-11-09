@@ -1,0 +1,11 @@
+{
+  "capacidad": 20,
+  "carga_inicial": 0,
+  "paradas": [
+    {
+      "nombre": "Puerta de bus (Kaggle) · 0-60 s",
+      "inicio_s": 0
+    }
+  ],
+  "eventos": []
+}

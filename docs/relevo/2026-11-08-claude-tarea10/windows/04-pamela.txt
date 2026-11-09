@@ -1,0 +1,20 @@
+﻿2 eventos: 1 subidas y 1 bajadas.
+Predicciones: docs\relevo\2026-11-08-claude-tarea10\windows\pamela\eventos\base-defecto.json
+Configuración: docs\relevo\2026-11-08-claude-tarea10\windows\pamela\eventos\base-defecto.config.json
+Video anotado: runs\evaluacion\windows-amd64\pamela-A-base-defecto.mp4
+11 eventos: 1 subidas y 10 bajadas.
+Predicciones: docs\relevo\2026-11-08-claude-tarea10\windows\pamela\eventos\base-calibrado.json
+Configuración: docs\relevo\2026-11-08-claude-tarea10\windows\pamela\eventos\base-calibrado.config.json
+Video anotado: runs\evaluacion\windows-amd64\pamela-A-base-calibrado.mp4
+0 eventos: 0 subidas y 0 bajadas.
+Predicciones: docs\relevo\2026-11-08-claude-tarea10\windows\pamela\eventos\ajustado-defecto.json
+Configuración: docs\relevo\2026-11-08-claude-tarea10\windows\pamela\eventos\ajustado-defecto.config.json
+Video anotado: runs\evaluacion\windows-amd64\pamela-A-ajustado-defecto.mp4
+1 eventos: 0 subidas y 1 bajadas.
+Predicciones: docs\relevo\2026-11-08-claude-tarea10\windows\pamela\eventos\ajustado-calibrado.json
+Configuración: docs\relevo\2026-11-08-claude-tarea10\windows\pamela\eventos\ajustado-calibrado.config.json
+Video anotado: runs\evaluacion\windows-amd64\pamela-A-ajustado-calibrado.mp4
+base-defecto ejecutado {'subida': {'TP': 0, 'FP': 1, 'FN': 0, 'error_conteo_abs': 1, 'omitidos_s': [], 'extra_s': [26.16]}, 'bajada': {'TP': 1, 'FP': 0, 'FN': 27, 'error_conteo_abs': 27, 'omitidos_s': [0.2, 1.2, 2.2, 3.6, 5.0, 6.0, 7.4, 8.6, 9.6, 10.4, 11.6, 12.8, 13.2, 14.8, 16.2, 17.2, 18.0, 19.8, 19.8, 21.2, 22.2, 23.4, 24.2, 26.2, 27.8, 28.8, 30.0], 'extra_s': []}} 27.94
+base-calibrado ejecutado {'subida': {'TP': 0, 'FP': 1, 'FN': 0, 'error_conteo_abs': 1, 'omitidos_s': [], 'extra_s': [2.44]}, 'bajada': {'TP': 10, 'FP': 0, 'FN': 18, 'error_conteo_abs': 18, 'omitidos_s': [0.2, 2.2, 5.0, 6.0, 7.4, 8.6, 9.6, 13.2, 14.8, 17.2, 19.8, 19.8, 21.2, 23.4, 24.2, 26.2, 28.8, 30.0], 'extra_s': []}} 29.07
+ajustado-defecto ejecutado {'subida': {'TP': 0, 'FP': 0, 'FN': 0, 'error_conteo_abs': 0, 'omitidos_s': [], 'extra_s': []}, 'bajada': {'TP': 0, 'FP': 0, 'FN': 28, 'error_conteo_abs': 28, 'omitidos_s': [0.2, 1.2, 2.2, 3.6, 5.0, 6.0, 7.4, 8.6, 9.6, 10.4, 11.6, 12.8, 13.2, 14.8, 16.2, 17.2, 18.0, 19.8, 19.8, 21.2, 22.2, 23.4, 24.2, 25.8, 26.2, 27.8, 28.8, 30.0], 'extra_s': []}} 30.09
+ajustado-calibrado ejecutado {'subida': {'TP': 0, 'FP': 0, 'FN': 0, 'error_conteo_abs': 0, 'omitidos_s': [], 'extra_s': []}, 'bajada': {'TP': 1, 'FP': 0, 'FN': 27, 'error_conteo_abs': 27, 'omitidos_s': [0.2, 1.2, 2.2, 3.6, 5.0, 6.0, 7.4, 8.6, 9.6, 10.4, 11.6, 12.8, 13.2, 14.8, 16.2, 17.2, 18.0, 19.8, 19.8, 21.2, 22.2, 23.4, 24.2, 25.8, 26.2, 28.8, 30.0], 'extra_s': []}} 28.62

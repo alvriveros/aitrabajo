@@ -1,0 +1,50 @@
+﻿0 eventos: 0 subidas y 0 bajadas.
+Predicciones: docs\relevo\2026-11-08-claude-tarea10\windows\oficina-control\eventos\base-defecto-0-6.json
+Configuración: docs\relevo\2026-11-08-claude-tarea10\windows\oficina-control\eventos\base-defecto-0-6.config.json
+Video anotado: runs\evaluacion\windows-amd64\base-defecto-0-6.mp4
+0 eventos: 0 subidas y 0 bajadas.
+Predicciones: docs\relevo\2026-11-08-claude-tarea10\windows\oficina-control\eventos\base-defecto-completo.json
+Configuración: docs\relevo\2026-11-08-claude-tarea10\windows\oficina-control\eventos\base-defecto-completo.config.json
+1 eventos: 1 subidas y 0 bajadas.
+Predicciones: docs\relevo\2026-11-08-claude-tarea10\windows\oficina-control\eventos\base-calibrado-0-6.json
+Configuración: docs\relevo\2026-11-08-claude-tarea10\windows\oficina-control\eventos\base-calibrado-0-6.config.json
+Video anotado: runs\evaluacion\windows-amd64\base-calibrado-0-6.mp4
+11 eventos: 7 subidas y 4 bajadas.
+Predicciones: docs\relevo\2026-11-08-claude-tarea10\windows\oficina-control\eventos\base-calibrado-completo.json
+Configuración: docs\relevo\2026-11-08-claude-tarea10\windows\oficina-control\eventos\base-calibrado-completo.config.json
+2 eventos: 1 subidas y 1 bajadas.
+Predicciones: docs\relevo\2026-11-08-claude-tarea10\windows\oficina-control\eventos\ajustado-defecto-0-6.json
+Configuración: docs\relevo\2026-11-08-claude-tarea10\windows\oficina-control\eventos\ajustado-defecto-0-6.config.json
+Video anotado: runs\evaluacion\windows-amd64\ajustado-defecto-0-6.mp4
+19 eventos: 10 subidas y 9 bajadas.
+Predicciones: docs\relevo\2026-11-08-claude-tarea10\windows\oficina-control\eventos\ajustado-defecto-completo.json
+Configuración: docs\relevo\2026-11-08-claude-tarea10\windows\oficina-control\eventos\ajustado-defecto-completo.config.json
+2 eventos: 1 subidas y 1 bajadas.
+Predicciones: docs\relevo\2026-11-08-claude-tarea10\windows\oficina-control\eventos\ajustado-calibrado-0-6.json
+Configuración: docs\relevo\2026-11-08-claude-tarea10\windows\oficina-control\eventos\ajustado-calibrado-0-6.config.json
+Video anotado: runs\evaluacion\windows-amd64\ajustado-calibrado-0-6.mp4
+20 eventos: 10 subidas y 10 bajadas.
+Predicciones: docs\relevo\2026-11-08-claude-tarea10\windows\oficina-control\eventos\ajustado-calibrado-completo.json
+Configuración: docs\relevo\2026-11-08-claude-tarea10\windows\oficina-control\eventos\ajustado-calibrado-completo.config.json
+
+configuración        corrida   tramo          sub TP/FP/FN  baj TP/FP/FN  FPS   
+base-defecto         0-6       0-6            0/0/1         0/0/1         21.56
+base-defecto         completo  ensayo         0/0/1         0/0/1         28.62
+base-defecto         completo  entrenamiento  0/0/7         0/0/7         28.62
+base-defecto         completo  reserva        0/0/2         0/0/2         28.62
+base-defecto         completo  completo       0/0/10        0/0/10        28.62
+base-calibrado       0-6       0-6            1/0/0         0/0/1         27.16
+base-calibrado       completo  ensayo         1/0/0         0/0/1         28.24
+base-calibrado       completo  entrenamiento  5/0/2         3/0/4         28.24
+base-calibrado       completo  reserva        1/0/1         1/0/1         28.24
+base-calibrado       completo  completo       7/0/3         4/0/6         28.24
+ajustado-defecto     0-6       0-6            1/0/0         1/0/0         28.48
+ajustado-defecto     completo  ensayo         1/0/0         1/0/0         29.31
+ajustado-defecto     completo  entrenamiento  7/0/0         7/0/0         29.31
+ajustado-defecto     completo  reserva        2/0/0         1/0/1         29.31
+ajustado-defecto     completo  completo       10/0/0         9/0/1         29.31
+ajustado-calibrado   0-6       0-6            1/0/0         1/0/0         28.27
+ajustado-calibrado   completo  ensayo         1/0/0         1/0/0         29.22
+ajustado-calibrado   completo  entrenamiento  7/0/0         7/0/0         29.22
+ajustado-calibrado   completo  reserva        2/0/0         2/0/0         29.22
+ajustado-calibrado   completo  completo       10/0/0         10/0/0         29.22
