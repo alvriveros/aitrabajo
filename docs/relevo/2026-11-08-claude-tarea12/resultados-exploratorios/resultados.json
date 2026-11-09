@@ -1,0 +1,643 @@
+{
+  "aviso": "EXPLORATORIO: referencias de Claude sin revisión humana. No es una selección definitiva.",
+  "tolerancia_s": 1.0,
+  "insumos_sha256": {
+    "data/annotations/kaggle-people-boarding-bus-cruces.json": "6ebd660e0ce0831f9d4e718e1a534f2ccd7cf7e1f10973c2f8eeafbc406aaf8e",
+    "docs/relevo/2026-11-08-claude-tarea11/linux/kaggle/eventos/yolo11n-calibrado.json": "c7ba23f50a26a904c762c4fe893f32588ff2d2f5126e78ffd0a1b630b60ea569",
+    "docs/relevo/2026-11-08-claude-tarea11/linux/kaggle/eventos/yolo11l-calibrado.json": "83751b341751d53984edbf4c26df8e5dc522cea10e52df4bac65a794bbab383a",
+    "data/annotations/pamela-A-cruces.json": "def143dcf329e496fb21bea2a939912e72b29d9664d6e11ecacffb524fe92244",
+    "docs/relevo/2026-11-08-claude-tarea11/linux/pamela-A/eventos/yolo11n-calibrado.json": "75e009d54b21bd954377f01c7511189ac0ab484ff615090959bcbb082293c432",
+    "docs/relevo/2026-11-08-claude-tarea11/linux/pamela-A/eventos/yolo11l-calibrado.json": "f9260339eb4e927ecdd196f1322ea9f59d3a85d114e09aa380433f2b4890a931"
+  },
+  "cota_referencia_borrada": {
+    "kaggle": {
+      "0.0": 0,
+      "0.5": 0,
+      "1.0": 0,
+      "1.5": 1
+    },
+    "pamela-A": {
+      "0.0": 0,
+      "0.5": 3,
+      "1.0": 6,
+      "1.5": 13
+    }
+  },
+  "api_actual": "yolo11n-calibrado@0.0",
+  "filas": {
+    "yolo11n-calibrado@0.0": {
+      "detector": "yolo11n-calibrado",
+      "umbral_s": 0.0,
+      "escenas": {
+        "kaggle": {
+          "por_sentido": {
+            "subida": {
+              "TP": 5,
+              "FP": 4,
+              "FN": 1,
+              "error_conteo_abs": 3
+            },
+            "bajada": {
+              "TP": 0,
+              "FP": 4,
+              "FN": 0,
+              "error_conteo_abs": 4
+            }
+          },
+          "descartados": []
+        },
+        "pamela-A": {
+          "por_sentido": {
+            "subida": {
+              "TP": 0,
+              "FP": 1,
+              "FN": 0,
+              "error_conteo_abs": 1
+            },
+            "bajada": {
+              "TP": 10,
+              "FP": 0,
+              "FN": 18,
+              "error_conteo_abs": 18
+            }
+          },
+          "descartados": []
+        }
+      },
+      "errores": 28,
+      "error_conteo_abs": 26,
+      "omisiones_no_aumentan": true,
+      "mejora_su_detector_sin_filtro": false
+    },
+    "yolo11n-calibrado@0.5": {
+      "detector": "yolo11n-calibrado",
+      "umbral_s": 0.5,
+      "escenas": {
+        "kaggle": {
+          "por_sentido": {
+            "subida": {
+              "TP": 5,
+              "FP": 1,
+              "FN": 1,
+              "error_conteo_abs": 0
+            },
+            "bajada": {
+              "TP": 0,
+              "FP": 3,
+              "FN": 0,
+              "error_conteo_abs": 3
+            }
+          },
+          "descartados": [
+            {
+              "tiempo_s": 14.04,
+              "track_id": 37,
+              "sentido": "subida",
+              "suprimido_por": {
+                "tiempo_s": 13.76,
+                "track_id": 7,
+                "sentido": "subida"
+              }
+            },
+            {
+              "tiempo_s": 14.92,
+              "track_id": 37,
+              "sentido": "bajada",
+              "suprimido_por": {
+                "tiempo_s": 14.68,
+                "track_id": 7,
+                "sentido": "bajada"
+              }
+            },
+            {
+              "tiempo_s": 15.32,
+              "track_id": 7,
+              "sentido": "subida",
+              "suprimido_por": {
+                "tiempo_s": 15.0,
+                "track_id": 37,
+                "sentido": "subida"
+              }
+            },
+            {
+              "tiempo_s": 25.92,
+              "track_id": 63,
+              "sentido": "subida",
+              "suprimido_por": {
+                "tiempo_s": 25.76,
+                "track_id": 57,
+                "sentido": "subida"
+              }
+            }
+          ]
+        },
+        "pamela-A": {
+          "por_sentido": {
+            "subida": {
+              "TP": 0,
+              "FP": 1,
+              "FN": 0,
+              "error_conteo_abs": 1
+            },
+            "bajada": {
+              "TP": 9,
+              "FP": 0,
+              "FN": 19,
+              "error_conteo_abs": 19
+            }
+          },
+          "descartados": [
+            {
+              "tiempo_s": 11.4,
+              "track_id": 37,
+              "sentido": "bajada",
+              "suprimido_por": {
+                "tiempo_s": 11.04,
+                "track_id": 32,
+                "sentido": "bajada"
+              }
+            }
+          ]
+        }
+      },
+      "errores": 25,
+      "error_conteo_abs": 23,
+      "omisiones_no_aumentan": false,
+      "mejora_su_detector_sin_filtro": true
+    },
+    "yolo11n-calibrado@1.0": {
+      "detector": "yolo11n-calibrado",
+      "umbral_s": 1.0,
+      "escenas": {
+        "kaggle": {
+          "por_sentido": {
+            "subida": {
+              "TP": 5,
+              "FP": 0,
+              "FN": 1,
+              "error_conteo_abs": 1
+            },
+            "bajada": {
+              "TP": 0,
+              "FP": 3,
+              "FN": 0,
+              "error_conteo_abs": 3
+            }
+          },
+          "descartados": [
+            {
+              "tiempo_s": 14.04,
+              "track_id": 37,
+              "sentido": "subida",
+              "suprimido_por": {
+                "tiempo_s": 13.76,
+                "track_id": 7,
+                "sentido": "subida"
+              }
+            },
+            {
+              "tiempo_s": 14.92,
+              "track_id": 37,
+              "sentido": "bajada",
+              "suprimido_por": {
+                "tiempo_s": 14.68,
+                "track_id": 7,
+                "sentido": "bajada"
+              }
+            },
+            {
+              "tiempo_s": 15.32,
+              "track_id": 7,
+              "sentido": "subida",
+              "suprimido_por": {
+                "tiempo_s": 15.0,
+                "track_id": 37,
+                "sentido": "subida"
+              }
+            },
+            {
+              "tiempo_s": 25.76,
+              "track_id": 57,
+              "sentido": "subida",
+              "suprimido_por": {
+                "tiempo_s": 25.0,
+                "track_id": 58,
+                "sentido": "subida"
+              }
+            },
+            {
+              "tiempo_s": 25.92,
+              "track_id": 63,
+              "sentido": "subida",
+              "suprimido_por": {
+                "tiempo_s": 25.0,
+                "track_id": 58,
+                "sentido": "subida"
+              }
+            }
+          ]
+        },
+        "pamela-A": {
+          "por_sentido": {
+            "subida": {
+              "TP": 0,
+              "FP": 1,
+              "FN": 0,
+              "error_conteo_abs": 1
+            },
+            "bajada": {
+              "TP": 9,
+              "FP": 0,
+              "FN": 19,
+              "error_conteo_abs": 19
+            }
+          },
+          "descartados": [
+            {
+              "tiempo_s": 11.4,
+              "track_id": 37,
+              "sentido": "bajada",
+              "suprimido_por": {
+                "tiempo_s": 11.04,
+                "track_id": 32,
+                "sentido": "bajada"
+              }
+            }
+          ]
+        }
+      },
+      "errores": 24,
+      "error_conteo_abs": 24,
+      "omisiones_no_aumentan": false,
+      "mejora_su_detector_sin_filtro": true
+    },
+    "yolo11n-calibrado@1.5": {
+      "detector": "yolo11n-calibrado",
+      "umbral_s": 1.5,
+      "escenas": {
+        "kaggle": {
+          "por_sentido": {
+            "subida": {
+              "TP": 5,
+              "FP": 0,
+              "FN": 1,
+              "error_conteo_abs": 1
+            },
+            "bajada": {
+              "TP": 0,
+              "FP": 2,
+              "FN": 0,
+              "error_conteo_abs": 2
+            }
+          },
+          "descartados": [
+            {
+              "tiempo_s": 14.04,
+              "track_id": 37,
+              "sentido": "subida",
+              "suprimido_por": {
+                "tiempo_s": 13.76,
+                "track_id": 7,
+                "sentido": "subida"
+              }
+            },
+            {
+              "tiempo_s": 14.92,
+              "track_id": 37,
+              "sentido": "bajada",
+              "suprimido_por": {
+                "tiempo_s": 14.68,
+                "track_id": 7,
+                "sentido": "bajada"
+              }
+            },
+            {
+              "tiempo_s": 15.0,
+              "track_id": 37,
+              "sentido": "subida",
+              "suprimido_por": {
+                "tiempo_s": 13.76,
+                "track_id": 7,
+                "sentido": "subida"
+              }
+            },
+            {
+              "tiempo_s": 25.76,
+              "track_id": 57,
+              "sentido": "subida",
+              "suprimido_por": {
+                "tiempo_s": 25.0,
+                "track_id": 58,
+                "sentido": "subida"
+              }
+            },
+            {
+              "tiempo_s": 25.92,
+              "track_id": 63,
+              "sentido": "subida",
+              "suprimido_por": {
+                "tiempo_s": 25.0,
+                "track_id": 58,
+                "sentido": "subida"
+              }
+            },
+            {
+              "tiempo_s": 27.72,
+              "track_id": 63,
+              "sentido": "bajada",
+              "suprimido_por": {
+                "tiempo_s": 26.48,
+                "track_id": 63,
+                "sentido": "bajada"
+              }
+            }
+          ]
+        },
+        "pamela-A": {
+          "por_sentido": {
+            "subida": {
+              "TP": 0,
+              "FP": 1,
+              "FN": 0,
+              "error_conteo_abs": 1
+            },
+            "bajada": {
+              "TP": 9,
+              "FP": 0,
+              "FN": 19,
+              "error_conteo_abs": 19
+            }
+          },
+          "descartados": [
+            {
+              "tiempo_s": 11.4,
+              "track_id": 37,
+              "sentido": "bajada",
+              "suprimido_por": {
+                "tiempo_s": 11.04,
+                "track_id": 32,
+                "sentido": "bajada"
+              }
+            }
+          ]
+        }
+      },
+      "errores": 23,
+      "error_conteo_abs": 23,
+      "omisiones_no_aumentan": false,
+      "mejora_su_detector_sin_filtro": true
+    },
+    "yolo11l-calibrado@0.0": {
+      "detector": "yolo11l-calibrado",
+      "umbral_s": 0.0,
+      "escenas": {
+        "kaggle": {
+          "por_sentido": {
+            "subida": {
+              "TP": 6,
+              "FP": 2,
+              "FN": 0,
+              "error_conteo_abs": 2
+            },
+            "bajada": {
+              "TP": 0,
+              "FP": 2,
+              "FN": 0,
+              "error_conteo_abs": 2
+            }
+          },
+          "descartados": []
+        },
+        "pamela-A": {
+          "por_sentido": {
+            "subida": {
+              "TP": 0,
+              "FP": 2,
+              "FN": 0,
+              "error_conteo_abs": 2
+            },
+            "bajada": {
+              "TP": 13,
+              "FP": 0,
+              "FN": 15,
+              "error_conteo_abs": 15
+            }
+          },
+          "descartados": []
+        }
+      },
+      "errores": 21,
+      "error_conteo_abs": 21,
+      "omisiones_no_aumentan": true,
+      "mejora_su_detector_sin_filtro": false
+    },
+    "yolo11l-calibrado@0.5": {
+      "detector": "yolo11l-calibrado",
+      "umbral_s": 0.5,
+      "escenas": {
+        "kaggle": {
+          "por_sentido": {
+            "subida": {
+              "TP": 6,
+              "FP": 2,
+              "FN": 0,
+              "error_conteo_abs": 2
+            },
+            "bajada": {
+              "TP": 0,
+              "FP": 2,
+              "FN": 0,
+              "error_conteo_abs": 2
+            }
+          },
+          "descartados": []
+        },
+        "pamela-A": {
+          "por_sentido": {
+            "subida": {
+              "TP": 0,
+              "FP": 2,
+              "FN": 0,
+              "error_conteo_abs": 2
+            },
+            "bajada": {
+              "TP": 13,
+              "FP": 0,
+              "FN": 15,
+              "error_conteo_abs": 15
+            }
+          },
+          "descartados": []
+        }
+      },
+      "errores": 21,
+      "error_conteo_abs": 21,
+      "omisiones_no_aumentan": true,
+      "mejora_su_detector_sin_filtro": false
+    },
+    "yolo11l-calibrado@1.0": {
+      "detector": "yolo11l-calibrado",
+      "umbral_s": 1.0,
+      "escenas": {
+        "kaggle": {
+          "por_sentido": {
+            "subida": {
+              "TP": 6,
+              "FP": 1,
+              "FN": 0,
+              "error_conteo_abs": 1
+            },
+            "bajada": {
+              "TP": 0,
+              "FP": 2,
+              "FN": 0,
+              "error_conteo_abs": 2
+            }
+          },
+          "descartados": [
+            {
+              "tiempo_s": 26.48,
+              "track_id": 58,
+              "sentido": "subida",
+              "suprimido_por": {
+                "tiempo_s": 25.76,
+                "track_id": 65,
+                "sentido": "subida"
+              }
+            }
+          ]
+        },
+        "pamela-A": {
+          "por_sentido": {
+            "subida": {
+              "TP": 0,
+              "FP": 2,
+              "FN": 0,
+              "error_conteo_abs": 2
+            },
+            "bajada": {
+              "TP": 12,
+              "FP": 0,
+              "FN": 16,
+              "error_conteo_abs": 16
+            }
+          },
+          "descartados": [
+            {
+              "tiempo_s": 2.08,
+              "track_id": 5,
+              "sentido": "bajada",
+              "suprimido_por": {
+                "tiempo_s": 1.2,
+                "track_id": 6,
+                "sentido": "bajada"
+              }
+            }
+          ]
+        }
+      },
+      "errores": 21,
+      "error_conteo_abs": 21,
+      "omisiones_no_aumentan": false,
+      "mejora_su_detector_sin_filtro": false
+    },
+    "yolo11l-calibrado@1.5": {
+      "detector": "yolo11l-calibrado",
+      "umbral_s": 1.5,
+      "escenas": {
+        "kaggle": {
+          "por_sentido": {
+            "subida": {
+              "TP": 6,
+              "FP": 0,
+              "FN": 0,
+              "error_conteo_abs": 0
+            },
+            "bajada": {
+              "TP": 0,
+              "FP": 2,
+              "FN": 0,
+              "error_conteo_abs": 2
+            }
+          },
+          "descartados": [
+            {
+              "tiempo_s": 13.6,
+              "track_id": 25,
+              "sentido": "subida",
+              "suprimido_por": {
+                "tiempo_s": 12.4,
+                "track_id": 24,
+                "sentido": "subida"
+              }
+            },
+            {
+              "tiempo_s": 26.48,
+              "track_id": 58,
+              "sentido": "subida",
+              "suprimido_por": {
+                "tiempo_s": 25.76,
+                "track_id": 65,
+                "sentido": "subida"
+              }
+            }
+          ]
+        },
+        "pamela-A": {
+          "por_sentido": {
+            "subida": {
+              "TP": 0,
+              "FP": 2,
+              "FN": 0,
+              "error_conteo_abs": 2
+            },
+            "bajada": {
+              "TP": 10,
+              "FP": 0,
+              "FN": 18,
+              "error_conteo_abs": 18
+            }
+          },
+          "descartados": [
+            {
+              "tiempo_s": 2.08,
+              "track_id": 5,
+              "sentido": "bajada",
+              "suprimido_por": {
+                "tiempo_s": 1.2,
+                "track_id": 6,
+                "sentido": "bajada"
+              }
+            },
+            {
+              "tiempo_s": 7.16,
+              "track_id": 19,
+              "sentido": "bajada",
+              "suprimido_por": {
+                "tiempo_s": 5.68,
+                "track_id": 11,
+                "sentido": "bajada"
+              }
+            },
+            {
+              "tiempo_s": 14.68,
+              "track_id": 33,
+              "sentido": "bajada",
+              "suprimido_por": {
+                "tiempo_s": 13.28,
+                "track_id": 42,
+                "sentido": "bajada"
+              }
+            }
+          ]
+        }
+      },
+      "errores": 22,
+      "error_conteo_abs": 22,
+      "omisiones_no_aumentan": false,
+      "mejora_su_detector_sin_filtro": false
+    }
+  },
+  "elegida": null,
+  "conclusion": "Ninguna variante con u > 0 mejora a su detector sin aumentar omisiones: la supresión temporal global no se justifica."
+}
