@@ -320,6 +320,13 @@ def crear_rastreador(pesos, rastreador="bytetrack.yaml", conf=None, dispositivo=
     if dispositivo:
         opciones["device"] = dispositivo
 
+    # Precalentar: la primera inferencia carga el modelo en el dispositivo (~2 s) y, con --ritmo-real, hacía
+    # descartar los primeros cuadros. predict no toca el estado del rastreador.
+    import numpy
+
+    modelo.predict(numpy.zeros((640, 640, 3), dtype="uint8"), verbose=False,
+                   **{clave: opciones[clave] for clave in ("device", "classes") if clave in opciones})
+
     def rastrear(imagen):
         cajas = modelo.track(imagen, **opciones)[0].boxes
         if cajas is None or cajas.id is None:
@@ -369,16 +376,45 @@ class VideoAnotado:
         if self._escritor is None:
             self.destino.parent.mkdir(parents=True, exist_ok=True)
             alto, ancho = lienzo.shape[:2]
-            # Los navegadores no reproducen mp4v; el panel pide .webm (VP8).
-            formato = cv2.VideoWriter_fourcc(*("VP80" if self.destino.suffix == ".webm" else "mp4v"))
-            self._escritor = cv2.VideoWriter(str(self.destino), formato, self.fps, (ancho, alto))
+            # Durante el conteo se escribe mp4v, que es rápido: codificar VP8 cuadro a cuadro tardaba ~50 ms y
+            # frenaba el tiempo real. Los navegadores no reproducen mp4v, así que al cerrar se convierte a .webm.
+            self._escritor = cv2.VideoWriter(str(self._intermedio()), cv2.VideoWriter_fourcc(*"mp4v"), self.fps,
+                                             (ancho, alto))
             if not self._escritor.isOpened():
                 raise SystemExit(f"No se pudo crear el video anotado: {self.destino}")
         self._escritor.write(lienzo)
 
+    def _intermedio(self):
+        return self.destino.with_name(self.destino.stem + ".tmp.mp4") if self.destino.suffix == ".webm" else self.destino
+
     def cerrar(self):
-        if self._escritor is not None:
-            self._escritor.release()
+        """Termina el video; si el destino es .webm, lo convierte a VP8 después de contar."""
+        if self._escritor is None:
+            return
+        self._escritor.release()
+        intermedio = self._intermedio()
+        if intermedio == self.destino:
+            return
+        import cv2
+
+        lector = cv2.VideoCapture(str(intermedio))
+        escritor = None
+        try:
+            while True:
+                leido, cuadro = lector.read()
+                if not leido:
+                    break
+                if escritor is None:
+                    alto, ancho = cuadro.shape[:2]
+                    escritor = cv2.VideoWriter(str(self.destino), cv2.VideoWriter_fourcc(*"VP80"), self.fps, (ancho, alto))
+                    if not escritor.isOpened():
+                        raise SystemExit(f"No se pudo crear el video anotado: {self.destino}")
+                escritor.write(cuadro)
+        finally:
+            lector.release()
+            if escritor is not None:
+                escritor.release()
+        intermedio.unlink(missing_ok=True)
 
 
 class Cancelado(Exception):

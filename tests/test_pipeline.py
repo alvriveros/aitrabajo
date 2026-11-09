@@ -320,3 +320,21 @@ def test_progreso_publica_cruces_parciales_y_se_cancela(tmp_path):
     with pytest.raises(Cancelado):
         progreso(0.2, None, [], [])
     assert not (tmp_path / "progreso.tmp").exists()
+
+
+def test_video_anotado_webm_se_convierte_al_cerrar_y_no_deja_intermedios(tmp_path):
+    cv2 = pytest.importorskip("cv2")
+    numpy = pytest.importorskip("numpy")
+    destino = tmp_path / "anotado.webm"
+    anotador = VideoAnotado(destino, Linea(0, 60, 160, 60, interior="arriba"), fps=10, punto="centro")
+    for indice in range(5):
+        anotador(indice / 10, numpy.zeros((120, 160, 3), dtype="uint8"), [], [])
+    assert (tmp_path / "anotado.tmp.mp4").is_file() and not destino.exists()  # durante el conteo, mp4v
+    anotador.cerrar()
+    assert destino.is_file() and not (tmp_path / "anotado.tmp.mp4").exists()
+    captura = cv2.VideoCapture(str(destino))
+    leidos = 0
+    while captura.read()[0]:
+        leidos += 1
+    captura.release()
+    assert leidos == 5
