@@ -87,7 +87,7 @@ Se compararon los eventos de esta ejecución con los de otras ejecuciones, sin v
 | `20261108-200805-374934` (CPU de Windows, primera evaluación) | 24 | 12/12/0 |
 
 - **Coincidencia:** los 25 eventos del ensayo son idénticos, en instante y sentido, a los de la GPU procesando todos los cuadros.
-- **Lo que queda descartado:** la bajada adicional **no se debe a los 4 cuadros descartados ni a una variación entre repeticiones**. En GPU, el resultado se repitió igual en las tres ejecuciones.
+- **Lo que muestran estas ejecuciones:** la bajada adicional también aparece procesando los 686 cuadros, así que no necesita que se descarten cuadros para aparecer. En las tres ejecuciones en GPU revisadas, el resultado fue idéntico. Eso no garantiza que toda ejecución futura lo sea.
 - **Lo que no se identificó:** la diferencia está entre el resultado en GPU y la primera evaluación en CPU. Ya estaba registrado que el sistema varía según la plataforma (tarea 10, Kaggle). No se identificó el mecanismo exacto de esta bajada.
-- **Para la presentación:** en GPU se esperan 25 eventos; las métricas históricas, con 24, son las de la evaluación ciega en CPU. Hay que presentar cada resultado con su ejecución.
-- **Energía:** este registro observó el plan de energía en «Equilibrado», no en máximo rendimiento. Aun así, el ensayo alcanzó 24,84 FPS con 4 cuadros descartados.
+- **Para la presentación:** las ejecuciones en GPU verificadas produjeron 25 eventos; las métricas históricas, con 24, son las de la evaluación ciega en CPU. Hay que presentar cada resultado con su ejecución.
+- **Energía:** este registro observó el plan de energía en «Equilibrado», no en máximo rendimiento. Con ese plan, el ensayo alcanzó el rendimiento medido: 24,84 FPS y 4 cuadros descartados. Si se cambia a máximo rendimiento, conviene una comprobación breve antes de presentar; no hace falta para validar este ensayo.
