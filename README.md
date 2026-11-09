@@ -125,4 +125,5 @@ docker compose up --build
 - [vision/README.md](vision/README.md): regla de conteo, parámetros y comandos de visión.
 - [data/README.md](data/README.md): grabaciones, permisos, revisiones y qué sigue reservado.
 - [docs/demo/guion.md](docs/demo/guion.md): defensa de 10 + 2 minutos, con la demo en vivo y el respaldo.
+- [docs/README.md](docs/README.md): índice de la documentación, que separa lo vigente de lo histórico.
 - [`docs/relevo/`](docs/relevo/): registro fechado de cada tarea. Los registros antiguos describen el estado de su fecha.

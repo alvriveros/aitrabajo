@@ -12,3 +12,8 @@ docs/informe/*.log
 docs/informe/*.bbl
 docs/informe/*.blg
 docs/informe/*.out
+
+# Temporales de pytest
+.pytest_cache/
+.pytest-*/
+pytest-cache-files-*/
