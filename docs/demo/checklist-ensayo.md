@@ -1,6 +1,7 @@
 # Checklist del ensayo final (10 + 2 minutos)
 
-**Estado: SIN REALIZAR.** Lo completa el equipo; no se marca como hecho hasta que el equipo lo confirme.
+**Estado: ensayo técnico realizado por Codex el 9 nov.; ensayo oral del equipo SIN REALIZAR.** No se marca la exposición de 10 + 2 minutos como hecha hasta que el equipo la confirme.
+Registro de tiempos, resultados y límites: [ensayo técnico](ensayo-tecnico-codex-2026-11-09.md).
 Guion: [`guion.md`](guion.md). Rama: `cierre-final`.
 
 ## Verificado por Claude (9 nov., 01:20)

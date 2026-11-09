@@ -51,6 +51,8 @@ Pantalla: Fig. 1 del informe.
 5. **Al terminar,** mostrá el video anotado, la tabla de eventos y las descargas (eventos, video y configuración).
 6. **Opcional:** recargá la página durante un procesamiento y mostrá que se retoma; o pulsá «Cancelar» y mostrá que no se publica.
 
+**Qué esperar:** en GPU, la ejecución en vivo da **25 eventos** (12/13/0). Es reproducible, pero distinto de los **24** de la evaluación ciega en CPU (12/12/0). Antes de leer cifras, mirá el id de la ejecución.
+
 **Respaldo, si algo falla en vivo:** en «Ejecución», elegí la del ensayo o `20261108-200805-374934`. Decilo explícitamente:
 
 > "Esto es un resultado guardado, no inferencia en vivo."
