@@ -1,0 +1,47 @@
+{
+  "capacidad": 20,
+  "carga_inicial": 0,
+  "paradas": [
+    {
+      "nombre": "youtube-bus-real-0y08Jtqtkys",
+      "inicio_s": 0
+    }
+  ],
+  "eventos": [
+    {
+      "tiempo_s": 32.76,
+      "track_id": 1,
+      "sentido": "subida"
+    },
+    {
+      "tiempo_s": 149.44,
+      "track_id": 51,
+      "sentido": "bajada"
+    },
+    {
+      "tiempo_s": 158.64,
+      "track_id": 58,
+      "sentido": "subida"
+    },
+    {
+      "tiempo_s": 189.0,
+      "track_id": 75,
+      "sentido": "bajada"
+    },
+    {
+      "tiempo_s": 189.52,
+      "track_id": 77,
+      "sentido": "subida"
+    },
+    {
+      "tiempo_s": 365.24,
+      "track_id": 95,
+      "sentido": "subida"
+    },
+    {
+      "tiempo_s": 367.36,
+      "track_id": 97,
+      "sentido": "subida"
+    }
+  ]
+}

@@ -1,0 +1,77 @@
+{
+  "capacidad": 20,
+  "carga_inicial": 0,
+  "paradas": [
+    {
+      "nombre": "kaggle-people-boarding-bus",
+      "inicio_s": 0
+    }
+  ],
+  "eventos": [
+    {
+      "tiempo_s": 13.76,
+      "track_id": 7,
+      "sentido": "subida"
+    },
+    {
+      "tiempo_s": 14.04,
+      "track_id": 37,
+      "sentido": "subida"
+    },
+    {
+      "tiempo_s": 14.68,
+      "track_id": 7,
+      "sentido": "bajada"
+    },
+    {
+      "tiempo_s": 14.92,
+      "track_id": 37,
+      "sentido": "bajada"
+    },
+    {
+      "tiempo_s": 15.0,
+      "track_id": 37,
+      "sentido": "subida"
+    },
+    {
+      "tiempo_s": 15.32,
+      "track_id": 7,
+      "sentido": "subida"
+    },
+    {
+      "tiempo_s": 17.52,
+      "track_id": 42,
+      "sentido": "subida"
+    },
+    {
+      "tiempo_s": 25.0,
+      "track_id": 58,
+      "sentido": "subida"
+    },
+    {
+      "tiempo_s": 25.76,
+      "track_id": 57,
+      "sentido": "subida"
+    },
+    {
+      "tiempo_s": 25.92,
+      "track_id": 63,
+      "sentido": "subida"
+    },
+    {
+      "tiempo_s": 26.48,
+      "track_id": 63,
+      "sentido": "bajada"
+    },
+    {
+      "tiempo_s": 27.44,
+      "track_id": 63,
+      "sentido": "subida"
+    },
+    {
+      "tiempo_s": 27.72,
+      "track_id": 63,
+      "sentido": "bajada"
+    }
+  ]
+}

@@ -1,0 +1,87 @@
+{
+  "capacidad": 20,
+  "carga_inicial": 0,
+  "paradas": [
+    {
+      "nombre": "puerta-tren-d800-A",
+      "inicio_s": 0
+    }
+  ],
+  "eventos": [
+    {
+      "tiempo_s": 1.2,
+      "track_id": 6,
+      "sentido": "bajada"
+    },
+    {
+      "tiempo_s": 2.08,
+      "track_id": 5,
+      "sentido": "bajada"
+    },
+    {
+      "tiempo_s": 3.8,
+      "track_id": 7,
+      "sentido": "bajada"
+    },
+    {
+      "tiempo_s": 5.68,
+      "track_id": 11,
+      "sentido": "bajada"
+    },
+    {
+      "tiempo_s": 7.16,
+      "track_id": 19,
+      "sentido": "bajada"
+    },
+    {
+      "tiempo_s": 7.28,
+      "track_id": 19,
+      "sentido": "subida"
+    },
+    {
+      "tiempo_s": 10.68,
+      "track_id": 19,
+      "sentido": "bajada"
+    },
+    {
+      "tiempo_s": 13.28,
+      "track_id": 42,
+      "sentido": "bajada"
+    },
+    {
+      "tiempo_s": 14.68,
+      "track_id": 33,
+      "sentido": "bajada"
+    },
+    {
+      "tiempo_s": 16.08,
+      "track_id": 54,
+      "sentido": "bajada"
+    },
+    {
+      "tiempo_s": 18.6,
+      "track_id": 57,
+      "sentido": "bajada"
+    },
+    {
+      "tiempo_s": 22.2,
+      "track_id": 67,
+      "sentido": "bajada"
+    },
+    {
+      "tiempo_s": 26.2,
+      "track_id": 61,
+      "sentido": "bajada"
+    },
+    {
+      "tiempo_s": 26.32,
+      "track_id": 61,
+      "sentido": "subida"
+    },
+    {
+      "tiempo_s": 27.72,
+      "track_id": 79,
+      "sentido": "bajada"
+    }
+  ]
+}

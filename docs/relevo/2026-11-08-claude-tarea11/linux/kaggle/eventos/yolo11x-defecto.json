@@ -1,0 +1,22 @@
+{
+  "capacidad": 20,
+  "carga_inicial": 0,
+  "paradas": [
+    {
+      "nombre": "kaggle-people-boarding-bus",
+      "inicio_s": 0
+    }
+  ],
+  "eventos": [
+    {
+      "tiempo_s": 13.36,
+      "track_id": 18,
+      "sentido": "subida"
+    },
+    {
+      "tiempo_s": 25.76,
+      "track_id": 138,
+      "sentido": "subida"
+    }
+  ]
+}

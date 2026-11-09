@@ -1,0 +1,22 @@
+{
+  "capacidad": 20,
+  "carga_inicial": 0,
+  "paradas": [
+    {
+      "nombre": "puerta-tren-d800-A",
+      "inicio_s": 0
+    }
+  ],
+  "eventos": [
+    {
+      "tiempo_s": 10.8,
+      "track_id": 31,
+      "sentido": "bajada"
+    },
+    {
+      "tiempo_s": 27.76,
+      "track_id": 89,
+      "sentido": "bajada"
+    }
+  ]
+}

@@ -1,0 +1,49 @@
+{
+  "comando": "python -m vision.pipeline --video data/raw/kaggle-people-boarding-bus.mp4 --recorte 600,0,840,1080 --linea 0,480,839,480 --interior arriba --dispositivo cpu --pesos yolo11n.pt --rastreador vision/bytetrack-cenital.yaml --conf 0.05 --confirmacion 2 --salida /home/claude/ev11/kaggle/eventos/yolo11n-calibrado.json --video-anotado runs/evaluacion/tarea11-linux/kaggle-yolo11n-calibrado.mp4",
+  "video": "data/raw/kaggle-people-boarding-bus.mp4",
+  "propiedades_del_video": {
+    "fps": 25.016677785190126,
+    "ancho": 1920,
+    "alto": 1080
+  },
+  "tramo_s": {
+    "inicio": 0.0,
+    "fin": null
+  },
+  "recorte": {
+    "x": 600,
+    "y": 0,
+    "ancho": 840,
+    "alto": 1080
+  },
+  "linea": {
+    "x1": 0.0,
+    "y1": 480.0,
+    "x2": 839.0,
+    "y2": 480.0,
+    "interior": "arriba"
+  },
+  "sistema_de_coordenadas": "Píxeles: origen arriba a la izquierda, x hacia la derecha, y hacia abajo.",
+  "punto_del_cuerpo": "centro",
+  "margen_px": 5.0,
+  "confirmacion_cuadros": 2,
+  "pesos": "yolo11n.pt",
+  "rastreador": "vision/bytetrack-cenital.yaml",
+  "conf": 0.05,
+  "dispositivo": "cpu",
+  "medicion": {
+    "cuadros": 1499,
+    "segundos": 130.411,
+    "fps_procesados": 11.49,
+    "con_video_anotado": true
+  },
+  "entorno": {
+    "python": "3.12.3",
+    "plataforma": "Linux-6.18.44-fc-v310-x86_64-with-glibc2.39",
+    "procesador": "x86_64",
+    "ultralytics": "8.4.203",
+    "torch": "2.15.0",
+    "opencv-python": "5.0.0.93",
+    "lap": "0.5.14"
+  }
+}

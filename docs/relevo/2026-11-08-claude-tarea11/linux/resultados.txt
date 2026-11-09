@@ -1,0 +1,14 @@
+pamela-A yolo11n-defecto {'fps': 13.01, 'eventos': 2, 'por_sentido': {'subida': {'TP': 0, 'FP': 1, 'FN': 0, 'error_conteo_abs': 1}, 'bajada': {'TP': 1, 'FP': 0, 'FN': 27, 'error_conteo_abs': 27}}, 'errores': 28}
+pamela-A yolo11n-calibrado {'fps': 13.38, 'eventos': 11, 'por_sentido': {'subida': {'TP': 0, 'FP': 1, 'FN': 0, 'error_conteo_abs': 1}, 'bajada': {'TP': 10, 'FP': 0, 'FN': 18, 'error_conteo_abs': 18}}, 'errores': 19}
+pamela-A yolo11l-defecto {'fps': 1.55, 'eventos': 2, 'por_sentido': {'subida': {'TP': 0, 'FP': 0, 'FN': 0, 'error_conteo_abs': 0}, 'bajada': {'TP': 2, 'FP': 0, 'FN': 26, 'error_conteo_abs': 26}}, 'errores': 26}
+pamela-A yolo11l-calibrado {'fps': 1.53, 'eventos': 15, 'por_sentido': {'subida': {'TP': 0, 'FP': 2, 'FN': 0, 'error_conteo_abs': 2}, 'bajada': {'TP': 13, 'FP': 0, 'FN': 15, 'error_conteo_abs': 15}}, 'errores': 17}
+pamela-A yolo11x-defecto {'fps': 0.77, 'eventos': 2, 'por_sentido': {'subida': {'TP': 0, 'FP': 0, 'FN': 0, 'error_conteo_abs': 0}, 'bajada': {'TP': 2, 'FP': 0, 'FN': 26, 'error_conteo_abs': 26}}, 'errores': 26}
+pamela-A yolo11x-calibrado {'fps': 0.8, 'eventos': 19, 'por_sentido': {'subida': {'TP': 0, 'FP': 6, 'FN': 0, 'error_conteo_abs': 6}, 'bajada': {'TP': 13, 'FP': 0, 'FN': 15, 'error_conteo_abs': 15}}, 'errores': 21}
+kaggle yolo11n-defecto {'fps': 11.45, 'eventos': 2, 'por_sentido': {'subida': {'TP': 1, 'FP': 0, 'FN': 5, 'error_conteo_abs': 5}, 'bajada': {'TP': 0, 'FP': 1, 'FN': 0, 'error_conteo_abs': 1}}, 'errores': 6}
+kaggle yolo11n-calibrado {'fps': 11.49, 'eventos': 13, 'por_sentido': {'subida': {'TP': 5, 'FP': 4, 'FN': 1, 'error_conteo_abs': 3}, 'bajada': {'TP': 0, 'FP': 4, 'FN': 0, 'error_conteo_abs': 4}}, 'errores': 9}
+kaggle yolo11l-defecto {'fps': 1.49, 'eventos': 4, 'por_sentido': {'subida': {'TP': 3, 'FP': 0, 'FN': 3, 'error_conteo_abs': 3}, 'bajada': {'TP': 0, 'FP': 1, 'FN': 0, 'error_conteo_abs': 1}}, 'errores': 4}
+kaggle yolo11l-calibrado {'fps': 1.52, 'eventos': 10, 'por_sentido': {'subida': {'TP': 6, 'FP': 2, 'FN': 0, 'error_conteo_abs': 2}, 'bajada': {'TP': 0, 'FP': 2, 'FN': 0, 'error_conteo_abs': 2}}, 'errores': 4}
+kaggle yolo11x-defecto {'fps': 0.76, 'eventos': 2, 'por_sentido': {'subida': {'TP': 2, 'FP': 0, 'FN': 4, 'error_conteo_abs': 4}, 'bajada': {'TP': 0, 'FP': 0, 'FN': 0, 'error_conteo_abs': 0}}, 'errores': 4}
+kaggle yolo11x-calibrado {'fps': 0.75, 'eventos': 9, 'por_sentido': {'subida': {'TP': 5, 'FP': 2, 'FN': 1, 'error_conteo_abs': 1}, 'bajada': {'TP': 0, 'FP': 2, 'FN': 0, 'error_conteo_abs': 2}}, 'errores': 5}
+oficina yolo11n-defecto {'fps': 13.12, 'eventos': 0, 'por_sentido': {'subida': {'TP': 0, 'FP': 0, 'FN': 10, 'error_conteo_abs': 10}, 'bajada': {'TP': 0, 'FP': 0, 'FN': 10, 'error_conteo_abs': 10}}, 'errores': 20}
+oficina yolo11n-calibrado {'fps': 13.3, 'eventos': 11, 'por_sentido': {'subida': {'TP': 7, 'FP': 0, 'FN': 3, 'error_conteo_abs': 3}, 'bajada': {'TP': 4, 'FP': 0, 'FN': 6, 'error_conteo_abs': 6}}, 'errores': 9}

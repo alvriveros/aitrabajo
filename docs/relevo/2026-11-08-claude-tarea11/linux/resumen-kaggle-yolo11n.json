@@ -1,0 +1,61 @@
+{
+  "dispositivo": "cpu",
+  "entorno": {
+    "python": "3.12.3",
+    "plataforma": "Linux-6.18.44-fc-v310-x86_64-with-glibc2.39",
+    "procesador": "x86_64",
+    "ultralytics": "8.4.203",
+    "torch": "2.15.0",
+    "opencv-python": "5.0.0.93",
+    "lap": "0.5.14"
+  },
+  "modelos": {
+    "yolo11n": {
+      "ruta": "yolo11n.pt",
+      "sha256": "0ebbc80d4a7680d14987a577cd21342b65ecfd94632bd9a8da63ae6417644ee1"
+    }
+  },
+  "resultados": {
+    "kaggle": {
+      "referencia_sha256": "6ebd660e0ce0831f9d4e718e1a534f2ccd7cf7e1f10973c2f8eeafbc406aaf8e",
+      "yolo11n-defecto": {
+        "fps": 11.45,
+        "eventos": 2,
+        "por_sentido": {
+          "subida": {
+            "TP": 1,
+            "FP": 0,
+            "FN": 5,
+            "error_conteo_abs": 5
+          },
+          "bajada": {
+            "TP": 0,
+            "FP": 1,
+            "FN": 0,
+            "error_conteo_abs": 1
+          }
+        },
+        "errores": 6
+      },
+      "yolo11n-calibrado": {
+        "fps": 11.49,
+        "eventos": 13,
+        "por_sentido": {
+          "subida": {
+            "TP": 5,
+            "FP": 4,
+            "FN": 1,
+            "error_conteo_abs": 3
+          },
+          "bajada": {
+            "TP": 0,
+            "FP": 4,
+            "FN": 0,
+            "error_conteo_abs": 4
+          }
+        },
+        "errores": 9
+      }
+    }
+  }
+}

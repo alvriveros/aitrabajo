@@ -1,0 +1,132 @@
+{
+  "capacidad": 20,
+  "carga_inicial": 0,
+  "paradas": [
+    {
+      "nombre": "youtube-bus-real-0y08Jtqtkys",
+      "inicio_s": 0
+    }
+  ],
+  "eventos": [
+    {
+      "tiempo_s": 33.28,
+      "track_id": 8,
+      "sentido": "subida"
+    },
+    {
+      "tiempo_s": 34.12,
+      "track_id": 10,
+      "sentido": "subida"
+    },
+    {
+      "tiempo_s": 34.32,
+      "track_id": 10,
+      "sentido": "bajada"
+    },
+    {
+      "tiempo_s": 53.12,
+      "track_id": 18,
+      "sentido": "subida"
+    },
+    {
+      "tiempo_s": 139.12,
+      "track_id": 70,
+      "sentido": "subida"
+    },
+    {
+      "tiempo_s": 149.4,
+      "track_id": 74,
+      "sentido": "bajada"
+    },
+    {
+      "tiempo_s": 149.64,
+      "track_id": 75,
+      "sentido": "bajada"
+    },
+    {
+      "tiempo_s": 158.24,
+      "track_id": 74,
+      "sentido": "subida"
+    },
+    {
+      "tiempo_s": 158.76,
+      "track_id": 75,
+      "sentido": "subida"
+    },
+    {
+      "tiempo_s": 159.76,
+      "track_id": 76,
+      "sentido": "subida"
+    },
+    {
+      "tiempo_s": 170.4,
+      "track_id": 83,
+      "sentido": "subida"
+    },
+    {
+      "tiempo_s": 173.68,
+      "track_id": 86,
+      "sentido": "subida"
+    },
+    {
+      "tiempo_s": 187.64,
+      "track_id": 92,
+      "sentido": "subida"
+    },
+    {
+      "tiempo_s": 188.76,
+      "track_id": 95,
+      "sentido": "subida"
+    },
+    {
+      "tiempo_s": 189.52,
+      "track_id": 96,
+      "sentido": "subida"
+    },
+    {
+      "tiempo_s": 189.52,
+      "track_id": 97,
+      "sentido": "subida"
+    },
+    {
+      "tiempo_s": 204.88,
+      "track_id": 102,
+      "sentido": "subida"
+    },
+    {
+      "tiempo_s": 207.88,
+      "track_id": 110,
+      "sentido": "subida"
+    },
+    {
+      "tiempo_s": 364.76,
+      "track_id": 118,
+      "sentido": "subida"
+    },
+    {
+      "tiempo_s": 365.12,
+      "track_id": 119,
+      "sentido": "bajada"
+    },
+    {
+      "tiempo_s": 366.64,
+      "track_id": 120,
+      "sentido": "bajada"
+    },
+    {
+      "tiempo_s": 367.52,
+      "track_id": 120,
+      "sentido": "subida"
+    },
+    {
+      "tiempo_s": 370.52,
+      "track_id": 124,
+      "sentido": "subida"
+    },
+    {
+      "tiempo_s": 466.28,
+      "track_id": 131,
+      "sentido": "bajada"
+    }
+  ]
+}
