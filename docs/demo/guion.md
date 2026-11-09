@@ -15,7 +15,7 @@ Versión del cierre final (9 nov.). Lo que está entre comillas es una propuesta
    ```powershell
    .\.venv\Scripts\python.exe -m streamlit run ui/app.py
    ```
-   **Alternativa con Docker** (CPU): `docker compose up --build -d` y el panel en http://127.0.0.1:8502.
+   **Alternativa con Docker** (solo CPU, **no** sirve para mostrar tiempo real): `docker compose up --build -d` y el panel en http://127.0.0.1:8502.
 4. **Ensayo:** procesá una vez `prueba-bus` con «Simular cámara en vivo» tildada y anotá el FPS y el retraso que muestra el panel. Esa ejecución queda guardada como **respaldo**.
 5. **Pestañas abiertas:** el informe (Tablas II y III), el panel en «Archivo JSON o demo» y la carpeta `runs\panel\20261108-200805-374934` (la primera evaluación de `prueba-bus`).
 
@@ -71,11 +71,12 @@ Pantalla: Tabla II del informe.
   > "Por eso desplegamos el preentrenado: no vamos a usar un modelo peor solo porque lo entrenamos nosotros."
 - **Tiempo real** (Tabla III):
   - en CPU, 8,8 FPS; con ritmo real, el retraso no crece, pero se descarta el 70 % de los cuadros y en oficina se cuentan 4 de 20 cruces;
-  - con la GPU, ritmo real a la velocidad del video: 680 de 686 cuadros, latencia media de 32 ms que no crece y el mismo conteo que procesando todos los cuadros.
+  - con la GPU, en ejecución nativa y ritmo real: 680 de 686 cuadros (6 descartados), latencia interna media de 32 ms que no crece, y el mismo conteo que procesando todos los cuadros. El panel suma hasta 1 s, porque consulta cada segundo.
+  - Docker usa CPU: empaqueta el sistema, pero no demuestra tiempo real.
 
 ## 9:00–10:00 · Conclusiones
 
-> "Funciona de extremo a extremo, en vivo y con Docker. La calidad todavía no alcanza para auditar un servicio. Lo siguiente es grabar colectivos locales con permiso, reservar una parte para la prueba y entrenar con cabezas vistas desde arriba."
+> "Es un prototipo funcional de extremo a extremo, en vivo con GPU y empaquetado en Docker. La calidad del conteo todavía no alcanza para auditar un servicio. Lo siguiente es grabar colectivos locales con permiso, reservar una parte para la prueba y entrenar con cabezas vistas desde arriba."
 
 ## Preguntas probables
 
@@ -83,6 +84,7 @@ Pantalla: Tabla II del informe.
 |---|---|
 | ¿Por qué no entrenaron con más datos? | Con YOLO11x faltaban unas 6 de cada 10 personas en PAMELA, y había que dibujar unas 450 cajas a mano. Entrenar con personas sin anotar le enseña al modelo a ignorarlas. |
 | ¿Por qué no filtran las cajas duplicadas? | Se probaron dos opciones. El filtro de cajas encimadas eliminaba pasajeros reales. El IoU 0,5 de NMS mejoró Kaggle y empeoró PAMELA, con el mismo total. Elegir mirando `prueba-bus` exigiría otra prueba ciega. |
-| ¿Es tiempo real? | Con GPU, sí en velocidad (65,9 FPS frente a 25). En CPU, no sin perder cruces. Lo medimos y lo decimos. |
+| ¿Es tiempo real? | En ejecución nativa con GPU: 680 de 686 cuadros a 24,75 FPS, con 32 ms de latencia interna que no crece. En CPU y en Docker, no: se descartan cuadros y se pierden cruces. |
+| ¿De dónde sale `prueba-bus`? | Es una vista previa de iStock (ID 1457518529) con marca de agua. No tenemos la licencia, por eso no publicamos capturas. |
 | ¿El 20 de 20 de oficina? | Es la grabación de entrenamiento: no mide generalización. |
 | ¿Datos de Paraguay? | No tenemos. Es la primera limitación del informe. |

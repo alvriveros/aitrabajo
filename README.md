@@ -2,7 +2,7 @@
 
 TP final de Inteligencia Artificial (proyecto 10 de [`contexto.md`](contexto.md)). El sistema cuenta subidas y bajadas en la puerta de un bus a partir de video, con YOLO11n, ByteTrack y una línea virtual. Con esos eventos calcula la carga y el porcentaje de ocupación por parada, también mientras el video se procesa.
 
-**Estado al 9 nov.:** qué cumple y qué falta de la consigna, con evidencia, en [la matriz de requisitos](docs/relevo/2026-11-08-claude-cierre-final/matriz.md). Las cifras de calidad, en [data/README.md](data/README.md) y en el informe ([`docs/informe/`](docs/informe/)).
+**Estado al 9 nov.: prototipo funcional con limitaciones medidas.** El conteo en escenas densas no está resuelto (F1 de 0,36 y 0,45), no se consiguieron grabaciones de buses de Paraguay accesibles y el tiempo real se demostró solo con GPU nativa. qué cumple y qué falta de la consigna, con evidencia, en [la matriz de requisitos](docs/relevo/2026-11-08-claude-cierre-final/matriz.md). Las cifras de calidad, en [data/README.md](data/README.md) y en el informe ([`docs/informe/`](docs/informe/)).
 
 ## Componentes
 
@@ -103,6 +103,8 @@ docker compose up --build
 - **Arranque:** los dos servicios tienen comprobación de salud, y el panel espera a la API.
 - **Para cerrar:** `docker compose down`.
 
+**Docker usa CPU:** sirve para empaquetar y probar el flujo, pero no alcanza el tiempo real. Para eso, usá la ejecución nativa con GPU de la sección anterior.
+
 **Verificado en Windows** (8 nov., 23:24): los dos servicios quedaron `healthy`, y `prueba-bus` se subió y se procesó dentro del contenedor (`docs/relevo/2026-11-08-claude-cierre-final/resultados/docker-windows/`). OpenCV avisa `tag 'VP80' is not supported`, pero el `.webm` se genera bien.
 
 ## Pruebas
@@ -110,6 +112,8 @@ docker compose up --build
 ```powershell
 .\.venv\Scripts\python.exe -m pytest -q -rxs
 ```
+
+**Resultado verificado** (Windows, 9 nov., commit `b60b615`): 139 aprobados, **1 fallido** y **1 xfail**, ningún omitido. **La suite no está completamente verde.**
 
 **Fallos que quedan, a propósito:**
 

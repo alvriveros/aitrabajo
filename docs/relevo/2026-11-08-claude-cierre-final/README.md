@@ -152,14 +152,16 @@ Se siguió [el prerregistro](validacion-pamela-b/prerregistro.md):
 - **Xfail:** `test_una_persona_con_tres_cajas_…`, la limitación de las cajas encimadas.
 - **Omitidos:** ninguno, porque ahora se encuentran los pesos ajustados.
 
-## Pendiente (causa → acción)
+## Pendiente (vigente al 9 nov., 01:20)
+
+**Lista para entregar como prototipo funcional con limitaciones medidas; no están resueltos todos los objetivos.**
 
 | Pendiente | Causa | Acción |
 |---|---|---|
-| Universidad en el informe | Falta el dato (los autores ya están) | Completar `\afiliacion` |
-| Compilar el informe y verificar 3 páginas | A este TeX Live le faltan `IEEEtran` y `babel-spanish`, y la red no permite instalarlos | Compilar en Windows (MiKTeX) o en un TeX Live completo, y revisar las 3 páginas |
-| Tiempo real en la máquina de defensa | Solo hay CPU en el entorno de Claude | Álvaro: procesar `prueba-bus` con ritmo real en la RTX 2050 y compartir `runs\panel\<id>\prediccion.config.json` |
-| Prueba manual del panel en el navegador | Sin navegador hacia el contenedor | Álvaro: seguir el guion completo |
-| Validación independiente y datos de Paraguay | No hay grabaciones nuevas | Grabar según `../2026-11-08-claude-tarea12/protocolo-validacion-nueva.md` |
-| Duplicados y omisiones del conteo | No hay corrección robusta | Más datos anotados (cabezas en vista cenital) |
-| Origen de `prueba-bus.mp4` | No está documentado | Álvaro: URL o identificador de iStock y licencia |
+| Oclusiones y duplicados del conteo | No hay corrección robusta (F1 de 0,36 y 0,45 en la validación con PAMELA B) | Más datos anotados (cabezas en vista cenital) y una nueva prueba reservada |
+| Datos de Paraguay | No se consiguieron grabaciones de cámaras de buses de Paraguay accesibles (restricción central) | Grabar según `../2026-11-08-claude-tarea12/protocolo-validacion-nueva.md` |
+| Licencia de `prueba-bus.mp4` | Solo hay una vista previa con marca de agua | No publicar capturas; adquirir la licencia si se van a publicar |
+| Ensayo cronometrado de la defensa | Le corresponde al equipo | [`docs/demo/checklist-ensayo.md`](../../demo/checklist-ensayo.md) |
+| Publicar `cierre-final` | Falta autorización | Propuesta en el resumen final al equipo |
+
+Lo resuelto (autores, compilación, tiempo real en GPU, Docker, suite en Windows y origen de `prueba-bus`) está registrado en las secciones anteriores.

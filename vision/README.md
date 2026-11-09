@@ -30,7 +30,7 @@ Las pruebas pasan con `pytest` en Python 3.12.16 sobre macOS (Apple M4). Sin las
 ## Regla de conteo
 
 - **Punto del cuerpo.** El centro de la caja decide de qué lado está la persona. `--punto pies` usa el borde inferior.
-- **Lado confirmado.** Hacen falta `--confirmacion` cuadros seguidos a más de `--margen` píxeles de la línea. Dentro de ese margen el estado no cambia, así que temblar sobre la línea no cuenta.
+- **Lado confirmado.** Hacen falta `--confirmacion` cuadros seguidos a más de `--margen` píxeles de la línea. Dentro de ese margen el estado no cambia, así que temblar sobre la línea no cuenta. Una oscilación que sale del margen y confirma ambos lados **sí** genera eventos. Es compatible con los falsos de PAMELA B, aunque no se verificó caso por caso.
 - **Evento.** Se emite al pasar de un lado confirmado al otro. El primer lado de un track no cuenta, así que aparecer junto a la línea no alcanza. Un regreso confirmado genera un evento nuevo.
 - **Tiempo.** `tiempo_s` son los segundos desde el inicio del tramo hasta el primer cuadro del lado nuevo de la línea. Salen de las marcas temporales del video, no del momento de la confirmación.
 - **Línea.** Se trata como una recta infinita porque se traza de lado a lado del recorte.

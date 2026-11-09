@@ -14,20 +14,30 @@ Lo redactó Claude a pedido de Álvaro. Resume el cierre hecho entre el 8 y el 9
 - **Probado:** hay una prueba que pasa.
 - **Documentado:** está escrito.
 
+## 0. Clasificación de la entrega
+
+**Lista para entregar como prototipo funcional con limitaciones medidas.** El flujo completo funciona y tiene evidencia: video → detección y seguimiento → cruces → ocupación por parada → panel en vivo → Docker → informe.
+
+**No están resueltos todos los objetivos:**
+
+- El desafío de oclusiones de la consigna no se superó (F1 de 0,36 y 0,45 en la validación con subidas densas).
+- **No se consiguieron grabaciones de buses de Paraguay accesibles para el proyecto.** Es una restricción central: impidió adaptar y evaluar el sistema en el contexto local y obligó a usar grabaciones de otras procedencias.
+- El tiempo real se demostró solo en ejecución nativa con GPU, no en CPU ni en la imagen de Docker.
+
 ## 1. Resumen
 
 | Requisito de la consigna | Estado | Por qué |
 |---|---|---|
-| Dataset relevante, limpio y documentado | **Parcial** | Siete grabaciones (cinco escenas), con origen, hash, licencia, partición y referencias anotadas o revisadas por personas. **Ninguna es de Paraguay.** |
+| Dataset relevante, limpio y documentado | **Parcial** | Siete grabaciones (cinco escenas), con origen, hash, licencia, partición y referencias anotadas o revisadas por personas. `prueba-bus` ya tiene su fuente documentada (iStock, ID 1457518529), pero la licencia no está verificada. **Ninguna es de Paraguay.** |
 | Modelo entrenado con métricas formales | **Parcial, justificado** | Se entrenó y evaluó un YOLO11n ajustado, pero empeora fuera de su escena. Se despliega el preentrenado con ByteTrack calibrado. Las métricas formales están: P, R y F1 por sentido, y mAP del ajuste. |
 | Seguimiento (ByteTrack) con línea virtual | **Cumple** | Implementado, con tests de cada caso de la regla. |
 | Superar oclusiones con varias personas | **No cumple** | Medido en una validación prerregistrada: F1 de 0,36 y 0,45 con subidas densas. |
 | Conteo y porcentaje de ocupación | **Cumple** (funcional) | La calidad depende del conteo (fila anterior). |
-| Tiempo real | **Cumple en GPU; no en CPU** | En la RTX 2050: 680 de 686 cuadros a 24,75 FPS y 32 ms de latencia que no crece. En CPU se descartan cuadros y se pierden cruces. |
+| Tiempo real | **Demostrado en ejecución nativa con GPU; no en CPU ni en Docker** | RTX 2050, `prueba-bus` a 25 FPS, con ritmo real: procesó 680 de 686 cuadros (**6 descartados**) a 24,75 FPS. La **latencia interna** del pipeline, desde que llega un cuadro hasta que se publica, fue de 32 ms de media, sin crecer. Hasta la visualización se suma hasta 1 s, porque el panel consulta cada segundo. El conteo observado coincidió con el de procesar todos los cuadros. En CPU se descartan cuadros y se pierden cruces. |
 | Módulo simulado de carga a lo largo del recorrido | **Cumple** | Recorrido simulado de 8 paradas, rotulado como no medido. |
 | API REST | **Cumple** | FastAPI, con tests. |
-| Interfaz | **Cumple**; prueba manual parcial | Streamlit con resultados en vivo. El flujo completo de video lo recorrió Álvaro en el navegador. |
-| Docker | **Cumple** | Verificado por Álvaro en Windows: servicios `healthy`, y `prueba-bus` procesado en el contenedor. |
+| Interfaz | **Cumple**; ensayo pendiente | Streamlit con resultados en vivo. Álvaro subió y procesó `prueba-bus` desde el navegador, en Docker y con la GPU. El recorrido completo del guion queda para el ensayo. |
+| Docker | **Cumple el empaquetado; en CPU** | Verificado por Álvaro en Windows: servicios `healthy`, y `prueba-bus` procesado en el contenedor. La imagen usa CPU: con ritmo real descartó 354 de 686 cuadros. **El tiempo real no se demostró en Docker.** |
 | Git con commits descriptivos | **Cumple** | Commits por tarea, sin artefactos pesados. |
 | Informe IEEE, 3 páginas | **Cumple** | `docs/informe/informe.pdf`: compilado con MiKTeX, 3 páginas, sin desbordes y revisado página por página. |
 | Defensa de 10 + 2 minutos con demo en vivo | **Preparada; sin ensayar** | Guion en `docs/demo/guion.md`. |
@@ -160,14 +170,15 @@ Script `e2e_api.py`, salida en `resultados/e2e-api.txt`:
 |---|---|---|
 | Resolver oclusiones y duplicados | **No se pudo** con evidencia | Ningún cambio acotado mejoró el conjunto de selección sin regresiones. El filtro de cajas encimadas (tarea 14) eliminaba pasajeros reales. Ajustar mirando los videos de validación los invalidaría. Hacen falta datos anotados nuevos, idealmente cabezas en vista cenital. |
 | Reentrenar con más escenas | **No se hizo** | Había que dibujar unas 450 cajas a mano en Kaggle y PAMELA. Las credenciales del dataset oficial de PAMELA requieren al Prof. Velastin, que no respondió. |
-| Datos de Paraguay | **No se pudo** | No hay grabaciones locales. El protocolo de captura está en `docs/relevo/2026-11-08-claude-tarea12/protocolo-validacion-nueva.md`. |
+| Datos de Paraguay | **No se pudo** | No se consiguieron grabaciones de cámaras de buses de Paraguay accesibles para el proyecto. Es una restricción central, no un descuido. El protocolo de captura para hacerlo en el futuro está en `docs/relevo/2026-11-08-claude-tarea12/protocolo-validacion-nueva.md`. |
 | Regla anti-oscilación (no contar a quien queda sobre la línea) | **No se hizo** | Diseñarla mirando PAMELA B la convertiría en desarrollo, y no queda otro conjunto reservado para validarla. |
 | Construir Docker en el entorno de Claude | **No se pudo** | Docker Hub estaba bloqueado. **Lo verificó Álvaro en Windows.** |
 | Compilar LaTeX en el entorno de Claude | **No se pudo** | Faltaban `IEEEtran` y `babel-spanish`, y no se permitió instalarlos. **Lo compiló Álvaro con MiKTeX.** |
-| Prueba manual completa del panel en el navegador | Hecha por Álvaro | Claude no tenía un navegador que llegara al contenedor. Usó `AppTest` para la demo de 8 paradas y la de oficina, y HTTP para el flujo de video. |
+| Prueba manual completa del panel en el navegador | **Parcial** | Álvaro subió y procesó `prueba-bus` en Docker y con la GPU. El recorrido completo del guion queda para el ensayo ([`docs/demo/checklist-ensayo.md`](../../demo/checklist-ensayo.md)). Claude usó `AppTest` y HTTP. |
 | Suite completa en Windows con el código final | **Hecha** (9 nov., 01:06) | 139 aprobados, 1 fallido y 1 xfail, como en Linux (sección 3). |
-| Origen y licencia de `prueba-bus.mp4` | **No documentado** | Es un video de stock con marca de agua de iStock; falta la URL o el identificador. |
-| Ensayo de la defensa | **No se hizo** | Le corresponde al equipo. |
+| Origen de `prueba-bus.mp4` | **Documentado** (9 nov.) | iStock ID 1457518529, «LD Bus stopping at the station and passengers getting off it», `simonkr`, en `data/README.md` y en la referencia [16] del informe. La correspondencia se comprobó por contenido, no contra el archivo original. |
+| Licencia de `prueba-bus.mp4` | **No verificada** | El archivo local es una vista previa con marca de agua. No consta una licencia adquirida, así que no se publican capturas ni se redistribuye. |
+| Ensayo de la defensa | **No se hizo** | Le corresponde al equipo, con [`docs/demo/checklist-ensayo.md`](../../demo/checklist-ensayo.md). No se marca como hecho hasta que el equipo lo confirme. |
 | Push o merge | **No se hizo** | Requiere autorización de Álvaro. |
 
 ## 5. Decisiones que conviene revisar

@@ -14,7 +14,7 @@ Los videos van en `data/raw/`, que git ignora. Acá se documenta de dónde sale 
 | `puerta-tren-d800-B-No.mp4` y `…-B-Oy.mp4` | 18 y 23 subidas (Álvaro, antes de procesar: `pamela-B-*-cruces.json`) | Es humana | **Validación prerregistrada (9 nov.)**, ejecutada una vez: F1 de 0,36 y 0,45 | Ya no: quedan consumidos. Es la misma escena que PAMELA A |
 
 - **Dónde está la revisión:** [`revision-humana-referencias.md`](../docs/relevo/2026-11-08-claude-tarea12/revision-humana-referencias.md), con los hashes. Las anotaciones de Kaggle y PAMELA conservan, sin cambios, el campo `anotado_por` original, que dice «sin revisión humana»; la revisión posterior consta en ese archivo.
-- **Contexto local:** ninguna grabación es de Paraguay. Para la próxima prueba hace falta una grabación nueva, idealmente de un colectivo del Gran Asunción. Protocolo: [`protocolo-validacion-nueva.md`](../docs/relevo/2026-11-08-claude-tarea12/protocolo-validacion-nueva.md).
+- **Contexto local: restricción central.** No se consiguieron grabaciones de cámaras de buses de Paraguay accesibles para este proyecto. Esa disponibilidad limitada de datos impidió adaptar y evaluar el sistema en el contexto local, y motivó el uso de grabaciones de otras procedencias: YouTube, Kaggle, PAMELA-UANDES (Chile) e iStock (Eslovenia). Para la próxima prueba hace falta una grabación nueva, idealmente de un colectivo del Gran Asunción. Protocolo: [`protocolo-validacion-nueva.md`](../docs/relevo/2026-11-08-claude-tarea12/protocolo-validacion-nueva.md).
 
 ## Estado anterior (8 nov., tarea 12)
 
@@ -34,12 +34,20 @@ Las particiones de la tabla siguiente son las originales.
 | `data/raw/oficina.mp4` | YouTube, ver abajo | Real, pero es una oficina que hace de puerta de bus | 52,64 s | Entrenamiento y calibración. No sirve para métricas del informe. |
 | `data/raw/kaggle-people-boarding-bus.mp4` | [Kaggle, «People boarding a bus»](https://www.kaggle.com/datasets/kapilraj/people-boarding-a-bus) (`video5.mp4`), licencia desconocida | Real: puerta de bus, cámara arriba de la entrada | 59,96 s | **Prueba.** Nunca se usó para calibrar ni entrenar. |
 | `data/raw/puerta-tren-d800-A.mp4`, `…-B-No.mp4`, `…-B-Oy.mp4` | [PAMELA-UANDES](https://videodatasets.org/PAMELA-UANDES/whole_data.html), muestras públicas `A_d800mm_sample`, `B_No_d800mm_sample` y `B_Oy_d800mm_sample` | Puerta de vagón de tren en laboratorio, puerta de 800 mm, cámara cenital. A = bajada; B = subida sin y con tarjeta | 30 s c/u | **Prueba**, como una sola fuente. Sin referencia todavía. |
+| `data/raw/prueba-bus.mp4` | [iStock, ID 1457518529](https://www.istockphoto.com/video/ld-bus-stopping-at-the-station-and-passengers-getting-off-it-gm1457518529-492183151), vista previa con marca de agua; licencia no verificada | Real: bus en una parada, cámara alta (Eslovenia) | 27,4 s | **Prueba ciega** (tarea 13); después, desarrollo |
 
 `kaggle-people-boarding-bus.mp4`:
 - **Archivo:** H.264, 1920×1080, 25 FPS, 43.857.248 bytes, SHA-256 `5084d4b11484282f1a81368f453dfccad9860c714f1e3c9704f65b32058ffe45`. Lo descargó Álvaro el 7 nov. 2026.
 - **Uso:** licencia «Unknown» en Kaggle. Solo uso local para evaluar, citando la fuente: no se versiona, no se redistribuye y no se suben capturas. Muestra personas identificables y coordenadas GPS sobreimpresas.
 - **Prerregistro:** recorte, línea y configuraciones fijados antes de ejecutar, en [`docs/relevo/2026-11-07-claude-tarea09/prueba-kaggle/preregistro.md`](../docs/relevo/2026-11-07-claude-tarea09/prueba-kaggle/preregistro.md).
 - **Anotación:** [`annotations/kaggle-people-boarding-bus-cruces.json`](annotations/kaggle-people-boarding-bus-cruces.json), con 6 subidas y 0 bajadas. La hizo **Claude** a pedido de Álvaro, mirando los cuadros antes de ejecutar ningún modelo. **Falta la revisión de una persona.** Resultados en [`prueba-kaggle/resultados.md`](../docs/relevo/2026-11-07-claude-tarea09/prueba-kaggle/resultados.md).
+
+`prueba-bus.mp4` (agregado el 9 nov., cierre final):
+- **Fuente:** iStock (Getty Images), video de stock **ID 1457518529**, «LD Bus stopping at the station and passengers getting off it», del colaborador `simonkr`, publicado el 28 feb. 2023: https://www.istockphoto.com/video/ld-bus-stopping-at-the-station-and-passengers-getting-off-it-gm1457518529-492183151. Según la página, es una toma alta y fija de un bus que se detiene, con gente que baja y sube, grabada en Eslovenia (no es de Paraguay).
+- **Archivo local:** H.264, 768×432, 25 FPS, 686 cuadros (27,4 s), SHA-256 `0b4b8c97940c5f753880cf370046e1930121bf30dde4182905735b11b7e90d63`, con la marca de agua «iStock by Getty Images». Es una **vista previa**, no el archivo HD o 4K que se obtiene con la licencia.
+- **Correspondencia:** Claude comparó el contenido del archivo local con el título y la descripción de la página, y coinciden: toma alta y fija de un bus detenido en la parada, con pasajeros que bajan y suben. **No se comparó con el archivo original de iStock** (no se descargó), así que la identificación es por contenido.
+- **Permisos: no verificados.** La página ofrece una licencia estándar paga, pero no consta que se haya adquirido. No se versiona ni se redistribuye, y antes de publicar capturas hay que resolver la licencia.
+- **Referencia y uso:** sin cambios. `annotations/prueba-bus-cruces.json` (SHA-256 `0640f227…`, de Álvaro, antes de procesar) y una primera evaluación ciega (tarea 13). Después se usó para desarrollo.
 
 Muestras de PAMELA-UANDES (`puerta-tren-d800-*`):
 - **Archivos:** 352×288, 25 FPS, unos 30 s cada uno. SHA-256: A `cf18411cda0d7b9de9a1c649599185b4d469c20fa2f9fc4f057d537aeb0868ab`; B-No `58d945ab2a876d563dcbdfe07b9cf9697aa842c9999458e061b5d8a3530ec650`; B-Oy `00151d75110b95fe4d1d8aff61dc5bfadaf10b83b6808acd2251c7d3802d43ea`. Los descargó Álvaro el 7 nov. 2026.
