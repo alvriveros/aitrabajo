@@ -22,7 +22,7 @@
 \maketitle
 
 \begin{abstract}
-Auditar el hacinamiento de los buses del Gran Asunción requiere la carga de cada unidad por parada. Se presenta un sistema que detecta personas con YOLO11n, las sigue con ByteTrack y cuenta subidas y bajadas al cruzar una línea virtual. Una API REST convierte los cruces en ocupación por parada, un panel web la muestra mientras se procesa el video y se despliega con Docker. En una evaluación ciega en un bus, detectó los 12 cruces, pero registró 12 eventos falsos (F1 de 0,67), en su mayoría por cajas duplicadas. En dos grabaciones nuevas con subidas densas, el F1 fue de 0,36 y 0,45, y en un bus real se contaron 6 de 18 cruces. El ajuste del detector con un video de oficina no generalizó, así que se despliega el preentrenado. Con GPU funciona en tiempo real: 24,8 cuadros por segundo y 32~ms de latencia media; en CPU descarta cuadros y pierde cruces.
+Auditar el hacinamiento de los buses del Gran Asunción requiere la carga de cada unidad por parada. Se presenta un sistema que detecta personas con YOLO11n, las sigue con ByteTrack y cuenta subidas y bajadas al cruzar una línea virtual. Una API REST calcula la ocupación por parada, que un panel web muestra mientras se procesa el video; todo se despliega con Docker. En una evaluación ciega en un bus, detectó los 12 cruces, pero registró 12 eventos falsos (F1 de 0,67), en su mayoría por cajas duplicadas. En dos grabaciones nuevas con subidas densas, el F1 fue de 0,36 y 0,45, y en un bus real se contaron 6 de 18 cruces. El ajuste del detector con un video de oficina no generalizó, así que se despliega el preentrenado. Con GPU funciona en tiempo real (24,8 cuadros por segundo, 32~ms de latencia); en CPU pierde cruces.
 \end{abstract}
 
 \begin{IEEEkeywords}
