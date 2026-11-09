@@ -21,7 +21,7 @@ Lo redactó Claude a pedido de Álvaro. Resume el cierre hecho entre el 8 y el 9
 **No están resueltos todos los objetivos:**
 
 - El desafío de oclusiones de la consigna no se superó (F1 de 0,36 y 0,45 en la validación con subidas densas).
-- **No se consiguieron grabaciones de buses de Paraguay accesibles para el proyecto.** Es una restricción central: impidió adaptar y evaluar el sistema en el contexto local y obligó a usar grabaciones de otras procedencias.
+- **Datos:** La disponibilidad de videos accesibles y adecuados de cámaras de buses fue una limitación central del proyecto. No se consiguió suficiente material para construir un conjunto diverso y representativo, especialmente del contexto paraguayo. Por ello se incorporaron una grabación de oficina para entrenamiento y calibración, y grabaciones de puertas de tren (PAMELA-UANDES) para selección y evaluación, junto con los pocos videos de bus disponibles (Kaggle, YouTube e iStock). Estos materiales permitieron desarrollar y probar el sistema, pero sus diferencias respecto de las condiciones reales de un bus limitan la generalización de los resultados.
 - El tiempo real se demostró solo en ejecución nativa con GPU, no en CPU ni en la imagen de Docker.
 
 ## 1. Resumen
@@ -170,7 +170,7 @@ Script `e2e_api.py`, salida en `resultados/e2e-api.txt`:
 |---|---|---|
 | Resolver oclusiones y duplicados | **No se pudo** con evidencia | Ningún cambio acotado mejoró el conjunto de selección sin regresiones. El filtro de cajas encimadas (tarea 14) eliminaba pasajeros reales. Ajustar mirando los videos de validación los invalidaría. Hacen falta datos anotados nuevos, idealmente cabezas en vista cenital. |
 | Reentrenar con más escenas | **No se hizo** | Había que dibujar unas 450 cajas a mano en Kaggle y PAMELA. Las credenciales del dataset oficial de PAMELA requieren al Prof. Velastin, que no respondió. |
-| Datos de Paraguay | **No se pudo** | No se consiguieron grabaciones de cámaras de buses de Paraguay accesibles para el proyecto. Es una restricción central, no un descuido. El protocolo de captura para hacerlo en el futuro está en `docs/relevo/2026-11-08-claude-tarea12/protocolo-validacion-nueva.md`. |
+| Datos de Paraguay | **No se pudo** | No se consiguió suficiente material accesible y adecuado de cámaras de buses, en especial del contexto paraguayo. Es una limitación central, no un descuido; se usaron oficina, puertas de tren y los pocos videos de bus disponibles. El protocolo de captura para hacerlo en el futuro está en `docs/relevo/2026-11-08-claude-tarea12/protocolo-validacion-nueva.md`. |
 | Regla anti-oscilación (no contar a quien queda sobre la línea) | **No se hizo** | Diseñarla mirando PAMELA B la convertiría en desarrollo, y no queda otro conjunto reservado para validarla. |
 | Construir Docker en el entorno de Claude | **No se pudo** | Docker Hub estaba bloqueado. **Lo verificó Álvaro en Windows.** |
 | Compilar LaTeX en el entorno de Claude | **No se pudo** | Faltaban `IEEEtran` y `babel-spanish`, y no se permitió instalarlos. **Lo compiló Álvaro con MiKTeX.** |
