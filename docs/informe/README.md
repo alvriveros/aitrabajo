@@ -20,6 +20,4 @@
    Si sobra o falta espacio, ajustá la sección III, la más larga.
 4. **Revisar visualmente** las tres páginas y guardar el PDF como `informe.pdf`.
 
-**Resumen:** 147 palabras, contadas en la fuente.
-
-**Estado de la compilación (9 nov.):** no se pudo compilar en el entorno de Claude. A ese TeX Live le faltan `IEEEtran` y `babel-spanish`, y la red no permite instalarlos. El texto tiene unas 2000 palabras, tres tablas y una figura TikZ. El borrador anterior tenía unas 1750 palabras, tres tablas y dos figuras, y ocupaba 3 páginas con casi una columna libre, así que la extensión debería cerrar en 3 páginas. **Igual hay que verificarlo compilando.** `informe-borrador.pdf` es el PDF del borrador anterior y no corresponde a este texto.
+**Estado (9 nov., 00:36):** `informe.pdf` es el PDF final. Lo compiló Álvaro con MiKTeX: 3 páginas A4, sin desbordes ni errores, y Claude revisó las tres páginas. El resumen tiene 150 palabras. `informe-borrador.pdf` es el borrador anterior y se conserva como histórico.
