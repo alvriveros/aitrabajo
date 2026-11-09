@@ -1,6 +1,6 @@
 # aitrabajo · Conteo de pasajeros y ocupación del bus
 
-TP final de Inteligencia Aplicada (proyecto 10 de [`contexto.md`](contexto.md)). El sistema cuenta subidas y bajadas en la puerta de un bus a partir de video, con YOLO11n, ByteTrack y una línea virtual. Con esos eventos calcula la carga y el porcentaje de ocupación por parada, también mientras el video se procesa.
+TP final de Inteligencia Artificial (proyecto 10 de [`contexto.md`](contexto.md)). El sistema cuenta subidas y bajadas en la puerta de un bus a partir de video, con YOLO11n, ByteTrack y una línea virtual. Con esos eventos calcula la carga y el porcentaje de ocupación por parada, también mientras el video se procesa.
 
 **Estado al 9 nov.:** qué cumple y qué falta de la consigna, con evidencia, en [la matriz de requisitos](docs/relevo/2026-11-08-claude-cierre-final/matriz.md). Las cifras de calidad, en [data/README.md](data/README.md) y en el informe ([`docs/informe/`](docs/informe/)).
 
