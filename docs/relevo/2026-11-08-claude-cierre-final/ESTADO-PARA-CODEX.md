@@ -136,7 +136,14 @@ Linux (contenedor de Claude), con el código final: **139 aprobados, 1 fallido y
 | `test_pipeline_modelo.py::test_ensayo_de_oficina_…` | Falla | Defecto conocido y visible a propósito: la bajada de oficina a los 4,68 s no se cuenta, porque la confianza cae a 0,02–0,09 en la puerta. No se cambió la expectativa. |
 | `test_cajas_encimadas.py::…` | Xfail | Limitación conocida: varias cajas encimadas sobre una persona cuentan varios cruces. |
 
-**No se corrió la suite completa en Windows después de los cambios.**
+**Windows (verificación de Álvaro, 9 nov., 01:06, commit `b60b615`):** 139 aprobados, 1 fallido (oficina) y 1 xfail (cajas encimadas), ningún omitido, en 31,37 s. Coincide con Linux.
+
+En la misma verificación se comprobaron otras dos cosas:
+
+- PAMELA B-No da 15 aciertos, 3 omisiones, 50 falsos positivos y F1 de 0,3614, igual que lo informado.
+- No hay videos, pesos ni contenido de `runs/` versionados.
+
+**Esa verificación no repitió** Docker, la medición en GPU ni el recorrido manual del panel; esos resultados son los del 8 y 9 nov. citados arriba.
 
 ### Prueba de punta a punta por HTTP
 
@@ -158,7 +165,7 @@ Script `e2e_api.py`, salida en `resultados/e2e-api.txt`:
 | Construir Docker en el entorno de Claude | **No se pudo** | Docker Hub estaba bloqueado. **Lo verificó Álvaro en Windows.** |
 | Compilar LaTeX en el entorno de Claude | **No se pudo** | Faltaban `IEEEtran` y `babel-spanish`, y no se permitió instalarlos. **Lo compiló Álvaro con MiKTeX.** |
 | Prueba manual completa del panel en el navegador | Hecha por Álvaro | Claude no tenía un navegador que llegara al contenedor. Usó `AppTest` para la demo de 8 paradas y la de oficina, y HTTP para el flujo de video. |
-| Suite completa en Windows con el código final | **No se hizo** | Pendiente; ver la sección 6. |
+| Suite completa en Windows con el código final | **Hecha** (9 nov., 01:06) | 139 aprobados, 1 fallido y 1 xfail, como en Linux (sección 3). |
 | Origen y licencia de `prueba-bus.mp4` | **No documentado** | Es un video de stock con marca de agua de iStock; falta la URL o el identificador. |
 | Ensayo de la defensa | **No se hizo** | Le corresponde al equipo. |
 | Push o merge | **No se hizo** | Requiere autorización de Álvaro. |

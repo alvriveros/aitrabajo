@@ -140,7 +140,11 @@ Se siguió [el prerregistro](validacion-pamela-b/prerregistro.md):
 - **Detección:** la mayoría de las subidas reales se detecta (34 de 41). El problema son los eventos de más, no las omisiones.
 - **Uso posterior:** desde este resultado, B-No y B-Oy pasan a ser de desarrollo. Si se prueba una corrección mirándolos, se rotula así.
 
-## Suite (Linux, contenedor de Claude)
+## Suite
+
+**Windows** (Álvaro, 9 nov., 01:06, commit `b60b615`): 139 aprobados, 1 fallido y 1 xfail; ningún omitido; 31,37 s.
+
+### Linux (contenedor de Claude)
 
 `pytest -q -rxs`: **138 aprobados, 1 fallido y 1 xfail.**
 
