@@ -18,6 +18,7 @@ pytest-cache-files-*
 **/*.mkv
 **/*.webm
 **/*.pt
+!yolo11n.pt
 **/*.pth
 **/*.onnx
 **/*.weights
