@@ -1,0 +1,137 @@
+{
+  "capacidad": 20,
+  "carga_inicial": 0,
+  "paradas": [
+    {
+      "nombre": "prueba-bus",
+      "inicio_s": 0
+    }
+  ],
+  "eventos": [
+    {
+      "tiempo_s": 8.2,
+      "track_id": 14,
+      "sentido": "bajada"
+    },
+    {
+      "tiempo_s": 8.24,
+      "track_id": 22,
+      "sentido": "bajada"
+    },
+    {
+      "tiempo_s": 8.36,
+      "track_id": 10,
+      "sentido": "bajada"
+    },
+    {
+      "tiempo_s": 10.16,
+      "track_id": 34,
+      "sentido": "bajada"
+    },
+    {
+      "tiempo_s": 10.36,
+      "track_id": 39,
+      "sentido": "bajada"
+    },
+    {
+      "tiempo_s": 10.4,
+      "track_id": 38,
+      "sentido": "bajada"
+    },
+    {
+      "tiempo_s": 10.6,
+      "track_id": 40,
+      "sentido": "bajada"
+    },
+    {
+      "tiempo_s": 11.76,
+      "track_id": 46,
+      "sentido": "bajada"
+    },
+    {
+      "tiempo_s": 11.88,
+      "track_id": 44,
+      "sentido": "bajada"
+    },
+    {
+      "tiempo_s": 13.52,
+      "track_id": 52,
+      "sentido": "bajada"
+    },
+    {
+      "tiempo_s": 14.6,
+      "track_id": 74,
+      "sentido": "bajada"
+    },
+    {
+      "tiempo_s": 14.8,
+      "track_id": 60,
+      "sentido": "bajada"
+    },
+    {
+      "tiempo_s": 15.04,
+      "track_id": 56,
+      "sentido": "subida"
+    },
+    {
+      "tiempo_s": 15.68,
+      "track_id": 84,
+      "sentido": "bajada"
+    },
+    {
+      "tiempo_s": 15.76,
+      "track_id": 89,
+      "sentido": "bajada"
+    },
+    {
+      "tiempo_s": 15.84,
+      "track_id": 80,
+      "sentido": "bajada"
+    },
+    {
+      "tiempo_s": 15.88,
+      "track_id": 56,
+      "sentido": "bajada"
+    },
+    {
+      "tiempo_s": 15.88,
+      "track_id": 79,
+      "sentido": "subida"
+    },
+    {
+      "tiempo_s": 15.88,
+      "track_id": 91,
+      "sentido": "subida"
+    },
+    {
+      "tiempo_s": 16.04,
+      "track_id": 56,
+      "sentido": "subida"
+    },
+    {
+      "tiempo_s": 17.52,
+      "track_id": 2,
+      "sentido": "subida"
+    },
+    {
+      "tiempo_s": 18.08,
+      "track_id": 2,
+      "sentido": "bajada"
+    },
+    {
+      "tiempo_s": 19.12,
+      "track_id": 2,
+      "sentido": "subida"
+    },
+    {
+      "tiempo_s": 20.68,
+      "track_id": 68,
+      "sentido": "subida"
+    },
+    {
+      "tiempo_s": 21.12,
+      "track_id": 76,
+      "sentido": "subida"
+    }
+  ]
+}

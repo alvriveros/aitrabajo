@@ -496,10 +496,10 @@ def main(argv=None):
         print("Cancelado a pedido del usuario.", file=sys.stderr)
         raise SystemExit(CODIGO_CANCELADO)
     finally:
+        if progreso:
+            progreso.escribir()  # antes de convertir el video, para que el retraso final sea el del conteo
         if anotador:
             anotador.cerrar()
-        if progreso:
-            progreso.escribir()
 
     eventos = recorrido["eventos"]
     subidas = sum(evento["sentido"] == "subida" for evento in eventos)

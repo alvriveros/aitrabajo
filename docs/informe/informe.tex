@@ -22,7 +22,7 @@
 \maketitle
 
 \begin{abstract}
-Auditar el hacinamiento de los buses del Gran Asunción requiere la carga de cada unidad por parada. Se presenta un sistema que detecta personas con YOLO11n, las sigue con ByteTrack y cuenta subidas y bajadas al cruzar una línea virtual. Una API REST convierte los cruces en ocupación por parada, un panel web la muestra mientras se procesa el video y se despliega con Docker. En una evaluación ciega en un bus, detectó los 12 cruces, pero registró 12 eventos falsos (F1 de 0,67), en su mayoría por cajas duplicadas. En dos grabaciones nuevas con subidas densas, el F1 fue de 0,36 y 0,45, y en un bus real se contaron 6 de 18 cruces. El ajuste del detector con un video de oficina no generalizó, así que se despliega el preentrenado. En CPU no hay tiempo real sin perder cruces; con GPU, el detector procesa 66 cuadros por segundo.
+Auditar el hacinamiento de los buses del Gran Asunción requiere la carga de cada unidad por parada. Se presenta un sistema que detecta personas con YOLO11n, las sigue con ByteTrack y cuenta subidas y bajadas al cruzar una línea virtual. Una API REST convierte los cruces en ocupación por parada, un panel web la muestra mientras se procesa el video y se despliega con Docker. En una evaluación ciega en un bus, detectó los 12 cruces, pero registró 12 eventos falsos (F1 de 0,67), en su mayoría por cajas duplicadas. En dos grabaciones nuevas con subidas densas, el F1 fue de 0,36 y 0,45, y en un bus real se contaron 6 de 18 cruces. El ajuste del detector con un video de oficina no generalizó, así que se despliega el preentrenado. Con GPU funciona en tiempo real: 24,8 cuadros por segundo y 32~ms de latencia media; en CPU descarta cuadros y pierde cruces.
 \end{abstract}
 
 \begin{IEEEkeywords}
@@ -125,7 +125,7 @@ La validación con las muestras B de PAMELA, grabaciones nuevas de la misma puer
 Antes de modificar el sistema, se probó un cambio por vez sobre el conjunto de selección (oficina, Kaggle y PAMELA, con 37 errores de la línea base). Bajar el IoU de la supresión de no máximos de 0,7 a 0,5 eliminó cajas duplicadas en Kaggle, pero en PAMELA perdió una bajada y sumó dos falsos, y el total quedó en 37. Un filtro de cajas encimadas eliminaba pasajeros reales. Ninguno de los dos se adoptó. Elegir otra corrección mirando \emph{prueba-bus} exigiría una nueva prueba ciega.
 
 \subsection{Rendimiento y tiempo real}
-La Tabla~\ref{tab:vel} resume las mediciones. El detector y el seguimiento ocupan casi todo el tiempo de cada cuadro; la lectura y la regla son despreciables, y codificar el video anotado en VP8 agrega unos 50~ms por cuadro a 768$\times$432. En CPU no se llega a 25~FPS. En modo de ritmo real el retraso no crece: la latencia media del último décimo de la ejecución fue de 129~ms, frente a 206~ms del primero, y el video de 27,4~s terminó en 27,5~s. A cambio, se descartó el 70~\% de los cuadros, y en oficina el conteo bajó de 11 a 4 de 20 cruces. Saltar cuadros de manera fija produce el mismo efecto: con 1 de cada 2, la selección pasa de 37 a 42 errores, y con 1 de cada 3, a 47. Con la GPU RTX~2050, YOLO11n procesó 65,9 cuadros por segundo, con video anotado, más del doble de lo necesario. Falta repetir en GPU la medición de latencia en modo de ritmo real.
+La Tabla~\ref{tab:vel} resume las mediciones. El detector y el seguimiento ocupan casi todo el tiempo de cada cuadro; la lectura y la regla son despreciables, y codificar el video anotado en VP8 agrega unos 50~ms por cuadro a 768$\times$432. En CPU no se llega a 25~FPS. En modo de ritmo real el retraso no crece: la latencia media del último décimo de la ejecución fue de 129~ms, frente a 206~ms del primero, y el video de 27,4~s terminó en 27,5~s. A cambio, se descartó el 70~\% de los cuadros, y en oficina el conteo bajó de 11 a 4 de 20 cruces. Saltar cuadros de manera fija produce el mismo efecto: con 1 de cada 2, la selección pasa de 37 a 42 errores, y con 1 de cada 3, a 47. En la GPU RTX~2050, el detector y el seguimiento tardan 17~ms por cuadro (58 FPS). Codificar el video anotado en VP8 durante el conteo lo frenaba a 10 FPS, así que ahora se escribe en mp4v y se convierte al final. Con ese cambio, en modo de ritmo real se procesaron 680 de los 686 cuadros a la velocidad del video. La latencia media fue de 32~ms, y de 26~ms en el último décimo, sin crecer. El conteo resultó idéntico al que se obtiene procesando todos los cuadros.
 
 \begin{table}[!t]
 \caption{Rendimiento medido (YOLO11n, entrada de 640~px)}
@@ -139,15 +139,16 @@ CPU Ryzen~5 7535HS, \emph{prueba-bus}, con video anotado & 8,8 FPS\\
 CPU de 2 núcleos (Linux), detección y seguimiento & 70--90 ms por cuadro\\
 Ídem: lectura, regla y escritura del progreso & $<$3, $<$0,1 y $<$1 ms\\
 Ídem, ritmo real, \emph{prueba-bus}, con video & latencia media de 148~ms, p95 de 180~ms; 30~\% de cuadros procesados\\
-GPU RTX~2050, bus real (586$\times$420), con video anotado & 65,9 FPS\\
+GPU RTX~2050, \emph{prueba-bus}, todos los cuadros, sin video & 58 FPS; 17 ms por cuadro\\
+Ídem, ritmo real, con video & 680 de 686 cuadros; latencia media de 32~ms, p95 de 47~ms\\
 \bottomrule
 \end{tabular}
 \end{table}
 
 \section{Conclusiones y trabajo futuro}
-El sistema funciona de extremo a extremo: recibe un video, cuenta los cruces, actualiza la ocupación mientras procesa y la reporta por parada a lo largo de un recorrido. Se despliega con Docker y está cubierto por pruebas automáticas. La calidad del conteo, en cambio, todavía no alcanza para auditar un servicio. Duplica eventos cuando hay varias cajas sobre una persona o cuando una fila oscila sobre la línea, y los omite cuando la detección se pierde en la puerta. En CPU, además, no hay tiempo real sin perder cruces. Las lecciones son tres. Una métrica perfecta en la grabación de entrenamiento no prueba generalización. Cada video de prueba sirve una sola vez. Y una corrección que mejora un video puede empeorar otro.
+El sistema funciona de extremo a extremo: recibe un video, cuenta los cruces, actualiza la ocupación mientras procesa y la reporta por parada a lo largo de un recorrido. Se despliega con Docker y está cubierto por pruebas automáticas. La calidad del conteo, en cambio, todavía no alcanza para auditar un servicio. Duplica eventos cuando hay varias cajas sobre una persona o cuando una fila oscila sobre la línea, y los omite cuando la detección se pierde en la puerta. Con la GPU funciona en tiempo real sin perder cuadros; en CPU, no. Las lecciones son tres. Una métrica perfecta en la grabación de entrenamiento no prueba generalización. Cada video de prueba sirve una sola vez. Y una corrección que mejora un video puede empeorar otro.
 
-Las limitaciones son la falta de grabaciones paraguayas, pocas escenas anotadas y una sola puerta. El trabajo futuro es grabar puertas de colectivos locales con permiso y reservar una parte como prueba, entrenar con cabezas anotadas en vista cenital, como las de PAMELA~\cite{velastin2020}, y medir el tiempo real en GPU con una cámara.
+Las limitaciones son la falta de grabaciones paraguayas, pocas escenas anotadas y una sola puerta. El trabajo futuro es grabar puertas de colectivos locales con permiso y reservar una parte como prueba, entrenar con cabezas anotadas en vista cenital, como las de PAMELA~\cite{velastin2020}, y probar el tiempo real con una cámara en lugar de un archivo.
 
 \bibliographystyle{IEEEtran}
 \bibliography{referencias}

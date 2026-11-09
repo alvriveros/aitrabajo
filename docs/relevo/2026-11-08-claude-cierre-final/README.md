@@ -101,6 +101,26 @@ Con la API en ese contenedor. El script es [`e2e_api.py`](e2e_api.py) y su salid
 - **Conteo:** 11/5/1, con subidas 4/3/0 y bajadas 7/2/1. **Es desarrollo:** `prueba-bus` ya se usó, así que no es una validación. Además, depende de qué cuadros se descarten.
 - **Aviso de OpenCV:** `tag 'VP80' is not supported with codec id 139`. El `anotado.webm` igual se genera: 10,9 MB, con cabecera WebM válida.
 
+## Tiempo real en la RTX 2050 (Álvaro, 9 nov.)
+
+Las pruebas se hicieron con la notebook enchufada y en máximo rendimiento.
+
+| Ejecución | FPS | Detección y seguimiento | Entrega | Descartados | Latencia media / p95 |
+|---|---|---|---|---|---|
+| Panel, ritmo real, VP8 en el conteo (`20261109-004143`) | 10,3 | 43 ms | 53 ms | 404 de 686 | 117 / 143 ms |
+| (b) CLI, todos los cuadros, sin video | 58,0 | 17 ms | — | 0 | 17 / 19 ms |
+| (a) CLI, ritmo real, sin video | 23,0 | 22 ms | — | 54, todos al arrancar | 23 / 21 ms |
+| (c) CLI, todos los cuadros, con VP8 | 11,6 | 37 ms | 49 ms | 0 | 86 / 122 ms |
+| **Panel, ritmo real, con la corrección `c272311`** (`20261109-005405`) | **24,75** | 27 ms | 3 ms | **6 de 686** | **32 / 47 ms** |
+
+- **Diagnóstico:** la GPU no era el cuello de botella. Lo eran la codificación VP8 dentro del bucle, que además le quita CPU al seguimiento, y la carga del modelo en el primer cuadro.
+- **Corrección:**
+  - el video se escribe en mp4v y se convierte a VP8 al terminar;
+  - se agrega una inferencia de precalentamiento.
+- **Conteo:** 12/13/0, igual al de procesar todos los cuadros en la GPU (b). La diferencia con 12/12/0 en CPU se debe a la plataforma. `prueba-bus` es desarrollo.
+- **Detalle:** en esa ejecución, el último `progreso.json` muestra un «retraso» de 30 s porque se escribió después de convertir el video. Se corrigió después: ahora se escribe antes.
+- **Evidencia:** [`resultados/gpu-windows/`](resultados/gpu-windows/), con las mediciones a, b y c en `diagnostico/`.
+
 ## Validación con PAMELA B (Álvaro, 9 nov., 00:16–00:19)
 
 Se siguió [el prerregistro](validacion-pamela-b/prerregistro.md):

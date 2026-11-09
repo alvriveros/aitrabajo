@@ -71,7 +71,7 @@ Pantalla: Tabla II del informe.
   > "Por eso desplegamos el preentrenado: no vamos a usar un modelo peor solo porque lo entrenamos nosotros."
 - **Tiempo real** (Tabla III):
   - en CPU, 8,8 FPS; con ritmo real, el retraso no crece, pero se descarta el 70 % de los cuadros y en oficina se cuentan 4 de 20 cruces;
-  - con la GPU, 65,9 FPS, más que los 25 del video.
+  - con la GPU, ritmo real a la velocidad del video: 680 de 686 cuadros, latencia media de 32 ms que no crece y el mismo conteo que procesando todos los cuadros.
 
 ## 9:00–10:00 · Conclusiones
 

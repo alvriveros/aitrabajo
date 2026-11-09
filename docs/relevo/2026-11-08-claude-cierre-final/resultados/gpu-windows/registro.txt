@@ -1,0 +1,5 @@
+25 eventos: 8 subidas y 17 bajadas.
+Predicciones: C:\Users\Alvaro\Desktop\Facultad\4to\IA\TpFinal\.worktrees\integracion-video\runs\panel\20261109-005405-323754\prediccion.json
+ConfiguraciÃ³n: C:\Users\Alvaro\Desktop\Facultad\4to\IA\TpFinal\.worktrees\integracion-video\runs\panel\20261109-005405-323754\prediccion.config.json
+Video anotado: C:\Users\Alvaro\Desktop\Facultad\4to\IA\TpFinal\.worktrees\integracion-video\runs\panel\20261109-005405-323754\anotado.webm
+OpenCV: FFMPEG: tag 0x30385056/'VP80' is not supported with codec id 139 and format 'webm / WebM'

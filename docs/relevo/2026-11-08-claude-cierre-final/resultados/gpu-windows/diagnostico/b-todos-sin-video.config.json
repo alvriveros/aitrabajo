@@ -1,0 +1,64 @@
+{
+  "comando": "python -m vision.pipeline --video data/raw/prueba-bus.mp4 --recorte 0,0,768,432 --linea 274,431,467,242 --interior arriba --rastreador vision/bytetrack-cenital.yaml --conf 0.05 --confirmacion 2 --dispositivo cuda:0 --pesos yolo11n.pt --salida runs/diagnostico-gpu/b-todos-sin-video.json",
+  "video": "data\\raw\\prueba-bus.mp4",
+  "propiedades_del_video": {
+    "fps": 25.0,
+    "ancho": 768,
+    "alto": 432
+  },
+  "tramo_s": {
+    "inicio": 0.0,
+    "fin": null
+  },
+  "recorte": {
+    "x": 0,
+    "y": 0,
+    "ancho": 768,
+    "alto": 432
+  },
+  "linea": {
+    "x1": 274.0,
+    "y1": 431.0,
+    "x2": 467.0,
+    "y2": 242.0,
+    "interior": "arriba"
+  },
+  "sistema_de_coordenadas": "Píxeles: origen arriba a la izquierda, x hacia la derecha, y hacia abajo.",
+  "punto_del_cuerpo": "centro",
+  "margen_px": 5.0,
+  "confirmacion_cuadros": 2,
+  "pesos": "yolo11n.pt",
+  "rastreador": "vision/bytetrack-cenital.yaml",
+  "conf": 0.05,
+  "dispositivo": "cuda:0",
+  "medicion": {
+    "cuadros": 686,
+    "segundos": 11.821,
+    "fps_procesados": 58.03,
+    "con_video_anotado": false,
+    "ritmo_real": false,
+    "ms_por_cuadro": {
+      "lectura": 0.3,
+      "rastreo": 16.9,
+      "conteo": 0.0,
+      "entrega": 0.0
+    },
+    "latencia_ms": {
+      "media": 16.9,
+      "p95": 18.7,
+      "maxima": 2054.6,
+      "primer_decimo": 43.6,
+      "ultimo_decimo": 18.5
+    },
+    "cuadros_descartados": 0
+  },
+  "entorno": {
+    "python": "3.12.10",
+    "plataforma": "Windows-11-10.0.26200-SP0",
+    "procesador": "AMD64 Family 25 Model 68 Stepping 1, AuthenticAMD",
+    "ultralytics": "8.4.203",
+    "torch": "2.14.1+cu130",
+    "opencv-python": "5.0.0.93",
+    "lap": "0.5.14"
+  }
+}
