@@ -20,3 +20,23 @@ Leé [el resumen del proyecto](../../../resumen.md) antes de editar. Guardá tu 
 **Siguiente tarea:** [09 · Evaluación en Windows](09-evaluacion-windows.md). Comparar modelos y preparar datos independientes; informes aplazados.
 
 **Estado 09 (Claude, 7 nov.):** comparación del modelo base hecha en Linux y Windows (eventos idénticos); pesos ajustados pendientes. Ver [la devolución](../../relevo/2026-11-07-claude-tarea09/README.md).
+
+**Estado 10 (Claude, 8 nov.):** el ajuste reproducido con oficina no se transfiere: 0 de 6 subidas en Kaggle y 0 o 1 de 28 bajadas en PAMELA. No hay base para cambiar de modelo. Ver [la devolución](../../relevo/2026-11-08-claude-tarea10/README.md).
+
+**Estado 11 (actualizado tras la prueba final, 8 nov.):** `yolo11l` fue seleccionado con 21 errores en Kaggle y PAMELA A frente a 28 de la API. En la prueba final con referencia de Álvaro produjo 18 errores frente a 13 de `yolo11n`: la API no cambia. YouTube ya no está reservado como prueba ciega. Ver [la devolución](../../relevo/2026-11-08-claude-tarea11/README.md).
+
+**Prioridad vigente · 8 de noviembre:** [Tarea 12 · Evaluar supresión de duplicados sin cambiar la API](12-duplicados-y-prueba-nueva.md). Corregir trazabilidad, evaluar la hipótesis temporal solo en Kaggle/PAMELA y preparar una prueba nueva. Sin staging, commit, push ni merge; informes aplazados.
+
+**Estado 12 (Claude, 8 nov.):** exploratorio, con referencias de Claude sin revisar. **La supresión temporal global no se justifica:** toda variante que baja el total borra cruces reales de PAMELA. Casi todos los falsos de Kaggle y PAMELA son oscilaciones del mismo ID. Se corrigieron el anotador y el arnés, y quedan preparados el protocolo de validación nueva y el manifiesto. API sin cambios. Ver [la devolución](../../relevo/2026-11-08-claude-tarea12/README.md).
+
+**Estado 13 (Claude, 8 nov., noche):** el panel ya permite subir y procesar un video nuevo («Video nuevo»), con vista previa de la geometría sin inferencia, la configuración de la API, sin duplicados y con descargas. Siguen funcionando la demo de oficina y la carga de JSON. Sin commit. Ver [la devolución](../../relevo/2026-11-08-claude-tarea13/README.md).
+
+**Estado 14 (Claude, 8 nov., noche):** de los 12 falsos de `prueba-bus`, inspeccionados uno por uno, 8 son cajas encimadas o de grupo sobre una persona ya contada y el resto, saltos de ID u oscilación. No vienen de la regla de cruce. Un filtro de cajas encimadas bajó los falsos positivos, pero borró cruces reales (PAMELA A y `prueba-bus`), así que **quedó fuera de la entrega**. La limitación queda visible como *xfail*. La demo en la página está verificada, sin reprocesar al recargar. Sin commit. Ver [la devolución](../../relevo/2026-11-08-claude-tarea14/README.md).
+
+**Cierre (Claude, 8 nov., noche):**
+- **Versión de entrega:** sin filtros, sin cambios en `vision/`.
+- **Demo principal:** `prueba-bus` desde la página, con sus errores medidos.
+- **Oficina:** queda como caso documentado de bajada omitida.
+- **Tests en Windows:** 129 aprobados, **1 fallido** (oficina), **1 omitido** (pesos ajustados) y **1 xfail** (cajas encimadas).
+
+Ver [el cierre](../../relevo/2026-11-08-claude-cierre/README.md).

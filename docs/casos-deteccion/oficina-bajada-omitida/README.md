@@ -75,3 +75,24 @@ No se cambió ningún parámetro: la decisión es del módulo de visión.
 1. **Detector ajustado** (`runs/oficina-ajuste/oficina-ajustado.pt`, con `python -m vision.train`), con el rastreador por defecto. Según [su relevo](../../relevo/vision-ajuste-detector/README.md), cuenta los 20 cruces del video completo. Pero se entrenó con esa misma grabación, así que no prueba que generalice.
 2. **Bajar `new_track_thresh` o `conf`.** Recuperaría este cruce, pero aumenta los falsos positivos. Además, calibrarlo sobre el mismo clip sería ajustar el resultado a la prueba.
 3. **Mostrarlo en la defensa** como ejemplo de pérdida de detección y cambio de ID, con [`cuadros.png`](cuadros.png) y [`confianza.png`](confianza.png).
+
+## Revisión del tramo corto (8 nov., noche, Claude)
+
+Pregunta de Álvaro: ¿la demo omite la bajada porque el clip es corto o porque el recorte la excluye?
+
+**Respuesta: no. El tramo y el recorte incluyen los dos cruces; el fallo es de detección.**
+
+- **Duraciones:**
+  - el video original `data/raw/oficina.mp4` dura 52,64 s (1316 cuadros, 25 FPS, 450×360);
+  - la demo usa **ese mismo archivo**, sin copia recortada, con `--inicio 0 --fin 6` de la configuración guardada `evaluation/results/oficina-00-06-prediccion.config.json`, es decir, 150 cuadros.
+- **No hay un límite que obligue al tramo corto:** el único límite de la API es el tiempo máximo de 10 min, y el video completo se procesa en menos de 2 min en CPU. Los 6 s son una elección del ensayo de demo, el primer par entrada-salida.
+- **Los dos movimientos están dentro del tramo y del recorte `228,2,222,176`:**
+  - la **subida** cruza la línea y = 90 entre 2,00 y 2,20 s;
+  - la **bajada** se ve arriba de la línea a 4,52 s, sobre ella a 4,64 s y debajo a 4,76 s;
+  - la referencia completa (`data/annotations/oficina-cruces.json`) marca 2,16 s (subida) y 4,68 s (bajada);
+  - comprobado con cuadros del video original, con la línea dibujada.
+- **Con el video completo tampoco se cuenta:** en la ejecución de la tarea 11 (Linux), los únicos eventos antes de los 10 s son la subida a 2,16 s; la bajada de 4,68 s falta igual. Usar un tramo más largo no la recupera.
+- **Causa:** la confianza del detector cerca de la puerta (`confianza.json`: 0,02–0,09 entre 4,40 y 4,68 s), tal como se describe arriba.
+- **El test que falla es correcto:** la bajada existe y cruza la línea configurada. **No se cambió su expectativa ni el tramo de la demo.**
+
+**Estado en la entrega (8 nov., noche):** es una **limitación confirmada de detección y seguimiento**. El test que la cubre (`test_ensayo_de_oficina_…`) falla por este defecto conocido, que se decidió conservar visible: no se cambió el tramo, ni la expectativa, ni el umbral global de confianza (bajarlo sin evaluar podría sumar detecciones falsas).

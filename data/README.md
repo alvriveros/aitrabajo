@@ -2,13 +2,37 @@
 
 Los videos van en `data/raw/`, que git ignora. Acá se documenta de dónde sale cada grabación y para qué se usa. Todos los fragmentos de una grabación quedan en la misma partición.
 
+## Estado vigente (8 nov., tarea 12)
+
+- **Kaggle y PAMELA A** se usaron para **seleccionar** el detector en la tarea 11 y para explorar el filtro de la tarea 12. Ya no son pruebas independientes. Sus referencias son de Claude y siguen sin revisión humana.
+- **`youtube-bus-real-0y08Jtqtkys.mp4`** se **consumió** en la prueba final de la tarea 11, con la referencia de Álvaro en `annotations/youtube-bus-real-cruces.json`.
+  - No se usa para elegir parámetros ni como prueba ciega.
+  - Fuente: [YouTube 0y08Jtqtkys](https://www.youtube.com/watch?v=0y08Jtqtkys), de terceros, sin licencia abierta; no se versiona.
+- **`youtube-bus-demo-UYKQ1sQOIwo.mp4`** solo sirve como ejemplo cualitativo: hay una multitud que no se puede anotar. Fuente: [YouTube UYKQ1sQOIwo](https://www.youtube.com/watch?v=UYKQ1sQOIwo).
+- **La próxima validación** necesita una grabación nueva (ver `docs/relevo/2026-11-08-claude-tarea12/protocolo-validacion-nueva.md`).
+
+Las particiones de la tabla siguiente son las originales.
+
 ## Grabaciones
 
 | Archivo | Origen | Contexto | Duración | Partición |
 |---|---|---|---|---|
 | `data/raw/oficina.mp4` | YouTube, ver abajo | Real, pero es una oficina que hace de puerta de bus | 52,64 s | Entrenamiento y calibración. No sirve para métricas del informe. |
+| `data/raw/kaggle-people-boarding-bus.mp4` | [Kaggle, «People boarding a bus»](https://www.kaggle.com/datasets/kapilraj/people-boarding-a-bus) (`video5.mp4`), licencia desconocida | Real: puerta de bus, cámara arriba de la entrada | 59,96 s | **Prueba.** Nunca se usó para calibrar ni entrenar. |
+| `data/raw/puerta-tren-d800-A.mp4`, `…-B-No.mp4`, `…-B-Oy.mp4` | [PAMELA-UANDES](https://videodatasets.org/PAMELA-UANDES/whole_data.html), muestras públicas `A_d800mm_sample`, `B_No_d800mm_sample` y `B_Oy_d800mm_sample` | Puerta de vagón de tren en laboratorio, puerta de 800 mm, cámara cenital. A = bajada; B = subida sin y con tarjeta | 30 s c/u | **Prueba**, como una sola fuente. Sin referencia todavía. |
 
-Faltan grabaciones independientes para validación y prueba.
+`kaggle-people-boarding-bus.mp4`:
+- **Archivo:** H.264, 1920×1080, 25 FPS, 43.857.248 bytes, SHA-256 `5084d4b11484282f1a81368f453dfccad9860c714f1e3c9704f65b32058ffe45`. Lo descargó Álvaro el 7 nov. 2026.
+- **Uso:** licencia «Unknown» en Kaggle. Solo uso local para evaluar, citando la fuente: no se versiona, no se redistribuye y no se suben capturas. Muestra personas identificables y coordenadas GPS sobreimpresas.
+- **Prerregistro:** recorte, línea y configuraciones fijados antes de ejecutar, en [`docs/relevo/2026-11-07-claude-tarea09/prueba-kaggle/preregistro.md`](../docs/relevo/2026-11-07-claude-tarea09/prueba-kaggle/preregistro.md).
+- **Anotación:** [`annotations/kaggle-people-boarding-bus-cruces.json`](annotations/kaggle-people-boarding-bus-cruces.json), con 6 subidas y 0 bajadas. La hizo **Claude** a pedido de Álvaro, mirando los cuadros antes de ejecutar ningún modelo. **Falta la revisión de una persona.** Resultados en [`prueba-kaggle/resultados.md`](../docs/relevo/2026-11-07-claude-tarea09/prueba-kaggle/resultados.md).
+
+Muestras de PAMELA-UANDES (`puerta-tren-d800-*`):
+- **Archivos:** 352×288, 25 FPS, unos 30 s cada uno. SHA-256: A `cf18411cda0d7b9de9a1c649599185b4d469c20fa2f9fc4f057d537aeb0868ab`; B-No `58d945ab2a876d563dcbdfe07b9cf9697aa842c9999458e061b5d8a3530ec650`; B-Oy `00151d75110b95fe4d1d8aff61dc5bfadaf10b83b6808acd2251c7d3802d43ea`. Los descargó Álvaro el 7 nov. 2026.
+- **Condiciones:** **uso solo para investigación**, no comercial, y citando el trabajo: Velastin, Fernández, Espinosa y Bay (2020), *Sensors* 20(21): 6251, https://doi.org/10.3390/s20216251. No se redistribuye.
+- **Referencia:** el dataset ofrece, con usuario y contraseña que entrega el Prof. Sergio A. Velastin, cabezas anotadas cuadro a cuadro con ID por persona para 15 videos completos (R1 a R8 de bajada, R1 a R7 de subida; R1 a R4 se usan normalmente para entrenar) y conteos manuales por video. Las muestras de 30 s no traen referencia propia, y en `B` la densidad hace poco fiable una anotación a ojo. Para la muestra `A` hay una referencia de Claude, hecha mirando los cuadros antes de ejecutar ningún modelo: [`annotations/pamela-A-cruces.json`](annotations/pamela-A-cruces.json), con 28 bajadas. Falta la revisión humana; resultados en [`prueba-pamela/resultados.md`](../docs/relevo/2026-11-07-claude-tarea09/prueba-pamela/resultados.md).
+
+Faltan grabaciones independientes para validación y más material de prueba, sobre todo con bajadas.
 
 ## Anotaciones
 

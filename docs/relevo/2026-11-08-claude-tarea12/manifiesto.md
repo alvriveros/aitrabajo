@@ -93,3 +93,5 @@ data/annotations/prueba-bus-cruces.json                               (referenci
 `data/raw/prueba-bus.mp4` queda fuera de Git, igual que los demás videos. Es un video de stock con marca de agua de iStock; habría que revisar su licencia antes de publicar capturas.
 
 También va en el grupo 6: `docs/relevo/2026-11-08-claude-cierre/README.md` y la revisión del tramo agregada en `docs/casos-deteccion/oficina-bajada-omitida/README.md`.
+
+**Aplicado el 8 nov., noche:** los grupos se commitearon por separado (ver la tabla de `docs/relevo/2026-11-08-claude-cierre/README.md`), con la opción b de la nota sobre el orden y sin convertir los line endings.

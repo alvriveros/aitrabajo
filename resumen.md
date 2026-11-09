@@ -1,6 +1,53 @@
 # Relevo para Claude · 5 de noviembre de 2026
 
-## Tarea actual · 7 de noviembre · Tarea 09
+## Estado de entrega · 8 de noviembre (noche)
+
+- **Versión cerrada:** API y panel con «Video nuevo»; conteo `yolo11n` calibrado, sin filtros.
+- **Demo principal:** `prueba-bus` desde la página. Detecta los 12 cruces, pero registra 24 eventos. Según la inspección de cada uno de los 12 falsos, 8 son cajas encimadas o de grupo y el resto, saltos de ID u oscilaciones. La página separa «resultado guardado» de «reprocesar en vivo para demostración».
+- **Oficina:** caso documentado de bajada omitida, una limitación confirmada.
+- **Tests (Windows):** 129 aprobados, **1 fallido** (oficina), **1 omitido** (pesos ajustados ausentes) y **1 xfail** (cajas encimadas).
+
+Arranque y guion: [cierre](docs/relevo/2026-11-08-claude-cierre/README.md). Sin commit.
+
+## Tareas 13 y 14
+
+- **Validación a ciegas con `prueba-bus`** (referencia de Álvaro): 12 de 12 cruces detectados, pero 24 eventos (12 FP). La inspección de los 12 falsos encontró sobre todo cajas encimadas (8), además de saltos de ID y una oscilación.
+- **Filtro de cajas encimadas:** probado y descartado, porque borraba cruces reales. La entrega mantiene el conteo de siempre.
+- **Página:** el modo «Video nuevo» funciona.
+- **Arranque y guion de demo:** en la [devolución de la tarea 14](docs/relevo/2026-11-08-claude-tarea14/README.md). Sin commit.
+
+## Tarea anterior · 8 de noviembre (noche) · Tarea 13
+
+El panel suma el modo **«Video nuevo»**:
+- subir un video (hasta 200 MB y 5 min);
+- fijar recorte, línea e interior con vista previa sin inferencia;
+- procesar con la configuración de la API (`yolo11n` calibrado);
+- ver el resultado y descargar el JSON, el video anotado y la configuración.
+
+La demo de oficina y la carga de JSON siguen igual. Hay 10 tests nuevos de endpoints, y la verificación en el navegador dio eventos idénticos al pipeline en PAMELA A. Falta probar el arranque en Windows y hacer la validación con el video nuevo de Álvaro. [Devolución](docs/relevo/2026-11-08-claude-tarea13/README.md).
+
+## Tarea anterior · 8 de noviembre · Tareas 11 y 12
+
+- **Tarea 11:**
+  - **Selección** en Kaggle y PAMELA A: `yolo11l` calibrado sumó 21 errores, contra 28 de la API.
+  - **Prueba final** en `youtube-bus-real`, con referencia de Álvaro de 18 cruces: `yolo11n` tuvo 13 errores, con 6 de 18 cruces y 66 FPS, y `yolo11l` 18 errores, con 12 de 18 y 24 FPS.
+  - **La API no cambia.** El video quedó consumido. [Devolución](docs/relevo/2026-11-08-claude-tarea11/README.md).
+- **Tarea 12:** resultado exploratorio, con referencias de Claude sin revisión humana.
+  - **El filtro no se justifica.** Un filtro temporal de duplicados por sentido no mejora sin borrar cruces reales. Los falsos de Kaggle y PAMELA son sobre todo oscilaciones de un mismo ID, y en PAMELA dominan las omisiones.
+  - **Corregido:** el anotador (navegación, protección de la referencia final) y el arnés (no sobrescribe resultados).
+  - **Preparado:** el protocolo para una grabación nueva y el manifiesto de qué versionar.
+  - **Pendientes de Álvaro:** aclarar los 18 cruces contra 16 del contador, revisar las referencias, conseguir un video nuevo y aprobar el manifiesto. [Devolución](docs/relevo/2026-11-08-claude-tarea12/README.md).
+
+## Tarea anterior · 8 de noviembre · Tarea 10 *(histórico: «YouTube reservado» ya no rige)*
+
+Ajuste del detector reproducido en Windows, entrenado solo con oficina: 19,5 min, SHA-256 `69958946…`, pesos fuera de Git. En oficina, su material de entrenamiento, cuenta 19 o 20 de 20. Pero **no se transfiere**:
+
+- en Kaggle no produce ningún evento (0 de 6 subidas); sin rastreador, ningún cuadro supera 0,05 de confianza;
+- en PAMELA A cuenta 0 o 1 de 28 bajadas.
+
+El base calibrado de la API sigue igual: Kaggle con subidas 5/5/1 y bajadas 0/3/0, y PAMELA con bajadas 10/0/18. **No hay evidencia para cambiar de modelo.** Hace falta entrenar con varias escenas y evaluar en otras. En Kaggle, el base dio eventos algo distintos entre Linux y Windows. Las referencias de Kaggle y PAMELA siguen pendientes de revisión humana, y los videos de YouTube siguen reservados. [Devolución](docs/relevo/2026-11-08-claude-tarea10/README.md).
+
+## Tarea anterior · 7 de noviembre · Tarea 09
 
 [Tarea 09 · Comparar modelos en Windows](docs/tareas/claude/09-evaluacion-windows.md), en `integracion-video`, sin commit.
 
@@ -9,6 +56,8 @@
 - **Windows (Ryzen 5 7535HS):** da los mismos eventos que Linux; solo macOS difiere. Los pesos ajustados del compañero no están en esta máquina.
 - **Video de oficina:** no es una evaluación independiente; se revisó su referencia y falta la revisión humana.
 - **Preparado:** la ficha para una grabación nueva y un mensaje para el compañero.
+- **Primera prueba independiente** (video de Kaggle, prerregistrada, 6 subidas anotadas por Claude): el base calibrado da subidas 5/4/1 y bajadas 0/4/0 (TP/FP/FN). Inventa tantos eventos como acierta en una escena concurrida. Ver `docs/relevo/2026-11-07-claude-tarea09/prueba-kaggle/resultados.md`.
+- **Segunda prueba independiente** (PAMELA-UANDES, muestra A, 28 bajadas anotadas por Claude): el base calibrado da bajadas 10/0/18. En escenas nuevas omite muchos cruces o inventa eventos según la escena. Ya se pidió la referencia oficial del dataset.
 - **Sin cambios:** la configuración de la API, que todavía no tiene base para cambiarse.
 
 [Devolución](docs/relevo/2026-11-07-claude-tarea09/README.md).
