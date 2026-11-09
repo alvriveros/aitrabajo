@@ -19,7 +19,10 @@ from vision.pipeline import main  # noqa: E402
 RAIZ = Path(__file__).parents[1]
 PESOS = RAIZ / "yolo11n.pt"
 OFICINA = RAIZ / "data/raw/oficina.mp4"
-AJUSTADO = RAIZ / "runs/oficina-ajuste/oficina-ajustado.pt"
+# Los del compañero (macOS) o, si no están, la reproducción de Windows de la tarea 10 (SHA-256 69958946…).
+AJUSTADO = next((ruta for ruta in (RAIZ / "runs/oficina-ajuste/oficina-ajustado.pt",
+                                   RAIZ / "runs/oficina-ajuste-windows/oficina-ajustado.pt") if ruta.exists()),
+                RAIZ / "runs/oficina-ajuste/oficina-ajustado.pt")
 FPS = 30
 pytestmark = pytest.mark.skipif(not PESOS.exists(), reason="Faltan los pesos yolo11n.pt en la raíz.")
 
