@@ -13,6 +13,7 @@ import vl_convert as vlc
 st.set_page_config(page_title="Ocupación del bus")
 st.title("Ocupación del bus")
 DEMO = Path(__file__).resolve().parents[1] / "docs/demo/recorrido.json"
+LINEA = DEMO.with_name("recorrido-linea.json")
 MANUAL = DEMO.with_name("oficina-00-06-manual.json")
 url = os.getenv("API_URL", "http://127.0.0.1:8000").rstrip("/")
 
@@ -193,11 +194,13 @@ fin_tramo = None  # los JSON no declaran duración: el selector termina en su ú
 fuente = st.radio("Origen de los eventos",
                   ["Archivo JSON o demo", "Predicción automática del video de oficina", "Video nuevo"], horizontal=True)
 if fuente == "Archivo JSON o demo":
-    subido = st.file_uploader("Recorrido en JSON (sin archivo se usa la demo)", type="json")
-    origen = subido.file_id if subido else "demo"
-    st.caption(f"Recorrido: {subido.name if subido else 'demo sintética · docs/demo/recorrido.json'}")
+    subido = st.file_uploader("Recorrido en JSON (sin archivo se usa la demo elegida)", type="json")
+    demo = LINEA if st.radio("Demo", ["Dos paradas (ejemplo corto)", "Línea simulada de 8 paradas"],
+                             horizontal=True, disabled=subido is not None) != "Dos paradas (ejemplo corto)" else DEMO
+    origen = subido.file_id if subido else demo.stem
+    st.caption(f"Recorrido: {subido.name if subido else f'demo sintética, no medida · docs/demo/{demo.name}'}")
     try:
-        recorrido = json.loads(subido.getvalue() if subido else DEMO.read_text(encoding="utf-8"))
+        recorrido = json.loads(subido.getvalue() if subido else demo.read_text(encoding="utf-8"))
     except ValueError as error:  # incluye JSON mal formado y texto que no es UTF-8
         st.error(f"No se pudo leer el archivo como JSON ({error}). Corregilo o cargá otro.")
         st.stop()

@@ -61,3 +61,12 @@ def test_bajada_con_bus_vacio_deja_aviso_aunque_se_recupere():
 ], ids=["capacidad_cero", "sentido_desconocido", "eventos_desordenados", "inicio_repetido"])
 def test_entradas_invalidas_dan_422(cambios):
     assert cliente.post("/ocupacion", json=recorrido(**cambios)).status_code == 422
+
+
+def test_recorrido_simulado_de_la_linea_acumula_la_carga_por_parada():
+    linea = json.loads((Path(__file__).parents[1] / "docs/demo/recorrido-linea.json").read_text(encoding="utf-8"))
+    resultado = calcular(linea)
+    # Cuentas a mano: 14, +9-1, +11-3, +18-6, +6-9, +3-12, +2-10, -22 sobre capacidad 40.
+    assert [f["pasajeros"] for f in resultado["paradas"]] == [14, 22, 30, 42, 39, 30, 22, 0]
+    assert resultado["paradas"][3]["ocupacion_pct"] == 105.0  # hacinamiento: se informa por encima del 100 %
+    assert resultado["avisos"] == []
