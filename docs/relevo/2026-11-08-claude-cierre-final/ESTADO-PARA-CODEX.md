@@ -89,7 +89,7 @@ Todo está en `docs/relevo/2026-11-08-claude-cierre-final/` salvo indicación.
 | **PAMELA B-No, validación prerregistrada** | 15/20/3 | 0/30/0 | 0,36 | `validacion-pamela-b/resultado/` |
 | **PAMELA B-Oy, validación prerregistrada** | 19/13/4 | 0/30/0 | 0,45 | `validacion-pamela-b/resultado/` |
 | Oficina (grabación de entrenamiento) | 7/0/3 | 4/0/6 | 0,71 | `resultados/experimentos/base--oficina.json` |
-| Kaggle (selección) | 5/4/1 | 0/4/0 | 0,53 | `resultados/experimentos/base--kaggle.json` |
+| Kaggle (selección, Linux) | 5/4/1 | 0/4/0 | 0,53 | `resultados/experimentos/base--kaggle.json`. En Windows da 5/5/1 y 0/3/0, con el mismo F1; ese es el valor del informe, que compara en el mismo equipo (tarea 10) |
 | PAMELA A (selección) | 0/1/0 | 10/0/18 | 0,51 | `resultados/experimentos/base--pamela-A.json` |
 
 **Sobre las validaciones:**

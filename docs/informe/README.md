@@ -20,4 +20,4 @@
    Si sobra o falta espacio, ajustá la sección III, la más larga.
 4. **Revisar visualmente** las tres páginas y guardar el PDF como `informe.pdf`.
 
-**Estado (9 nov., 00:36):** `informe.pdf` es el PDF final. Lo compiló Álvaro con MiKTeX: 3 páginas A4, sin desbordes ni errores, y Claude revisó las tres páginas. El resumen tiene 150 palabras. `informe-borrador.pdf` es el borrador anterior y se conserva como histórico.
+**Estado (9 nov., 01:22, commit `8ffa96c`):** `informe.pdf` es el PDF final, con las correcciones del cierre documental. Lo compiló Álvaro con MiKTeX: 3 páginas A4, sin desbordes ni errores, 16 referencias y resumen de 150 palabras. Claude revisó las tres páginas. `informe-borrador.pdf` es el borrador anterior y se conserva como histórico.
