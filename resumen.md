@@ -1,5 +1,7 @@
 # Relevo para Claude · 5 de noviembre de 2026
 
+> **Aclaración (9 nov., cierre final):** este resumen describe etapas anteriores. El estado vigente está en [la matriz de requisitos](docs/relevo/2026-11-08-claude-cierre-final/matriz.md) y en [el cierre final](docs/relevo/2026-11-08-claude-cierre-final/README.md).
+
 ## Estado de entrega · 8 de noviembre (noche)
 
 - **Versión cerrada:** API y panel con «Video nuevo»; conteo `yolo11n` calibrado, sin filtros.

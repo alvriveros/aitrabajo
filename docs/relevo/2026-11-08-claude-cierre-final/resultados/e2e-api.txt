@@ -1,0 +1,22 @@
+subida 201 0b4b8c97940c5f75 768 432 25.0 27.44
+inicio 202 {'id': '20261108-222507-092483', 'estado': 'en_curso'} 0.00s
+doble clic 409 actual {'id': '20261108-222507-092483'}
+estado final completa None
+  t=  4.0s video= 0.40s eventos= 0 pasajeros=20 ocupacion=66.67%
+  t= 10.0s video= 2.28s eventos= 0 pasajeros=20 ocupacion=66.67%
+  t= 16.0s video= 4.56s eventos= 0 pasajeros=20 ocupacion=66.67%
+  t= 22.1s video= 6.84s eventos= 0 pasajeros=20 ocupacion=66.67%
+  t= 28.1s video= 9.00s eventos= 3 pasajeros=17 ocupacion=56.67%
+  t= 34.1s video=11.04s eventos= 6 pasajeros=14 ocupacion=46.67%
+  t= 40.1s video=13.08s eventos= 8 pasajeros=12 ocupacion=40.0%
+  t= 46.1s video=15.24s eventos=11 pasajeros=11 ocupacion=36.67%
+  t= 52.1s video=17.12s eventos=18 pasajeros=10 ocupacion=33.33%
+  t= 58.1s video=19.08s eventos=20 pasajeros=10 ocupacion=33.33%
+  t= 64.2s video=21.40s eventos=24 pasajeros=14 ocupacion=46.67%
+  t= 70.2s video=23.84s eventos=24 pasajeros=14 ocupacion=46.67%
+  t= 76.2s video=26.04s eventos=24 pasajeros=14 ocupacion=46.67%
+listado ['20261108-222507-092483']
+eventos finales 24 medicion 8.85 {'media': 112.4, 'p95': 142.3, 'maxima': 1242.7, 'primer_decimo': 137.0, 'ultimo_decimo': 99.2}
+repetir sin pedirlo (409, {'detail': 'Este video ya se procesó con la misma geometría, el mismo modelo y el mismo ritmo (ejecución 20261108-222507-092483). No se repite: se muestra el resultado guardado.'})
+cancelar (202, {'id': '20261108-222627-286645', 'estado': 'cancelando'})
+tras cancelar cancelado publicado: False

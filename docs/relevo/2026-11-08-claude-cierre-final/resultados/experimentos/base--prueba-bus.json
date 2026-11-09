@@ -1,0 +1,212 @@
+{
+ "config": "base",
+ "cambio": {},
+ "escena": "prueba-bus (desarrollo)",
+ "cuadros": 686,
+ "segundos": 49.4,
+ "fps": 13.89,
+ "medicion": {
+  "ms_por_cuadro": {
+   "lectura": 0.6,
+   "rastreo": 69.5,
+   "conteo": 0.0,
+   "entrega": 0.0
+  },
+  "latencia_ms": {
+   "media": 69.5,
+   "p95": 86.0,
+   "maxima": 1124.7,
+   "primer_decimo": 84.7,
+   "ultimo_decimo": 65.5
+  },
+  "cuadros_descartados": 0
+ },
+ "eventos": [
+  {
+   "tiempo_s": 8.2,
+   "track_id": 14,
+   "sentido": "bajada"
+  },
+  {
+   "tiempo_s": 8.24,
+   "track_id": 13,
+   "sentido": "bajada"
+  },
+  {
+   "tiempo_s": 8.36,
+   "track_id": 11,
+   "sentido": "bajada"
+  },
+  {
+   "tiempo_s": 10.16,
+   "track_id": 31,
+   "sentido": "bajada"
+  },
+  {
+   "tiempo_s": 10.36,
+   "track_id": 26,
+   "sentido": "bajada"
+  },
+  {
+   "tiempo_s": 10.4,
+   "track_id": 33,
+   "sentido": "bajada"
+  },
+  {
+   "tiempo_s": 11.76,
+   "track_id": 42,
+   "sentido": "bajada"
+  },
+  {
+   "tiempo_s": 11.84,
+   "track_id": 40,
+   "sentido": "bajada"
+  },
+  {
+   "tiempo_s": 13.52,
+   "track_id": 48,
+   "sentido": "bajada"
+  },
+  {
+   "tiempo_s": 14.6,
+   "track_id": 47,
+   "sentido": "bajada"
+  },
+  {
+   "tiempo_s": 15.04,
+   "track_id": 74,
+   "sentido": "subida"
+  },
+  {
+   "tiempo_s": 15.28,
+   "track_id": 51,
+   "sentido": "bajada"
+  },
+  {
+   "tiempo_s": 15.44,
+   "track_id": 51,
+   "sentido": "subida"
+  },
+  {
+   "tiempo_s": 15.68,
+   "track_id": 77,
+   "sentido": "bajada"
+  },
+  {
+   "tiempo_s": 15.76,
+   "track_id": 83,
+   "sentido": "bajada"
+  },
+  {
+   "tiempo_s": 15.88,
+   "track_id": 51,
+   "sentido": "bajada"
+  },
+  {
+   "tiempo_s": 15.88,
+   "track_id": 52,
+   "sentido": "subida"
+  },
+  {
+   "tiempo_s": 15.88,
+   "track_id": 85,
+   "sentido": "subida"
+  },
+  {
+   "tiempo_s": 17.52,
+   "track_id": 15,
+   "sentido": "subida"
+  },
+  {
+   "tiempo_s": 18.08,
+   "track_id": 15,
+   "sentido": "bajada"
+  },
+  {
+   "tiempo_s": 19.12,
+   "track_id": 15,
+   "sentido": "subida"
+  },
+  {
+   "tiempo_s": 19.12,
+   "track_id": 71,
+   "sentido": "subida"
+  },
+  {
+   "tiempo_s": 20.68,
+   "track_id": 94,
+   "sentido": "subida"
+  },
+  {
+   "tiempo_s": 21.12,
+   "track_id": 63,
+   "sentido": "subida"
+  }
+ ],
+ "metricas": {
+  "tolerancia_s": 1.0,
+  "tramo_s": {
+   "desde": 0.0,
+   "hasta": null
+  },
+  "sentidos": {
+   "subida": {
+    "referencia": 4,
+    "predichos": 9,
+    "aciertos": 4,
+    "omisiones": 0,
+    "falsos_positivos": 5,
+    "precision": 0.4444,
+    "exhaustividad": 1.0,
+    "f1": 0.6154,
+    "error_conteo_abs": 5,
+    "error_tiempo_medio_s": 0.23,
+    "tiempos_omitidos_s": [],
+    "tiempos_falsos_s": [
+     15.44,
+     15.88,
+     15.88,
+     19.12,
+     21.12
+    ]
+   },
+   "bajada": {
+    "referencia": 8,
+    "predichos": 15,
+    "aciertos": 8,
+    "omisiones": 0,
+    "falsos_positivos": 7,
+    "precision": 0.5333,
+    "exhaustividad": 1.0,
+    "f1": 0.6957,
+    "error_conteo_abs": 7,
+    "error_tiempo_medio_s": 0.24,
+    "tiempos_omitidos_s": [],
+    "tiempos_falsos_s": [
+     8.24,
+     8.36,
+     11.84,
+     15.68,
+     15.76,
+     15.88,
+     18.08
+    ]
+   }
+  },
+  "total": {
+   "aciertos": 12,
+   "omisiones": 0,
+   "falsos_positivos": 12,
+   "f1": 0.6667
+  }
+ },
+ "entorno": {
+  "python": "3.13.18",
+  "plataforma": "Linux-6.18.44-fc-v310-x86_64-with-glibc2.39",
+  "procesador": "x86_64",
+  "ultralytics": "8.4.203",
+  "torch": "2.15.0",
+  "opencv-python": "5.0.0.93",
+  "lap": "0.5.14"
+ }
+}

@@ -1,0 +1,144 @@
+{
+ "config": "salto3",
+ "cambio": {
+  "salto": 3
+ },
+ "escena": "pamela-A",
+ "cuadros": 254,
+ "segundos": 22.51,
+ "fps": 11.28,
+ "medicion": {
+  "ms_por_cuadro": {
+   "lectura": 1.9,
+   "rastreo": 86.5,
+   "conteo": 0.0,
+   "entrega": 0.0
+  },
+  "latencia_ms": {
+   "media": 86.6,
+   "p95": 108.2,
+   "maxima": 134.1,
+   "primer_decimo": 83.1,
+   "ultimo_decimo": 90.5
+  },
+  "cuadros_descartados": 0
+ },
+ "eventos": [
+  {
+   "tiempo_s": 2.16,
+   "track_id": 4,
+   "sentido": "bajada"
+  },
+  {
+   "tiempo_s": 4.08,
+   "track_id": 6,
+   "sentido": "bajada"
+  },
+  {
+   "tiempo_s": 10.44,
+   "track_id": 17,
+   "sentido": "bajada"
+  },
+  {
+   "tiempo_s": 11.4,
+   "track_id": 19,
+   "sentido": "bajada"
+  },
+  {
+   "tiempo_s": 14.76,
+   "track_id": 20,
+   "sentido": "bajada"
+  },
+  {
+   "tiempo_s": 18.96,
+   "track_id": 40,
+   "sentido": "bajada"
+  },
+  {
+   "tiempo_s": 23.64,
+   "track_id": 52,
+   "sentido": "subida"
+  },
+  {
+   "tiempo_s": 25.44,
+   "track_id": 53,
+   "sentido": "bajada"
+  }
+ ],
+ "metricas": {
+  "tolerancia_s": 1.0,
+  "tramo_s": {
+   "desde": 0.0,
+   "hasta": null
+  },
+  "sentidos": {
+   "subida": {
+    "referencia": 0,
+    "predichos": 1,
+    "aciertos": 0,
+    "omisiones": 0,
+    "falsos_positivos": 1,
+    "precision": 0.0,
+    "exhaustividad": null,
+    "f1": 0.0,
+    "error_conteo_abs": 1,
+    "error_tiempo_medio_s": null,
+    "tiempos_omitidos_s": [],
+    "tiempos_falsos_s": [
+     23.64
+    ]
+   },
+   "bajada": {
+    "referencia": 28,
+    "predichos": 7,
+    "aciertos": 7,
+    "omisiones": 21,
+    "falsos_positivos": 0,
+    "precision": 1.0,
+    "exhaustividad": 0.25,
+    "f1": 0.4,
+    "error_conteo_abs": 21,
+    "error_tiempo_medio_s": 0.6629,
+    "tiempos_omitidos_s": [
+     0.2,
+     2.2,
+     5.0,
+     6.0,
+     7.4,
+     8.6,
+     11.6,
+     12.8,
+     13.2,
+     16.2,
+     17.2,
+     19.8,
+     19.8,
+     21.2,
+     22.2,
+     23.4,
+     24.2,
+     26.2,
+     27.8,
+     28.8,
+     30.0
+    ],
+    "tiempos_falsos_s": []
+   }
+  },
+  "total": {
+   "aciertos": 7,
+   "omisiones": 21,
+   "falsos_positivos": 1,
+   "f1": 0.3889
+  }
+ },
+ "entorno": {
+  "python": "3.13.18",
+  "plataforma": "Linux-6.18.44-fc-v310-x86_64-with-glibc2.39",
+  "procesador": "x86_64",
+  "ultralytics": "8.4.203",
+  "torch": "2.15.0",
+  "opencv-python": "5.0.0.93",
+  "lap": "0.5.14"
+ }
+}

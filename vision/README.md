@@ -2,7 +2,16 @@
 
 Convierte un tramo de video de una puerta en eventos de subida y bajada con el formato de [`POST /ocupacion`](../api/main.py). La entrega completa está descrita en [el relevo de visión](../docs/tareas/vision/README.md).
 
-## Estado al 6 de noviembre
+## Estado vigente (9 nov., cierre final)
+
+- **Lo que usa la API:** `yolo11n.pt` preentrenado con [`bytetrack-cenital.yaml`](bytetrack-cenital.yaml), `--conf 0.05`, `--confirmacion 2` y margen de 5 px. El ajustado de oficina **no se despliega**: en Kaggle y PAMELA rinde peor que el base (tarea 10).
+- **Resultados en vivo:** `--progreso RUTA.json` reescribe, durante la ejecución, los cruces confirmados y la medición parcial. Si aparece un archivo `cancelar` en la misma carpeta, el pipeline se detiene con código 3. La API usa esto para su estado y su cancelación.
+- **Ritmo real:** `--ritmo-real` lee el video a su velocidad original, como una cámara. Si el modelo se atrasa, toma el cuadro más reciente y descarta los viejos, así el retraso queda acotado.
+  - **Costo en calidad:** en CPU se pierden cruces (ver [la medición](../docs/relevo/2026-11-08-claude-cierre-final/README.md)).
+- **Medición:** el `.config.json` incluye, en `medicion`, ms por cuadro de cada etapa (`lectura`, `rastreo`, `conteo`, `entrega`), la latencia por cuadro (media, p95, máxima, primer y último décimo) y los cuadros descartados.
+- **Calidad y limitaciones:** en [`data/README.md`](../data/README.md) y en el informe.
+
+## Estado al 6 de noviembre (histórico)
 
 | Parte | Estado |
 |---|---|

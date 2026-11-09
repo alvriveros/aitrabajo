@@ -1,4 +1,4 @@
-% BORRADOR DE TRABAJO. Compilación: ver README.md.
+% Informe final. Compilación: ver README.md. Autores: completar \autores y \afiliacion.
 \documentclass[conference,a4paper]{IEEEtran}
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
@@ -7,172 +7,142 @@
 \usepackage{booktabs,array}
 \usepackage{graphicx}
 \usepackage{tikz}
-\usetikzlibrary{arrows.meta,positioning,fit}
+\usetikzlibrary{arrows.meta,positioning}
 \usepackage[hidelinks]{hyperref}
-\AddToHook{shipout/foreground}{\put(297.6,-26){\makebox(0,0)[c]{\footnotesize\sffamily BORRADOR DE TRABAJO · 5 de noviembre de 2026 · sin métricas de visión · pág.~\thepage}}}
+\newcommand{\autores}{AUTORES}
+\newcommand{\afiliacion}{UNIVERSIDAD}
 
 \begin{document}
 \renewcommand{\IEEEkeywordsname}{Palabras clave}
-\title{Estimación de ocupación en buses a partir de eventos de conteo: arquitectura y verificación del software}
-\author{\IEEEauthorblockN{Álvaro [apellido pendiente] y [compañero, nombre pendiente]}
+\title{Conteo de pasajeros y ocupación en la puerta de un bus con YOLO11 y ByteTrack}
+\author{\IEEEauthorblockN{\autores}
 \IEEEauthorblockA{Inteligencia Aplicada, 4.º año de Ingeniería Informática\\
-{[}universidad pendiente{]}, Paraguay}}
+\afiliacion, Paraguay}}
 \maketitle
 
 \begin{abstract}
-La auditoría del nivel de ocupación del transporte público del Gran Asunción requiere datos de carga por parada. Este trabajo propone un sistema que cuenta subidas y bajadas en la puerta de un bus y calcula la ocupación a lo largo de un recorrido simulado. La ruta de software ya implementada recibe eventos JSON, los asigna a paradas mediante una API REST y los muestra en un panel web, con arranque reproducible en Docker. Siete pruebas de la API y recorridos reales del navegador verificaron el cálculo, la validación y la visualización en Linux y Windows con eventos sintéticos y manuales. Estos resultados verifican el software de ocupación y no miden visión por computadora. La detección, el seguimiento y el cruce de una línea virtual siguen en desarrollo, por lo que sus métricas se incorporarán en la versión final.
+Auditar el hacinamiento de los buses del Gran Asunción requiere la carga de cada unidad por parada. Este trabajo presenta un sistema que detecta personas con YOLO11n, las sigue con ByteTrack y cuenta subidas y bajadas cuando cruzan una línea virtual. Una API REST convierte los cruces en ocupación por parada, y un panel web la muestra mientras se procesa el video. El sistema se despliega con Docker. En una evaluación ciega con 12 cruces en un bus, detectó todos, pero registró 12 eventos falsos (F1 de 0,67), en su mayoría por cajas duplicadas sobre una misma persona. En un bus real de YouTube contó 6 de 18 cruces. El ajuste del detector con un video de oficina no generalizó, por lo que se despliega el modelo preentrenado. En CPU no se alcanza el tiempo real sin perder cruces; con GPU, el detector procesa 66 cuadros por segundo.
 \end{abstract}
 
 \begin{IEEEkeywords}
-conteo de pasajeros, ocupación, seguimiento de objetos, API REST, transporte público
+conteo de pasajeros, seguimiento multiobjeto, línea virtual, ocupación, transporte público
 \end{IEEEkeywords}
 
 \section{Introducción y contexto}
-La calidad del servicio de buses en el Gran Asunción requiere auditar las frecuencias y el nivel de hacinamiento de las unidades. Para ello no alcanza con saber cuántas personas subieron en total: una empresa o un ente de control necesita conocer la carga por parada y el porcentaje de ocupación respecto de la capacidad de la unidad. Este proyecto aborda ese problema con un módulo de visualización simulado, según la consigna de la cátedra. Este borrador no incluye cifras locales de demanda o de hacinamiento porque todavía no se contrastaron con una fuente primaria.
+En diciembre de 2025, el Congreso paraguayo sancionó la reforma del transporte público de pasajeros del área metropolitana de Asunción~\cite{abc-reforma}. En mayo de 2026, el Decreto 5969 la reglamentó y habilitó la renovación de flota y la redefinición de itinerarios~\cite{ln-decreto}. Para planificar frecuencias y controlar el hacinamiento, un operador o un ente de control necesita conocer la carga de cada unidad a lo largo del recorrido, y no solo los totales de pasajes. Este trabajo propone contar con una cámara las subidas y bajadas en la puerta del bus y calcular el porcentaje de ocupación parada por parada, con un recorrido simulado como módulo de visualización.
 
-El conteo automático de pasajeros se investiga con distintos sensores. Hsu \emph{et al.}~\cite{hsu2020} detectan pasajeros en video de vigilancia de buses con un detector SSD y los siguen con un filtro de partículas. Seidel \emph{et al.}~\cite{seidel2022} usan en cambio datos de profundidad de LiDAR 3D, sin imágenes de personas, como alternativa respetuosa de la privacidad.
-
-Una dificultad central del conteo por video son las oclusiones cuando varias personas cruzan a la vez, porque una identidad perdida puede duplicar u omitir un cruce. ByteTrack~\cite{zhang2022} asocia también las detecciones de baja confianza con las trayectorias existentes para recuperar objetos parcialmente ocultos. DeepSORT~\cite{wojke2017} agrega un descriptor de apariencia entrenado para reidentificación de personas, con el fin de sostener la identidad durante oclusiones largas.
-
-La contribución actual es una ruta de software verificada desde los eventos hasta el panel, con un contrato explícito que permite integrar el módulo de visión sin modificar el cálculo de ocupación.
+El conteo automático de pasajeros se estudia con distintos sensores. Hsu \emph{et al.}~\cite{hsu2020} detectan pasajeros en video de buses con SSD y los siguen con un filtro de partículas. Seidel \emph{et al.}~\cite{seidel2022} usan profundidad de LiDAR para preservar la privacidad. Velastin \emph{et al.}~\cite{velastin2020} publicaron PAMELA-UANDES, con puertas de tren filmadas desde arriba y cabezas anotadas, y lograron un 92~\% de exactitud en el conteo. El problema central son las oclusiones: cuando una identidad se pierde, un cruce se omite o se duplica. ByteTrack~\cite{zhang2022} asocia también las detecciones de baja confianza para recuperar objetos ocultos. DeepSORT~\cite{wojke2017} agrega un descriptor de apariencia.
 
 \section{Metodología y arquitectura del sistema}
-\subsection{Arquitectura}
-La Fig.~\ref{fig:arq} separa la ruta implementada del módulo de visión pendiente. Mientras ese módulo se completa, la entrada de la ruta son archivos JSON sintéticos o manuales. Las predicciones de visión deberán usar el mismo formato.
+\subsection{Datos}
+La Tabla~\ref{tab:datos} resume las grabaciones. Ninguna es de Paraguay. Cada una pertenece a una sola partición, y la referencia de cada cruce (instante y sentido) la anotó o revisó una persona, salvo en oficina. Kaggle y PAMELA~A se usaron para elegir parámetros. El video de bus real se reservó para una prueba final única, y \emph{prueba-bus} para una evaluación ciega, también única. Después de esas evaluaciones, ninguno de los dos se usó para elegir parámetros. Los videos de terceros se usan solo localmente y no se redistribuyen.
+
+\begin{table}[!t]
+\caption{Grabaciones, referencia y uso (25~FPS en todas)}
+\label{tab:datos}
+\centering\scriptsize
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{0.27\columnwidth}>{\raggedright\arraybackslash}p{0.20\columnwidth}>{\raggedright\arraybackslash}p{0.21\columnwidth}>{\raggedright\arraybackslash}p{0.22\columnwidth}@{}}
+\toprule
+Video & Duración, px & Referencia & Uso\\
+\midrule
+Oficina, YouTube~\cite{video} & 52,6~s, 450$\times$360 & 20 cruces, 165 cuadros con cajas & Ajuste y calibración\\
+Kaggle, puerta de bus~\cite{kaggle} & 60~s, 1920$\times$1080 & 6 subidas, revisadas & Selección\\
+PAMELA~A, tren~\cite{velastin2020} & 30~s, 352$\times$288 & 28 bajadas, revisadas & Selección\\
+Bus real, YouTube & 553~s, 586$\times$480 & 18 cruces, manual & Prueba final\\
+\emph{prueba-bus} (stock) & 27,4~s, 768$\times$432 & 12 cruces, manual & Prueba ciega\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Detección, seguimiento y regla de cruce}
+Cada cuadro se recorta a la zona de la puerta y pasa por YOLO11n~\cite{yolo11}, preentrenado con COCO~\cite{coco}, que solo detecta la clase persona. ByteTrack~\cite{zhang2022}, de Ultralytics~8.4.203~\cite{ultralytics}, asigna los identificadores. Con cámara cenital la confianza rara vez supera 0,25, por eso se bajaron los umbrales: confianza mínima de 0,05 y de 0,10 para iniciar una trayectoria, sin fusión de puntajes. Para cada identificador, la regla mide la distancia con signo del centro de la caja a la línea. Un lado se confirma con 2 cuadros seguidos a más de 5~píxeles de la línea, y pasar de un lado confirmado al otro emite un evento con su instante, su identificador y su sentido. Así, permanecer sobre la línea u oscilar no cuenta, aparecer de un lado tampoco, y un regreso legítimo sí cuenta. Pruebas unitarias con trayectorias escritas a mano cubren cruce, regreso, oscilación, dos personas, cambio de identificador y oclusión con recuperación.
+
+\subsection{Entrenamiento y selección del modelo}
+Se ajustó YOLO11n con 165 cuadros anotados del video de oficina: 131 para entrenar y 34 de reserva. Se entrenó durante 40 épocas, con entrada de 640~píxeles y semilla 0. En la reserva, que pertenece a la misma grabación, alcanzó un mAP50 de 0,995 y un mAP50-95 de 0,753. La Tabla~\ref{tab:res} muestra que el ajuste no generaliza: en Kaggle y PAMELA casi no detecta personas. También se probaron YOLO11l y YOLO11x sin ajuste. YOLO11l mejoró la selección (21 errores frente a 28), pero en la prueba final cometió más errores que YOLO11n (18 frente a 13). Por eso se despliega YOLO11n preentrenado con el seguimiento calibrado. Un evaluador empareja cada cruce de referencia con una predicción del mismo sentido dentro de $\pm1$~s, y a partir de esos pares calcula TP, FP, FN, precisión, exhaustividad y F1 por sentido.
+
+\subsection{API, panel y despliegue}
+La Fig.~\ref{fig:arq} muestra el flujo. La API (FastAPI~\cite{fastapi}) valida el video subido (formato, tamaño, duración y legibilidad) y lo guarda por su SHA-256. También ofrece una vista previa de la geometría sin ejecutar el modelo. Cada procesamiento corre en un hilo aparte de la petición HTTP, uno por vez, y puede cancelarse. Mientras procesa, el pipeline publica los cruces y la medición parcial. El panel (Streamlit~\cite{streamlit}) consulta ese estado cada segundo, y \texttt{POST /ocupacion} calcula, para cada parada,
+\begin{equation}
+p = c_0 + s - b, \qquad o = 100\,p/C,
+\end{equation}
+donde $p$ son los pasajeros a bordo, $c_0$ la carga inicial, $s$ y $b$ las subidas y bajadas acumuladas, $C$ la capacidad y $o$ la ocupación en porcentaje. Los valores negativos no se corrigen: se muestran con un aviso.
+
+Para emular una cámara, un modo de ritmo real lee el video a su velocidad original y descarta los cuadros viejos si el modelo se atrasa. Así, el retraso queda acotado y no se acumula. Una ejecución terminada se publica con su configuración y el video anotado. Repetir la misma configuración requiere un pedido explícito y se guarda aparte. Docker Compose~\cite{compose} levanta la API y el panel con visión en CPU.
 
 \begin{figure}[!t]
 \centering
-\begin{tikzpicture}[font=\scriptsize,node distance=3.5mm and 3.5mm,
-  ok/.style={draw,thick,rounded corners=1pt,align=center,minimum height=6.5mm,minimum width=13mm},
-  pen/.style={ok,dashed,fill=black!6},
-  fl/.style={-{Latex[length=1.6mm]},thick},
-  fd/.style={fl,dashed}]
-\node[pen] (vid) {Clip\\de video};
-\node[pen,right=of vid] (det) {Detector y\\seguimiento};
-\node[pen,right=of det] (lin) {Línea\\virtual};
-\node[ok,below=6mm of vid] (json) {JSON de\\eventos};
-\node[ok,right=of json] (api) {API\\FastAPI};
-\node[ok,right=of api] (ocu) {Ocupación\\por parada};
-\node[ok,right=of ocu] (pan) {Panel\\Streamlit};
-\draw[fd] (vid)--(det); \draw[fd] (det)--(lin);
-\draw[fd] (lin.south) |- ++(0,-1.9mm) -| (json.north);
-\draw[fl] (json)--(api); \draw[fl] (api)--(ocu); \draw[fl] (ocu)--(pan);
-\node[font=\scriptsize\itshape,anchor=west] at ([xshift=2mm]lin.east) {pendiente};
+\begin{tikzpicture}[font=\scriptsize,node distance=2.6mm and 2.6mm,
+  b/.style={draw,thick,rounded corners=1pt,align=center,minimum height=6mm,minimum width=10mm},
+  fl/.style={-{Latex[length=1.5mm]},thick}]
+\node[b] (vid) {Video\\recortado};
+\node[b,right=of vid] (det) {YOLO11n\\personas};
+\node[b,right=of det] (trk) {Byte-\\Track};
+\node[b,right=of trk] (cru) {Regla\\de cruce};
+\node[b,right=of cru] (ev) {Eventos\\y progreso};
+\node[b,below=5mm of ev] (api) {API\\FastAPI};
+\node[b,left=of api] (ocu) {Ocupación\\por parada};
+\node[b,left=of ocu] (pan) {Panel\\(sondeo 1~s)};
+\draw[fl] (vid)--(det); \draw[fl] (det)--(trk); \draw[fl] (trk)--(cru); \draw[fl] (cru)--(ev);
+\draw[fl] (ev)--(api); \draw[fl] (api)--(ocu); \draw[fl] (ocu)--(pan);
+\draw[fl,dashed] (pan.west) -| node[pos=0.75,left,align=right]{subida,\\geometría,\\cancelar} (vid.south);
 \end{tikzpicture}
-\caption{Ruta implementada (trazo continuo) y módulo de visión pendiente (trazo discontinuo).}
+\caption{Arquitectura. El panel inicia y cancela el procesamiento, y lee los cruces parciales sin reiniciar el modelo.}
 \label{fig:arq}
 \end{figure}
 
-\subsection{Contrato de eventos y datos}
-Cada evento contiene \texttt{tiempo\_s}, \texttt{track\_id} y \texttt{sentido}, que vale \texttt{subida} o \texttt{bajada}. El recorrido agrega capacidad, carga inicial y paradas con su instante de inicio. Un cruce confirmado debe generar un solo evento, y un regreso en sentido contrario, uno nuevo.
-
-Los datos disponibles son un recorrido sintético y un ensayo de oficina de 6~s tomado de un video público~\cite{video}. Ese video no muestra un bus: simula la puerta y solo sirve para ensayar la integración. Su referencia, una subida cerca de 2~s y una bajada cerca de 4~s, es un conteo manual aproximado.
-
-\subsection{Cálculo de ocupación}
-La API expone \texttt{POST /ocupacion} con FastAPI~\cite{fastapi}. Rechaza con HTTP 422 los datos inválidos, las paradas que no empiezan en 0 o no avanzan en el tiempo y los eventos desordenados. Cada parada abarca desde su inicio hasta el inicio de la siguiente. Para cada parada se calcula:
-\begin{equation}
-p = c_0 + s - b, \qquad o = 100\,\frac{p}{C},
-\end{equation}
-donde $p$ son los pasajeros acumulados, $c_0$ la carga inicial, $s$ y $b$ las subidas y bajadas acumuladas, $C$ la capacidad y $o$ la ocupación (\%). Un conteo negativo no se corrige: se conserva y genera un aviso para revisar los eventos.
-
-\subsection{Panel y despliegue}
-El panel en Streamlit~\cite{streamlit} consulta la API por HTTP. Carga recorridos JSON, permite cambiar capacidad, carga inicial e instante, y muestra indicadores, tabla y un gráfico de barras hecho con Altair~\cite{altair}. El gráfico numera las paradas, marca la última como parcial e incluye la línea del 100~\%. El cálculo y la validación permanecen en la API.
-
-Docker Compose~\cite{compose} arranca API y panel desde una misma imagen de Python~3.12. El panel espera a que el chequeo de salud de la API sea satisfactorio.
-
-\subsection{Integración prevista de visión}
-Lo siguiente aún no está implementado en \texttt{main}. Se prevé un detector de personas preentrenado y luego ajustado con cajas anotadas, seguimiento con ByteTrack~\cite{zhang2022} y una línea virtual que emita un evento al pasar de un lado confirmado al otro. Ultralytics~\cite{ultralytics} es una opción para integrar detector y seguimiento. La elección final corresponde a la rama \texttt{vision}.
-
-La evaluación prevista usa clips reservados y mantiene cada grabación en una sola partición. Empareja cada cruce manual con una predicción de igual sentido dentro de $\pm 1$~s y reporta F1 por sentido, error absoluto medio del conteo por clip y cuadros por segundo.
-
 \section{Resultados y discusión}
-\subsection{Verificación funcional}
-La Tabla~\ref{tab:ver} resume las pruebas realizadas. Verifican el software de ocupación con eventos conocidos y no miden la capacidad de ver personas. Los 11 registros del navegador incluyen indicadores, tabla, instantes, nota parcial, presencia del gráfico, errores y avisos. Sus valores coincidieron campo por campo entre Linux y Windows.
+\subsection{Calidad del conteo}
+La Tabla~\ref{tab:res} resume las evaluaciones. En la prueba ciega de \emph{prueba-bus}, el sistema detectó los 12 cruces, pero agregó 12 eventos falsos (precisión de 0,50, exhaustividad de 1,00 y F1 de 0,67 en cada sentido). El saldo predicho fue de $-8$ pasajeros, frente a $-4$ en la referencia. Al revisar el video anotado, 8 de los falsos resultaron ser una segunda caja sobre una persona ya contada, a veces una caja que abarca a un grupo, con un identificador propio. Otro es una de esas cajas, que sube y vuelve a bajar. De los tres restantes, dos son un identificador que salta a otra persona, y en el último no se pudo distinguir entre ambas causas. Es el efecto de las oclusiones que plantea la consigna, y queda sin resolver. En el bus real predomina el error inverso: se omiten 12 de 18 cruces, sobre todo subidas. También predominan las omisiones en oficina y PAMELA, donde se midió que la confianza del detector cae en la puerta y se corta la trayectoria.
 
 \begin{table}[!t]
-\caption{Pruebas funcionales realizadas}
-\label{tab:ver}
+\caption{Conteo por grabación (TP/FP/FN, $\pm1$~s) y F1 total. Base y ajustado comparten el seguimiento calibrado y el mismo equipo}
+\label{tab:res}
 \centering\scriptsize
-\begin{tabular}{@{}>{\raggedright\arraybackslash}p{0.43\columnwidth}>{\raggedright\arraybackslash}p{0.31\columnwidth}l@{}}
+\begin{tabular}{@{}lllc@{}}
 \toprule
-Prueba & Entorno & Resultado\\
+Grabación y modelo & Subidas & Bajadas & F1\\
 \midrule
-7 pruebas de la API (\texttt{pytest}) & Linux y Windows & 7 de 7\\
-Carga de JSON en el panel, 14 registros & Linux y Windows & Coinciden\\
-Gráfico y panel, 11 registros & Docker en Linux y Windows & Coinciden\\
-Imagen oficial de Python 3.12 & Docker Desktop, Windows & Arranca\\
-Detener y arrancar servicios & Linux y Windows & Consulta API\\
+Oficina, YOLO11n & 7/0/3 & 4/0/6 & 0,71\\
+Oficina, ajustado (misma grabación) & 10/0/0 & 10/0/0 & 1,00\\
+Kaggle, YOLO11n & 5/5/1 & 0/3/0 & 0,53\\
+Kaggle, ajustado & 0/0/6 & 0/0/0 & 0,00\\
+PAMELA~A, YOLO11n & 0/1/0 & 10/0/18 & 0,51\\
+PAMELA~A, ajustado & 0/0/0 & 1/0/27 & 0,07\\
+\midrule
+Bus real, YOLO11n (prueba final) & 5/0/10 & 1/1/2 & 0,48\\
+Bus real, YOLO11l (prueba final) & 11/7/4 & 1/5/2 & 0,57\\
+\emph{prueba-bus}, YOLO11n (ciega) & 4/4/0 & 8/8/0 & 0,67\\
 \bottomrule
 \end{tabular}
 \end{table}
 
+Antes de modificar el sistema, se probó un cambio por vez sobre el conjunto de selección (oficina, Kaggle y PAMELA, con 37 errores de la línea base). Bajar el IoU de la supresión de no máximos de 0,7 a 0,5 eliminó cajas duplicadas en Kaggle, pero en PAMELA perdió una bajada y sumó dos falsos, y el total quedó en 37. Un filtro de cajas encimadas eliminaba pasajeros reales. Ninguno de los dos se adoptó. Elegir otra corrección mirando \emph{prueba-bus} exigiría una nueva prueba ciega.
+
+\subsection{Rendimiento y tiempo real}
+La Tabla~\ref{tab:vel} resume las mediciones. El detector y el seguimiento ocupan casi todo el tiempo de cada cuadro; la lectura y la regla son despreciables, y codificar el video anotado en VP8 agrega unos 50~ms por cuadro a 768$\times$432. En CPU no se llega a 25~FPS. En modo de ritmo real el retraso no crece: la latencia media del último décimo de la ejecución fue de 129~ms, frente a 206~ms del primero, y el video de 27,4~s terminó en 27,5~s. A cambio, se descartó el 70~\% de los cuadros, y en oficina el conteo bajó de 11 a 4 de 20 cruces. Saltar cuadros de manera fija produce el mismo efecto: con 1 de cada 2, la selección pasa de 37 a 42 errores, y con 1 de cada 3, a 47. Con la GPU RTX~2050, YOLO11n procesó 65,9 cuadros por segundo, con video anotado, más del doble de lo necesario. Falta repetir en GPU la medición de latencia en modo de ritmo real.
+
 \begin{table}[!t]
-\caption{Casos de cálculo observados en el panel}
-\label{tab:casos}
+\caption{Rendimiento medido (YOLO11n, entrada de 640~px)}
+\label{tab:vel}
 \centering\scriptsize
-\begin{tabular}{@{}p{0.50\columnwidth}p{0.20\columnwidth}l@{}}
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{0.56\columnwidth}>{\raggedright\arraybackslash}p{0.34\columnwidth}@{}}
 \toprule
-Caso (capacidad, carga inicial) & Pasajeros & Ocupación\\
+Condición & Resultado\\
 \midrule
-Demo a 0, 5 y 10 s (20, 3) & 3, 5, 4 & 15, 25, 20~\%\\
-Demo a 10 s con capacidad 40 & 4 & 10~\%\\
-Segunda parada a 22 y 22,5 s (20, 3) & 5, 4 & 25, 20~\%\\
-Oficina a 0, 2 y 4 s (20, 0), manual & 0, 1, 0 & 0, 5, 0~\%\\
-Sobreocupación sin eventos (2, 3) & 3 & 150~\%\\
-Bajada con bus vacío (20, 0) & $-1$ y aviso & $-5$~\%\\
+CPU Ryzen~5 7535HS, \emph{prueba-bus}, con video anotado & 8,8 FPS\\
+CPU de 2 núcleos (Linux), detección y seguimiento & 70--90 ms por cuadro\\
+Ídem: lectura, regla y escritura del progreso & $<$3, $<$0,1 y $<$1 ms\\
+Ídem, ritmo real, \emph{prueba-bus}, con video & latencia media de 148~ms, p95 de 180~ms; 30~\% de cuadros procesados\\
+GPU RTX~2050, bus real (586$\times$420), con video anotado & 65,9 FPS\\
 \bottomrule
 \end{tabular}
 \end{table}
-
-Los casos de la Tabla~\ref{tab:casos} muestran que la bajada ocurrida al inicio de una parada pertenece a esa parada, que el porcentaje cambia con la capacidad sin alterar el conteo y que las inconsistencias quedan visibles. Los recorridos con nombres repetidos, sin eventos y de una sola parada también dieron el resultado esperado. Las pruebas de la API no cubren el panel, y este se comprobó con recorridos automatizados del navegador. La Fig.~\ref{fig:panel} muestra el gráfico con los valores de la demo.
-
-\begin{figure}[!t]
-\centering
-\includegraphics[width=0.92\columnwidth]{grafico-demo.png}
-\caption{Gráfico del panel en la demo sintética a los 10~s. La segunda parada figura como parcial y sus valores coinciden con la tabla.}
-\label{fig:panel}
-\end{figure}
-
-\subsection{Mediciones de visión}
-La Tabla~\ref{tab:vis} reserva el espacio de las métricas exigidas. Sus celdas permanecerán pendientes hasta recibir la salida del evaluador de la rama \texttt{vision}. Tampoco se puede afirmar todavía funcionamiento en tiempo real: esa conclusión requiere comparar los cuadros procesados por segundo con los del video en la máquina de defensa.
-
-\begin{table}[!t]
-\caption{Métricas de visión en clips reservados (pendientes)}
-\label{tab:vis}
-\centering\scriptsize
-\begin{tabular}{@{}lll@{}}
-\toprule
-Métrica & Detector base & Detector ajustado\\
-\midrule
-Aciertos, omisiones y falsos positivos & pendiente & pendiente\\
-F1 de subidas & pendiente & pendiente\\
-F1 de bajadas & pendiente & pendiente\\
-Error absoluto medio por clip & pendiente & pendiente\\
-Cuadros por segundo & pendiente & pendiente\\
-\bottomrule
-\end{tabular}
-\end{table}
-
-\begin{figure}[!t]
-\centering
-\fbox{\parbox[c][24mm][c]{0.9\columnwidth}{\centering\footnotesize Espacio reservado: fotograma del caso de oclusión o pérdida de identificación, con su instante y su efecto en el conteo (pendiente de visión).}}
-\caption{Caso de oclusión (pendiente).}
-\label{fig:oclusion}
-\end{figure}
-
-La Fig.~\ref{fig:oclusion} reserva el lugar del caso de oclusión, y este apartado deberá agregar el análisis de sus errores. Todavía no hay un caso observado.
-
-\subsection{Discusión}
-La principal decisión de diseño fue fijar el contrato antes de disponer del modelo. Eso permitió probar el cálculo con resultados conocidos y separar los errores de conteo de los errores de software. El resultado final de un clip no alcanza para validar: dos eventos omitidos pueden dar el mismo total que dos eventos correctos, por lo que la evaluación debe comparar cada cruce. Los datos actuales son sintéticos o manuales y no representan condiciones reales de un bus.
 
 \section{Conclusiones y trabajo futuro}
-La API, el contrato de eventos, el cálculo por parada, el panel, la carga de JSON y el arranque con Docker están implementados y verificados en Linux y Windows. El objetivo completo todavía no está demostrado, porque falta el conteo desde video.
+El sistema funciona de extremo a extremo: recibe un video, cuenta los cruces, actualiza la ocupación mientras procesa y la reporta por parada a lo largo de un recorrido. Se despliega con Docker y está cubierto por pruebas automáticas. La calidad del conteo, en cambio, todavía no alcanza para auditar un servicio. Duplica eventos cuando hay varias cajas sobre una persona y los omite cuando la detección se pierde en la puerta. En CPU, además, no hay tiempo real sin perder cruces. Las lecciones son tres. Una métrica perfecta en la grabación de entrenamiento no prueba generalización. Cada video de prueba sirve una sola vez. Y una corrección que mejora un video puede empeorar otro.
 
-Una lección del trabajo es que un contrato simple y probado permite avanzar en paralelo y mantiene visibles los errores. Las limitaciones actuales son la ausencia de eventos de visión, los datos simulados, el análisis de una sola puerta y que el recorrido se consulta por archivo y no en tiempo real.
+Las limitaciones son la falta de grabaciones paraguayas, pocas escenas anotadas y una sola puerta. El trabajo futuro es grabar puertas de colectivos locales con permiso y reservar una parte como prueba, entrenar con cabezas anotadas en vista cenital, como las de PAMELA~\cite{velastin2020}, y medir el tiempo real en GPU con una cámara.
 
-El trabajo futuro comprende integrar el módulo de visión, evaluar el detector base y el ajustado en clips independientes, documentar un caso de oclusión y conectar el video con el contador durante la reproducción. Con clips locales se podrá estimar el desempeño en condiciones cercanas a las del Gran Asunción.
-
-\IEEEtriggeratref{4}
 \bibliographystyle{IEEEtran}
 \bibliography{referencias}
 \end{document}

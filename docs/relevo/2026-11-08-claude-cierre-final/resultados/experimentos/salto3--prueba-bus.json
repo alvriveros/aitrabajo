@@ -1,0 +1,157 @@
+{
+ "config": "salto3",
+ "cambio": {
+  "salto": 3
+ },
+ "escena": "prueba-bus (desarrollo)",
+ "cuadros": 229,
+ "segundos": 19.1,
+ "fps": 11.99,
+ "medicion": {
+  "ms_por_cuadro": {
+   "lectura": 4.2,
+   "rastreo": 78.5,
+   "conteo": 0.0,
+   "entrega": 0.0
+  },
+  "latencia_ms": {
+   "media": 78.6,
+   "p95": 95.9,
+   "maxima": 132.8,
+   "primer_decimo": 79.3,
+   "ultimo_decimo": 72.2
+  },
+  "cuadros_descartados": 0
+ },
+ "eventos": [
+  {
+   "tiempo_s": 8.28,
+   "track_id": 9,
+   "sentido": "bajada"
+  },
+  {
+   "tiempo_s": 8.28,
+   "track_id": 10,
+   "sentido": "bajada"
+  },
+  {
+   "tiempo_s": 10.2,
+   "track_id": 18,
+   "sentido": "bajada"
+  },
+  {
+   "tiempo_s": 10.44,
+   "track_id": 12,
+   "sentido": "bajada"
+  },
+  {
+   "tiempo_s": 10.44,
+   "track_id": 17,
+   "sentido": "bajada"
+  },
+  {
+   "tiempo_s": 11.88,
+   "track_id": 22,
+   "sentido": "bajada"
+  },
+  {
+   "tiempo_s": 13.68,
+   "track_id": 26,
+   "sentido": "bajada"
+  },
+  {
+   "tiempo_s": 14.64,
+   "track_id": 33,
+   "sentido": "bajada"
+  },
+  {
+   "tiempo_s": 15.72,
+   "track_id": 51,
+   "sentido": "bajada"
+  },
+  {
+   "tiempo_s": 15.84,
+   "track_id": 44,
+   "sentido": "subida"
+  },
+  {
+   "tiempo_s": 15.96,
+   "track_id": 49,
+   "sentido": "bajada"
+  },
+  {
+   "tiempo_s": 16.08,
+   "track_id": 41,
+   "sentido": "subida"
+  },
+  {
+   "tiempo_s": 17.64,
+   "track_id": 7,
+   "sentido": "subida"
+  },
+  {
+   "tiempo_s": 20.76,
+   "track_id": 39,
+   "sentido": "subida"
+  }
+ ],
+ "metricas": {
+  "tolerancia_s": 1.0,
+  "tramo_s": {
+   "desde": 0.0,
+   "hasta": null
+  },
+  "sentidos": {
+   "subida": {
+    "referencia": 4,
+    "predichos": 4,
+    "aciertos": 3,
+    "omisiones": 1,
+    "falsos_positivos": 1,
+    "precision": 0.75,
+    "exhaustividad": 0.75,
+    "f1": 0.75,
+    "error_conteo_abs": 0,
+    "error_tiempo_medio_s": 0.0533,
+    "tiempos_omitidos_s": [
+     19.12
+    ],
+    "tiempos_falsos_s": [
+     16.08
+    ]
+   },
+   "bajada": {
+    "referencia": 8,
+    "predichos": 10,
+    "aciertos": 8,
+    "omisiones": 0,
+    "falsos_positivos": 2,
+    "precision": 0.8,
+    "exhaustividad": 1.0,
+    "f1": 0.8889,
+    "error_conteo_abs": 2,
+    "error_tiempo_medio_s": 0.205,
+    "tiempos_omitidos_s": [],
+    "tiempos_falsos_s": [
+     8.28,
+     15.96
+    ]
+   }
+  },
+  "total": {
+   "aciertos": 11,
+   "omisiones": 1,
+   "falsos_positivos": 3,
+   "f1": 0.8462
+  }
+ },
+ "entorno": {
+  "python": "3.13.18",
+  "plataforma": "Linux-6.18.44-fc-v310-x86_64-with-glibc2.39",
+  "procesador": "x86_64",
+  "ultralytics": "8.4.203",
+  "torch": "2.15.0",
+  "opencv-python": "5.0.0.93",
+  "lap": "0.5.14"
+ }
+}

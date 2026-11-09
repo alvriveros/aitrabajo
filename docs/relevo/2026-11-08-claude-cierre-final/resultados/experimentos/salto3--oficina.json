@@ -1,0 +1,110 @@
+{
+ "config": "salto3",
+ "cambio": {
+  "salto": 3
+ },
+ "escena": "oficina",
+ "cuadros": 439,
+ "segundos": 48.41,
+ "fps": 9.07,
+ "medicion": {
+  "ms_por_cuadro": {
+   "lectura": 2.0,
+   "rastreo": 108.2,
+   "conteo": 0.0,
+   "entrega": 0.0
+  },
+  "latencia_ms": {
+   "media": 108.2,
+   "p95": 124.6,
+   "maxima": 270.9,
+   "primer_decimo": 105.4,
+   "ultimo_decimo": 110.6
+  },
+  "cuadros_descartados": 0
+ },
+ "eventos": [
+  {
+   "tiempo_s": 27.84,
+   "track_id": 19,
+   "sentido": "subida"
+  },
+  {
+   "tiempo_s": 48.48,
+   "track_id": 40,
+   "sentido": "subida"
+  }
+ ],
+ "metricas": {
+  "tolerancia_s": 1.0,
+  "tramo_s": {
+   "desde": 0.0,
+   "hasta": null
+  },
+  "sentidos": {
+   "subida": {
+    "referencia": 10,
+    "predichos": 2,
+    "aciertos": 2,
+    "omisiones": 8,
+    "falsos_positivos": 0,
+    "precision": 1.0,
+    "exhaustividad": 0.2,
+    "f1": 0.3333,
+    "error_conteo_abs": 8,
+    "error_tiempo_medio_s": 0.12,
+    "tiempos_omitidos_s": [
+     2.16,
+     7.2,
+     11.88,
+     17.04,
+     22.44,
+     32.76,
+     38.28,
+     43.8
+    ],
+    "tiempos_falsos_s": []
+   },
+   "bajada": {
+    "referencia": 10,
+    "predichos": 0,
+    "aciertos": 0,
+    "omisiones": 10,
+    "falsos_positivos": 0,
+    "precision": null,
+    "exhaustividad": 0.0,
+    "f1": 0.0,
+    "error_conteo_abs": 10,
+    "error_tiempo_medio_s": null,
+    "tiempos_omitidos_s": [
+     4.68,
+     9.6,
+     14.52,
+     19.92,
+     25.2,
+     30.36,
+     35.28,
+     41.16,
+     45.96,
+     50.88
+    ],
+    "tiempos_falsos_s": []
+   }
+  },
+  "total": {
+   "aciertos": 2,
+   "omisiones": 18,
+   "falsos_positivos": 0,
+   "f1": 0.1818
+  }
+ },
+ "entorno": {
+  "python": "3.13.18",
+  "plataforma": "Linux-6.18.44-fc-v310-x86_64-with-glibc2.39",
+  "procesador": "x86_64",
+  "ultralytics": "8.4.203",
+  "torch": "2.15.0",
+  "opencv-python": "5.0.0.93",
+  "lap": "0.5.14"
+ }
+}

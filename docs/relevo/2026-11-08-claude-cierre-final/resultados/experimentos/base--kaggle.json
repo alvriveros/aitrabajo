@@ -1,0 +1,155 @@
+{
+ "config": "base",
+ "cambio": {},
+ "escena": "kaggle",
+ "cuadros": 1499,
+ "segundos": 130.61,
+ "fps": 11.48,
+ "medicion": {
+  "ms_por_cuadro": {
+   "lectura": 2.4,
+   "rastreo": 84.7,
+   "conteo": 0.0,
+   "entrega": 0.0
+  },
+  "latencia_ms": {
+   "media": 84.7,
+   "p95": 100.2,
+   "maxima": 187.1,
+   "primer_decimo": 85.6,
+   "ultimo_decimo": 85.3
+  },
+  "cuadros_descartados": 0
+ },
+ "eventos": [
+  {
+   "tiempo_s": 13.76,
+   "track_id": 7,
+   "sentido": "subida"
+  },
+  {
+   "tiempo_s": 14.04,
+   "track_id": 37,
+   "sentido": "subida"
+  },
+  {
+   "tiempo_s": 14.68,
+   "track_id": 7,
+   "sentido": "bajada"
+  },
+  {
+   "tiempo_s": 14.92,
+   "track_id": 37,
+   "sentido": "bajada"
+  },
+  {
+   "tiempo_s": 15.0,
+   "track_id": 37,
+   "sentido": "subida"
+  },
+  {
+   "tiempo_s": 15.32,
+   "track_id": 7,
+   "sentido": "subida"
+  },
+  {
+   "tiempo_s": 17.52,
+   "track_id": 42,
+   "sentido": "subida"
+  },
+  {
+   "tiempo_s": 25.0,
+   "track_id": 58,
+   "sentido": "subida"
+  },
+  {
+   "tiempo_s": 25.76,
+   "track_id": 57,
+   "sentido": "subida"
+  },
+  {
+   "tiempo_s": 25.92,
+   "track_id": 63,
+   "sentido": "subida"
+  },
+  {
+   "tiempo_s": 26.48,
+   "track_id": 63,
+   "sentido": "bajada"
+  },
+  {
+   "tiempo_s": 27.44,
+   "track_id": 63,
+   "sentido": "subida"
+  },
+  {
+   "tiempo_s": 27.72,
+   "track_id": 63,
+   "sentido": "bajada"
+  }
+ ],
+ "metricas": {
+  "tolerancia_s": 1.0,
+  "tramo_s": {
+   "desde": 0.0,
+   "hasta": null
+  },
+  "sentidos": {
+   "subida": {
+    "referencia": 6,
+    "predichos": 9,
+    "aciertos": 5,
+    "omisiones": 1,
+    "falsos_positivos": 4,
+    "precision": 0.5556,
+    "exhaustividad": 0.8333,
+    "f1": 0.6667,
+    "error_conteo_abs": 3,
+    "error_tiempo_medio_s": 0.56,
+    "tiempos_omitidos_s": [
+     21.4
+    ],
+    "tiempos_falsos_s": [
+     15.0,
+     15.32,
+     25.76,
+     25.92
+    ]
+   },
+   "bajada": {
+    "referencia": 0,
+    "predichos": 4,
+    "aciertos": 0,
+    "omisiones": 0,
+    "falsos_positivos": 4,
+    "precision": 0.0,
+    "exhaustividad": null,
+    "f1": 0.0,
+    "error_conteo_abs": 4,
+    "error_tiempo_medio_s": null,
+    "tiempos_omitidos_s": [],
+    "tiempos_falsos_s": [
+     14.68,
+     14.92,
+     26.48,
+     27.72
+    ]
+   }
+  },
+  "total": {
+   "aciertos": 5,
+   "omisiones": 1,
+   "falsos_positivos": 8,
+   "f1": 0.5263
+  }
+ },
+ "entorno": {
+  "python": "3.13.18",
+  "plataforma": "Linux-6.18.44-fc-v310-x86_64-with-glibc2.39",
+  "procesador": "x86_64",
+  "ultralytics": "8.4.203",
+  "torch": "2.15.0",
+  "opencv-python": "5.0.0.93",
+  "lap": "0.5.14"
+ }
+}

@@ -1,0 +1,34 @@
+...........................x............................................ [ 51%]
+....................F...............................................     [100%]
+=================================== FAILURES ===================================
+_ test_ensayo_de_oficina_sigue_dentro_de_la_tolerancia_de_la_referencia_manual _
+
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-6/test_ensayo_de_oficina_sigue_d0')
+
+    @pytest.mark.skipif(not OFICINA.exists(), reason="Falta el clip en data/raw/oficina.mp4.")
+    def test_ensayo_de_oficina_sigue_dentro_de_la_tolerancia_de_la_referencia_manual(tmp_path):
+        # Protege la calibración de este ensayo. No mide el desempeño: el clip se usó para calibrar.
+        manual = json.loads((RAIZ / "docs/demo/oficina-00-06-manual.json").read_text(encoding="utf-8"))["eventos"]
+        eventos = ejecutar_pipeline(OFICINA, tmp_path / "prediccion.json", "--recorte", "228,2,222,176",
+                                    "--linea", "0,90,221,90", "--rastreador", str(RAIZ / "vision/bytetrack-cenital.yaml"),
+                                    "--conf", "0.05", "--confirmacion", "2", "--dispositivo", "cpu")
+>       assert [evento["sentido"] for evento in eventos] == [evento["sentido"] for evento in manual]
+E       AssertionError: assert ['subida'] == ['subida', 'bajada']
+E         
+E         Right contains one more item: 'bajada'
+E         Use -v to get more diff
+
+tests/test_pipeline_modelo.py:100: AssertionError
+----------------------------- Captured stdout call -----------------------------
+1 eventos: 1 subidas y 0 bajadas.
+Predicciones: /tmp/pytest-of-root/pytest-6/test_ensayo_de_oficina_sigue_d0/prediccion.json
+Configuración: /tmp/pytest-of-root/pytest-6/test_ensayo_de_oficina_sigue_d0/prediccion.config.json
+=============================== warnings summary ===============================
+../venv/lib/python3.13/site-packages/starlette/testclient.py:51
+  /home/claude/venv/lib/python3.13/site-packages/starlette/testclient.py:51: DeprecationWarning: The anyio.abc.BlockingPortal alias is deprecated, use anyio.from_thread.BlockingPortal instead.
+    _PortalFactoryType = Callable[[], AbstractContextManager[anyio.abc.BlockingPortal]]
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+XFAIL tests/test_cajas_encimadas.py::test_una_persona_con_tres_cajas_cuenta_un_cruce - limitación conocida: 3 cruces para una sola persona con cajas encimadas
+1 failed, 138 passed, 1 xfailed, 1 warning in 57.94s

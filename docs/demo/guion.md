@@ -1,122 +1,85 @@
-# Guion de la demo · 10 minutos
+# Guion de la defensa · 10 minutos más 2 de preguntas
 
-Defensa: 10 minutos de exposición y 2 de preguntas. Los textos entre comillas son una propuesta para decir en voz alta. Adaptalos a tus palabras.
+Versión del cierre final (9 nov.). Lo que está entre comillas es una propuesta para decir en voz alta: adaptalo a tus palabras. **Regla de la demo: primero lo que se ejecuta en vivo; después, rotuladas como tales, las métricas históricas.** Nunca presentes un resultado guardado como si fuera inferencia nueva.
 
-## Preparación previa · 30 minutos antes
+## Preparación · 30 minutos antes
 
-Responsable: Álvaro, con el compañero para el material de visión.
-
-1. Iniciá Docker Desktop y esperá a que el motor Linux esté disponible.
-2. Desde la raíz del repo, arrancá los servicios:
-
+1. **Rama y entorno.** En `TpFinal\.worktrees\integracion-video`, con la rama `cierre-final`.
+2. **Insumos fuera de Git:** `yolo11n.pt` en la raíz, `data\raw\prueba-bus.mp4` y `data\raw\oficina.mp4`.
+3. **Arranque con GPU** (recomendado: en CPU no hay tiempo real, ver más abajo). En una terminal:
    ```powershell
-   docker compose up --build -d
-   docker compose ps
-   curl.exe http://127.0.0.1:8001/openapi.json -o NUL -w "API %{http_code}`n"
-   curl.exe http://127.0.0.1:8502/_stcore/health
+   $env:VISION_DISPOSITIVO = "cuda:0"
+   C:\Users\Alvaro\Desktop\Facultad\4to\IA\venv-gpu\Scripts\python.exe -m uvicorn api.main:app --port 8000
    ```
+   En otra:
+   ```powershell
+   .\.venv\Scripts\python.exe -m streamlit run ui/app.py
+   ```
+   **Alternativa con Docker** (CPU): `docker compose up --build -d` y el panel en http://127.0.0.1:8502.
+4. **Ensayo:** procesá una vez `prueba-bus` con «Simular cámara en vivo» tildada y anotá el FPS y el retraso que muestra el panel. Esa ejecución queda guardada como **respaldo**.
+5. **Pestañas abiertas:** el informe (Tablas II y III), el panel en «Archivo JSON o demo» y la carpeta `runs\panel\20261108-200805-374934` (la primera evaluación de `prueba-bus`).
 
-   Esperado: `api` en estado healthy, `API 200` y `ok`.
-3. Abrí http://127.0.0.1:8502 y comprobá que el panel muestre la demo con 4 pasajeros y 20 %.
-4. Confirmá que el panel se vea en tema claro, que es el predeterminado del proyecto. Si no, elegilo en menú ⋮ > Settings > Light.
-5. Confirmá que estén disponibles sin internet los clips, los pesos, el video anotado y estos JSON: `docs/demo/recorrido.json`, `docs/demo/oficina-00-06-manual.json` y las predicciones de visión.
-6. Recorré el bloque 5–8 una vez completo. Después recargá la página para volver a capacidad 20.
-7. Dejá abiertos, en este orden: las diapositivas, el video anotado y el panel. Ampliá la ventana para que el gráfico quede a la vista junto a los indicadores.
+## 0:00–1:30 · Problema y objetivo
 
-**Respaldo:** si Docker falla, usá la ejecución manual del README (API en 8000, panel en 8501). Si tampoco funciona, mostrá las capturas de `docs/relevo/2026-11-05-claude-tarea03/capturas/`.
+> "En diciembre de 2025 se sancionó la reforma del transporte público metropolitano, y en mayo se reglamentó. Para planificar frecuencias y controlar el hacinamiento hace falta saber cuánta gente lleva cada unidad en cada parada, no solo cuántos boletos se vendieron. Nuestro sistema cuenta subidas y bajadas con una cámara en la puerta y calcula la ocupación a lo largo del recorrido."
 
-## 0:00–2:00 · Álvaro · Problema, objetivo y arquitectura
+Pantalla: panel → «Archivo JSON o demo» → **Línea simulada de 8 paradas**. Mové el selector hasta la parada 4 y mostrá el **105 %**.
 
-Pantalla: una diapositiva con el problema y la Fig. 1 del informe.
+> "Este recorrido es simulado, y así lo indica el panel. Lo usamos para mostrar el reporte que recibiría la empresa: carga acumulada y sobreocupación por parada."
 
-> "Para auditar la calidad del servicio de buses en el Gran Asunción, no alcanza con saber cuántas personas subieron en total. Hace falta saber cuánta gente lleva la unidad en cada parada y qué porcentaje de su capacidad representa.
->
-> Nuestro objetivo es contar subidas y bajadas en la puerta de un bus y reconstruir la ocupación a lo largo de un recorrido simulado, como la vería una empresa de transporte.
->
-> El sistema tiene dos partes unidas por un contrato. La primera mira el video: detecta personas, las sigue y decide cuándo cruzan una línea virtual. Cada cruce se convierte en un evento con su tiempo, su identificador y su sentido. La segunda parte recibe esos eventos. Una API en FastAPI los asigna a paradas y calcula pasajeros y porcentaje. Un panel en Streamlit muestra el resultado, y todo arranca con Docker.
->
-> Esa separación nos permitió probar el cálculo con eventos conocidos antes de tener el modelo. Ahora mi compañero muestra la parte de visión, y después yo muestro cómo esos eventos se convierten en ocupación."
+## 1:30–3:00 · Arquitectura
 
-## 2:00–5:00 · Compañero · Detección, seguimiento y oclusión
+Pantalla: Fig. 1 del informe.
 
-Pantalla: video anotado con línea, ID y sentido.
+> "Cada cuadro pasa por YOLO11n, que detecta personas. ByteTrack les asigna un identificador, y una regla decide cuándo un identificador cruza la línea de un lado confirmado al otro. Cada cruce es un evento con su instante y su sentido. La API calcula la ocupación con esos eventos. El procesamiento corre fuera de la petición HTTP, uno por vez, y el panel consulta su estado cada segundo sin reiniciar el modelo."
 
-Contenido:
+## 3:00–6:30 · Demo en vivo
 
-1. Qué detector se usó y cómo se ajustó.
-2. Cómo ByteTrack conserva el ID entre cuadros.
-3. Cómo la línea decide un cruce y evita el doble conteo.
-4. Un caso de oclusión, con su instante y su efecto en el conteo.
+1. «Video nuevo» → subí `prueba-bus.mp4`. Mostrá resolución, FPS, duración y hash.
+2. **Geometría:** recorte 0, 0, 768, 432; línea X1 274, Y1 431, X2 467, Y2 242; interior arriba. Apretá Enter después de cada número. Mové la vista previa:
+   > "La vista previa no ejecuta el modelo."
+3. Tildá **«Simular cámara en vivo»**, cargá 30 de capacidad y 20 pasajeros iniciales, y pulsá **«Reprocesar en vivo para demostración»**.
+   - Si es la primera vez con esa configuración, alcanza con «Procesar video».
+   - Si la página avisa «No se repite», es que ya existe esa ejecución: usá «Reprocesar en vivo».
+4. **Mientras corre,** señalá:
+   - cómo aumentan las subidas y las bajadas;
+   - cómo baja la ocupación;
+   - el FPS y el retraso respecto del video, que no debe crecer;
+   - los cuadros descartados.
 
-**Material que debe aportar el compañero:**
+   > "Esto se está calculando ahora. Si el equipo no alcanzara la velocidad del video, descartaría cuadros en lugar de atrasarse, como una cámara."
+5. **Al terminar,** mostrá el video anotado, la tabla de eventos y las descargas (eventos, video y configuración).
+6. **Opcional:** recargá la página durante un procesamiento y mostrá que se retoma; o pulsá «Cancelar» y mostrá que no se publica.
 
-- Video anotado que se reproduzca sin internet, en la máquina de defensa.
-- Configuración de la escena: recorte, línea y orientación.
-- Detector, pesos y parámetros usados.
-- Fotograma o tramo del caso de oclusión, con su instante y su efecto.
-- JSON de predicciones generado por el pipeline.
+**Respaldo, si algo falla en vivo:** en «Ejecución», elegí la del ensayo o `20261108-200805-374934`. Decilo explícitamente:
 
-## 5:00–8:00 · Álvaro · Panel en vivo
+> "Esto es un resultado guardado, no inferencia en vivo."
 
-Ensayado contra Docker en Windows. Valores en [el relevo](../relevo/2026-11-05-claude-tarea04/README.md).
+## 6:30–9:00 · Resultados medidos (históricos, del informe)
 
-| Tiempo | Acción | Se debe ver |
-|---|---|---|
-| 5:00 | Mostrar el panel en 8502 con la demo | Recorrido: demo sintética; capacidad 20; carga 3 |
-| 5:20 | Mover el selector a 0 s | 3 pasajeros, 15 % |
-| 5:40 | Mover a 5 s | 5 pasajeros, 25 %; una barra, parcial |
-| 6:00 | Mover a 10 s | 4 pasajeros, 20 %; dos barras |
-| 6:15 | Revisar tabla y gráfico | Parada 1: 5 y 25 %. Parada 2: 4 y 20 % |
-| 6:40 | Cambiar la capacidad a 40 | 4 pasajeros, 10 %; tabla 12,5 y 10 |
-| 7:10 | Cargar `docs/demo/oficina-00-06-manual.json` | Recorrido de oficina; capacidad 20; carga 0 |
-| 7:25 | Mover a 0, 2 y 4 s | 0 → 1 (5 %) → 0 |
-| 7:50 | Si hay predicciones, cargarlas | Comparar con la referencia manual |
+Pantalla: Tabla II del informe.
 
-Para el selector: hacé clic en el control y usá las flechas ← y →. Desde 10 s son 11 pasos hasta 0 s, porque existe la marca de 4,2 s; desde 0 s son 6 pasos hasta 5 s.
+- **Prueba ciega de `prueba-bus`** (primera y única evaluación):
+  - 12 de 12 cruces detectados, pero 12 eventos falsos: precisión 0,50, exhaustividad 1,00 y F1 0,67;
+  - al revisar el video, 8 de los falsos son una segunda caja sobre una persona ya contada.
+  > "Es exactamente el problema de oclusiones de la consigna, y no lo resolvimos."
+- **Bus real de YouTube** (prueba final): se contaron 6 de 18 cruces. Predominan las omisiones.
+- **Modelo ajustado:** 20 de 20 en su propia grabación, pero 0 de 6 en Kaggle y 1 de 28 en PAMELA.
+  > "Por eso desplegamos el preentrenado: no vamos a usar un modelo peor solo porque lo entrenamos nosotros."
+- **Tiempo real** (Tabla III):
+  - en CPU, 8,8 FPS; con ritmo real, el retraso no crece, pero se descarta el 70 % de los cuadros y en oficina se cuentan 4 de 20 cruces;
+  - con la GPU, 65,9 FPS, más que los 25 del video.
 
-> "Este panel está corriendo en Docker, con la API y la interfaz como servicios separados. Estos son eventos sintéticos: los usamos porque conocemos el resultado correcto.
->
-> Al inicio hay 3 pasajeros, que con capacidad 20 son 15 %. A los 5 segundos subieron dos personas, así que hay 5, o sea 25 %. La barra aparece como parcial porque el conteo de esa parada llega solo hasta el instante elegido.
->
-> A los 10 segundos empieza la segunda parada y baja una persona. Quedan 4 pasajeros, 20 %. El gráfico y la tabla usan el mismo resultado de la API: la primera parada cerró con 5 y la segunda va en 4.
->
-> Si cambio la capacidad a 40, el conteo sigue en 4 pero la ocupación baja a 10 %, porque es 100 por pasajeros sobre capacidad. El conteo depende de los eventos; el porcentaje depende además de la capacidad.
->
-> Ahora cargo el ensayo de oficina. Es una referencia manual aproximada, no una predicción del modelo: una oficina que simula la puerta de un bus, con una subida cerca de 2 segundos y una bajada cerca de 4. Pasamos de 0 a 1, que es 5 %, y volvemos a 0.
->
-> Este mismo formato de archivo es el que produce el módulo de visión. Mi compañero compara ahora esas predicciones con el conteo manual."
+## 9:00–10:00 · Conclusiones
 
-**Si algo falla:** si aparece un aviso de la API, leelo en voz alta y seguí con la demo. Si el panel no conecta, usá `docker compose ps` y `docker compose logs api`. Si se pierde tiempo, omití el cambio de capacidad antes que la oficina.
-
-## 8:00–10:00 · Compañero · Comparación con el conteo manual y limitaciones
-
-Pantalla: tabla de resultados.
-
-Contenido:
-
-1. Comparación cruce por cruce: dos eventos omitidos pueden dar el mismo total que dos correctos.
-2. Error observado y un fotograma que lo explique.
-3. Limitaciones del sistema y de los datos.
-4. Cierre con lo aprendido y el trabajo futuro.
-
-**Mediciones pendientes:** aciertos, omisiones y falsos positivos por sentido; F1 por sentido; error absoluto medio por clip; cuadros por segundo; hardware, resolución y FPS del video. Deben salir del evaluador, en clips reservados. Para decir "tiempo real", comparen los cuadros procesados por segundo con los del video en la máquina de defensa.
+> "Funciona de extremo a extremo, en vivo y con Docker. La calidad todavía no alcanza para auditar un servicio. Lo siguiente es grabar colectivos locales con permiso, reservar una parte para la prueba y entrenar con cabezas vistas desde arriba."
 
 ## Preguntas probables
 
-1. **¿Cómo calculan la ocupación?**
-   Con carga inicial más subidas menos bajadas, dividido por la capacidad y multiplicado por 100. Lo calcula `POST /ocupacion`. Un evento justo al inicio de una parada pertenece a esa parada.
-
-2. **¿Qué pasa si el conteo da negativo?**
-   No se corrige. Queda registrado y el panel muestra un aviso, porque indica un error de conteo. Con carga 0, capacidad 20 y una bajada, da −1 pasajero y −5 %.
-
-3. **¿Cómo verificaron que el software funciona?**
-   Con siete pruebas de la API y recorridos del navegador en el panel, que coincidieron entre Linux y Windows. Esto verifica el software de ocupación con eventos conocidos, no el modelo de visión.
-
-4. **¿Qué tan preciso es el conteo?**
-   *Dato pendiente de visión.* Debe responderse con F1 por sentido y error absoluto medio por clip, medidos en clips reservados. Hoy no hay una cifra válida.
-
-5. **¿Cómo manejan las oclusiones cuando suben varias personas juntas?**
-   *Dato pendiente de visión.* El plan usa ByteTrack, que también asocia detecciones de baja confianza con trayectorias existentes. El compañero debe mostrar un caso real y su efecto en el conteo.
-
-6. **¿Funciona en tiempo real?**
-   *Dato pendiente de visión.* Hoy el panel consulta eventos ya generados y no procesa video. Para afirmarlo hay que medir los cuadros por segundo en la máquina de defensa y compararlos con los del video.
+| Pregunta | Respuesta corta |
+|---|---|
+| ¿Por qué no entrenaron con más datos? | Con YOLO11x faltaban unas 6 de cada 10 personas en PAMELA, y había que dibujar unas 450 cajas a mano. Entrenar con personas sin anotar le enseña al modelo a ignorarlas. |
+| ¿Por qué no filtran las cajas duplicadas? | Se probaron dos opciones. El filtro de cajas encimadas eliminaba pasajeros reales. El IoU 0,5 de NMS mejoró Kaggle y empeoró PAMELA, con el mismo total. Elegir mirando `prueba-bus` exigiría otra prueba ciega. |
+| ¿Es tiempo real? | Con GPU, sí en velocidad (65,9 FPS frente a 25). En CPU, no sin perder cruces. Lo medimos y lo decimos. |
+| ¿El 20 de 20 de oficina? | Es la grabación de entrenamiento: no mide generalización. |
+| ¿Datos de Paraguay? | No tenemos. Es la primera limitación del informe. |

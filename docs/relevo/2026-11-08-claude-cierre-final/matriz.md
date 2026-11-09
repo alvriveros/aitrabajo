@@ -1,0 +1,44 @@
+# Matriz de trazabilidad · `contexto.md` (cierre final, 8–9 nov.)
+
+Rama `cierre-final`, creada desde `integracion-video` (`24d873d`), que queda intacta como respaldo.
+
+**Estados:**
+
+- **Cumple:** implementado, probado y con evidencia.
+- **Parcial:** existe, pero le falta algo de lo que pide la consigna.
+- **Pendiente:** falta un insumo; se indica cuál.
+- **No cumple:** medido, y no alcanza.
+
+*Implementado*, *probado* y *documentado* se distinguen en la columna de evidencia.
+
+| # | Requisito (fuente) | Estado | Evidencia | Brecha | Acción | Aceptación | Bloqueo |
+|---|---|---|---|---|---|---|---|
+| R1 | Dataset relevante, limpio y documentado; preferentemente paraguayo (Directivas 1; Entregables 1) | **Parcial** | `data/README.md` (estado vigente del 9 nov.): origen, licencia, SHA-256, partición y revisión de cada grabación. Kaggle y PAMELA A, revisadas por Álvaro sin cambios. | **Ninguna grabación es de Paraguay.** Las cajas de oficina no tienen revisión humana. El origen de `prueba-bus` no está documentado. No queda ningún conjunto reservado sin usar. | Grabar siguiendo `tarea12/protocolo-validacion-nueva.md`. | Grabación nueva con referencia humana anotada antes de procesar. | **Grabación local y origen de `prueba-bus` (Álvaro).** |
+| R2 | Modelo entrenado con métricas formales (Directivas 2; Entregables 1) | **Parcial, justificado** | Ajuste de YOLO11n con oficina (`vision/train.py`): mAP50 0,995 en la reserva de la misma grabación. Fuera de oficina rinde peor que el base (tarea 10: Kaggle 0 de 6, PAMELA 0–1 de 28). Se despliega `yolo11n` preentrenado con ByteTrack calibrado. Métricas de conteo: P, R y F1 por sentido (`evaluation/evaluate.py`). | El modelo desplegado no es el ajustado: el ajuste empeoró la generalización. No hay datos cenitales variados para reentrenar. | Documentar en el informe la decisión y sus cifras. **No desplegar el ajustado.** | El informe muestra base y ajustado en condiciones equivalentes, y justifica el desplegado. | Más datos anotados: unas 450 cajas en Kaggle y PAMELA (tarea 11), o la grabación local. |
+| R3 | Seguimiento (ByteTrack o DeepSORT) con línea virtual (Proyecto 10) | **Cumple** | `vision/pipeline.py` usa ByteTrack de Ultralytics; `vision/cruces.py` implementa la regla con margen y confirmación. Hay tests de cruce, regreso, permanencia, oscilación, cambio de ID, dos personas juntas y oclusión con recuperación (`tests/test_cruces.py`, `test_cajas_encimadas.py`). | — | Comprobar que cada caso pedido tenga test (ver «Conteo»). | Suite verde, salvo el xfail explicado. | — |
+| R4 | Superar oclusiones cuando suben varios a la vez (Proyecto 10) | **No cumple** (medido) | `prueba-bus`: 12 de 24 eventos son falsos; 8 son cajas encimadas o de grupo (tarea 14). Experimento acotado (`resultados/experimentos/`): con NMS a IoU 0,5 la selección queda en 37 errores, igual que la base, con una regresión en PAMELA. **No se adoptó.** | Sin corrección robusta. | Se conserva la API sin cambios y se documenta como pendiente. | — | Datos anotados nuevos y validación independiente. |
+| R5 | Conteo de subidas y bajadas y porcentaje de ocupación (Proyecto 10) | **Cumple** (funcional) | `POST /ocupacion` (`tests/test_ocupacion.py`); el panel muestra pasajeros, porcentaje y avisos de valores negativos. | La calidad del conteo depende de R4. | — | — | — |
+| R6 | Ocupación **en tiempo real** (Proyecto 10; «UI para pruebas en tiempo real») | **Implementado y probado en CPU; criterio cumplido en latencia, no en calidad** | `9814abb`: progreso, estado, cancelación, ritmo real y sondeo en el panel. Prueba HTTP: la ocupación cambió durante la ejecución (66,7 → 33,3 → 46,7 %). Ritmo real en CPU (2 núcleos): latencia del primer décimo 206 ms y del último 129 ms, sin crecer; pero descarta el 70 % de los cuadros y en oficina cuenta 4 de 20. En GPU (tarea 11): 65,9 FPS frente a 25. | Falta medir el ritmo real en la GPU de la máquina de defensa. | Instrucciones en el guion y en el README. | En la RTX 2050, cuadros descartados ≈ 0, latencia estable y conteo igual al de la ejecución sin ritmo real. | **Medición de Álvaro en la RTX 2050.** |
+| R7 | Módulo simulado que reporte la carga a lo largo del recorrido (Proyecto 10) | **Cumple** | `a781402`: `recorrido-linea.json`, con 8 paradas, carga acumulada, porcentaje y 105 % en la parada 4; selector en el panel. `AppTest`: 35, 55, 75, 105, 97,5, 75, 55 y 0 %. | — | — | `test_recorrido_simulado_…` aprobado. | — |
+| R8 | API REST funcional (Directivas 3; Entregables 1) | **Cumple** | `api/main.py` (FastAPI): ocupación, subida validada, vista previa sin inferencia, procesamientos, descargas y reprocesamiento aislado. Tests en `test_videos.py` y `test_procesamientos.py`. | — | Adaptar los tests al procesamiento en segundo plano sin aflojar lo que comprueban. | Suite verde. | — |
+| R9 | Interfaz interactiva (Directivas 4; Entregables 1) | **Implementado; probado parcialmente** | Panel con resultados en vivo, cancelación y retomar tras recargar. `AppTest` cubre la demo de 8 paradas y la demo de oficina en vivo. | La subida de video desde el navegador no se probó en esta versión. | Prueba manual con el guion. | Flujo completo del guion sin errores. | **Álvaro (navegador).** |
+| R10 | Docker: `Dockerfile` y `docker-compose.yml` con un solo comando (Directivas 5; Entregables 1, puntos extra) | **Implementado; sin verificar** | `405d523`: visión en CPU, pesos en la imagen, volúmenes, healthchecks y `VISION_DISPOSITIVO`. | **No se pudo construir:** Docker Hub está bloqueado en el entorno de Claude. | Verificar en Windows. | `docker compose up --build`, después subir, procesar y ver `prueba-bus`. | **Álvaro.** |
+| R11 | Git con historia y commits descriptivos (Directivas 6) | **Cumple** | Historia con commits por tarea; `integracion-video` sin push. | — | Commits pequeños en `cierre-final`, sin artefactos. | `git status` limpio; ningún video ni peso versionado. | Push o merge: solo con autorización. |
+| R12 | Informe IEEE de dos columnas y exactamente 3 páginas (Entregables 2) | **Redactado; sin compilar** | `informe.tex` describe el sistema final: datos, métodos, Tablas I–III con cifras de registros fechados, conclusiones y referencias verificadas; sin «pendiente» en el texto. | Faltan autores. No se pudo compilar: faltan `IEEEtran` y `babel-spanish`. | Ver `docs/informe/README.md`. | 3 páginas, sin `Overfull` y con revisión visual. | **Autores; compilación en Windows o TeX Live completo.** |
+| R13 | Resumen de hasta 150 palabras | **Cumple** (en la fuente) | 147 palabras. | — | — | Repetir el conteo en el PDF. | — |
+| R14 | I. Introducción con contexto de Paraguay y estado del arte | **Cumple** (texto) | Reforma de 2025 y Decreto 5969 (fuentes verificadas); Hsu, Seidel, Velastin (PAMELA), ByteTrack y DeepSORT. | — | — | — | — |
+| R15 | II. Metodología: pipeline, preprocesamiento, entrenamiento, API y UI | **Cumple** (texto) | Secciones II-A a II-D y Fig. 1. | — | — | — | — |
+| R16 | III. Resultados con tablas y gráficos (F1, tiempos de inferencia, etc.) | **Cumple** (texto) | Tabla II (TP/FP/FN y F1 por grabación); Tabla III (FPS, ms por etapa y latencia). | Falta la latencia en GPU. | — | — | R6. |
+| R17 | IV. Conclusiones, limitaciones y trabajo futuro | **Cumple** (texto) | Sección IV. | — | — | — | — |
+| R18 | Referencias en formato IEEE | **Cumple** (texto) | Se agregaron PAMELA (DOI), YOLO11, COCO, Kaggle y dos fuentes de prensa sobre la reforma, comprobadas el 8 nov.; se completaron el autor y la fecha del video de oficina. | — | — | BibTeX sin advertencias. | Compilación. |
+| R19 | Defensa: 10 min más 2 de preguntas, con demo en vivo (Entregables 3) | **Preparado; sin ensayar** | `docs/demo/guion.md`: primero en vivo, respaldo rotulado y después métricas históricas, con preguntas probables. | Falta el ensayo. | — | Ensayo cronometrado. | Álvaro y su compañero. |
+| R20 | Trabajo en parejas, con autores identificados | **Pendiente** | — | — | — | — | **Nombres.** |
+
+## Prioridad de ejecución (plan inicial, ya ejecutado)
+
+1. **R6 y R9:** sin el procesamiento progresivo no hay tiempo real ni demo en vivo honesta.
+2. **R7:** recorrido con varias paradas.
+3. **R10:** Docker con visión, que depende de R6.
+4. **R4:** experimento acotado con el umbral de NMS y medición del salto de cuadros, que también alimenta R6.
+5. **R12–R18:** informe, que depende de las cifras de 3 y 4.
+6. **R19:** guion; después, verificación final y commits.
