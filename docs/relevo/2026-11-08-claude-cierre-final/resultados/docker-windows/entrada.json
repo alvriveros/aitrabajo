@@ -1,0 +1,40 @@
+{
+  "tipo": "video",
+  "video_id": "0b4b8c97940c5f75",
+  "video_sha256": "0b4b8c97940c5f753880cf370046e1930121bf30dde4182905735b11b7e90d63",
+  "nombre_original": "prueba-bus.mp4",
+  "geometria": {
+    "recorte": [
+      0,
+      0,
+      768,
+      432
+    ],
+    "linea": [
+      274.0,
+      431.0,
+      467.0,
+      242.0
+    ],
+    "interior": "arriba"
+  },
+  "opciones_del_modelo": [
+    "--rastreador",
+    "vision/bytetrack-cenital.yaml",
+    "--conf",
+    "0.05",
+    "--confirmacion",
+    "2",
+    "--dispositivo",
+    "cpu",
+    "--pesos",
+    "yolo11n.pt"
+  ],
+  "supresion_temporal": null,
+  "sistema_de_coordenadas": "Píxeles enteros, origen arriba a la izquierda, x hacia la derecha, y hacia abajo. El recorte X,Y,ANCHO,ALTO se mide en el cuadro completo; la línea X1,Y1,X2,Y2, en el recorte.",
+  "proposito": "primera ejecucion",
+  "repite_a": [],
+  "ritmo_real": true,
+  "origen_temporal": "tiempo_s = segundos desde el primer cuadro del video, según las marcas de tiempo del archivo.",
+  "pedido": "2026-11-09T02:22:32+00:00"
+}

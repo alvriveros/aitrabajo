@@ -12,7 +12,7 @@ Rama `cierre-final`, creada desde `integracion-video` (`24d873d`). `integracion-
 | `a781402` | Recorrido simulado de 8 paradas (`docs/demo/recorrido-linea.json`), con selector en el panel | `test_recorrido_simulado_de_la_linea_…` |
 | `9814abb` | **Procesamiento progresivo:** `--progreso` y `--ritmo-real` en el pipeline; API en segundo plano con estado, cancelación y procesamiento actual; panel con sondeo cada 1 s, cancelación y retomar tras recargar; medición por etapas y de latencia | `test_estado_progresivo_y_cancelacion`, `test_ritmo_real_…`, `test_progreso_…` y `test_procesar_mide_…` |
 | `09e6f39` | El test del detector ajustado acepta los pesos reproducidos en Windows (antes se omitía) | Pasa en Linux |
-| `405d523` | Docker con visión en CPU, pesos en la imagen, volúmenes y healthchecks | **Sin construir** (ver «Pendiente») |
+| `405d523` | Docker con visión en CPU, pesos en la imagen, volúmenes y healthchecks | **Verificado por Álvaro en Windows** (ver «Docker en Windows») |
 | Commit de documentación | Matriz, experimentos, `data/README.md`, README, informe y guion | — |
 
 ## Línea base reproducible
@@ -88,6 +88,19 @@ Con la API en ese contenedor. El script es [`e2e_api.py`](e2e_api.py) y su salid
 
 **No se probó:** la subida de archivos desde el navegador. `AppTest` no la soporta, y no había un navegador que llegara al contenedor. Queda para Álvaro.
 
+## Docker en Windows (Álvaro, 8 nov., 23:24)
+
+**Arranque:** `docker compose up --build -d` dejó `api` y `panel` en `healthy`. `openapi.json` respondió 200 y `_stcore/health`, `ok`.
+
+**Procesamiento en el contenedor:** desde el panel, `prueba-bus` con ritmo real. Es la ejecución `20261109-022232-332657`, copiada en [`resultados/docker-windows/`](resultados/docker-windows/).
+
+- **Entorno:** Linux WSL2, torch 2.15.0+cpu, en el Ryzen 5 7535HS.
+- **Cuadros:** 332 de 686 procesados (se descartaron 354) en 27,5 s, para un video de 27,4 s.
+- **Tiempo por cuadro:** detección y seguimiento, 43 ms; entrega con VP8, 38 ms.
+- **Latencia:** 102 ms de media y 137 ms de p95. Entre el primer y el último décimo bajó de 160 a 81 ms, así que **no crece**. La máxima, 2056 ms, corresponde a la carga del modelo.
+- **Conteo:** 11/5/1, con subidas 4/3/0 y bajadas 7/2/1. **Es desarrollo:** `prueba-bus` ya se usó, así que no es una validación. Además, depende de qué cuadros se descarten.
+- **Aviso de OpenCV:** `tag 'VP80' is not supported with codec id 139`. El `anotado.webm` igual se genera: 10,9 MB, con cabecera WebM válida.
+
 ## Suite (Linux, contenedor de Claude)
 
 `pytest -q -rxs`: **138 aprobados, 1 fallido y 1 xfail.**
@@ -100,9 +113,8 @@ Con la API en ese contenedor. El script es [`e2e_api.py`](e2e_api.py) y su salid
 
 | Pendiente | Causa | Acción |
 |---|---|---|
-| Autores y universidad en el informe | Faltan los datos | Álvaro: completar `\autores` y `\afiliacion` |
+| Universidad en el informe | Falta el dato (los autores ya están) | Completar `\afiliacion` |
 | Compilar el informe y verificar 3 páginas | A este TeX Live le faltan `IEEEtran` y `babel-spanish`, y la red no permite instalarlos | Compilar en Windows (MiKTeX) o en un TeX Live completo, y revisar las 3 páginas |
-| `docker compose up --build` con visión | Docker Hub está bloqueado en el entorno de Claude | Álvaro: construir, subir `prueba-bus` y procesarlo |
 | Tiempo real en la máquina de defensa | Solo hay CPU en el entorno de Claude | Álvaro: procesar `prueba-bus` con ritmo real en la RTX 2050 y compartir `runs\panel\<id>\prediccion.config.json` |
 | Prueba manual del panel en el navegador | Sin navegador hacia el contenedor | Álvaro: seguir el guion completo |
 | Validación independiente y datos de Paraguay | No hay grabaciones nuevas | Grabar según `../2026-11-08-claude-tarea12/protocolo-validacion-nueva.md` |

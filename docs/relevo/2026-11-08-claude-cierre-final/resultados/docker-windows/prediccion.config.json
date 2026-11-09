@@ -1,0 +1,64 @@
+{
+  "comando": "python -m vision.pipeline --video runs/videos/0b4b8c97940c5f75/video.mp4 --recorte 0,0,768,432 --linea 274,431,467,242 --interior arriba --parada Puerta --capacidad 20 --carga-inicial 15 --rastreador vision/bytetrack-cenital.yaml --conf 0.05 --confirmacion 2 --dispositivo cpu --pesos yolo11n.pt --ritmo-real --progreso /app/runs/panel/20261109-022232-332657/progreso.json --salida /app/runs/panel/20261109-022232-332657/prediccion.json --video-anotado /app/runs/panel/20261109-022232-332657/anotado.webm",
+  "video": "runs/videos/0b4b8c97940c5f75/video.mp4",
+  "propiedades_del_video": {
+    "fps": 25.0,
+    "ancho": 768,
+    "alto": 432
+  },
+  "tramo_s": {
+    "inicio": 0.0,
+    "fin": null
+  },
+  "recorte": {
+    "x": 0,
+    "y": 0,
+    "ancho": 768,
+    "alto": 432
+  },
+  "linea": {
+    "x1": 274.0,
+    "y1": 431.0,
+    "x2": 467.0,
+    "y2": 242.0,
+    "interior": "arriba"
+  },
+  "sistema_de_coordenadas": "Píxeles: origen arriba a la izquierda, x hacia la derecha, y hacia abajo.",
+  "punto_del_cuerpo": "centro",
+  "margen_px": 5.0,
+  "confirmacion_cuadros": 2,
+  "pesos": "yolo11n.pt",
+  "rastreador": "vision/bytetrack-cenital.yaml",
+  "conf": 0.05,
+  "dispositivo": "cpu",
+  "medicion": {
+    "cuadros": 332,
+    "segundos": 27.488,
+    "fps_procesados": 12.08,
+    "con_video_anotado": true,
+    "ritmo_real": true,
+    "ms_por_cuadro": {
+      "lectura": 1.2,
+      "rastreo": 43.1,
+      "conteo": 0.0,
+      "entrega": 38.5
+    },
+    "latencia_ms": {
+      "media": 102.4,
+      "p95": 137.2,
+      "maxima": 2055.9,
+      "primer_decimo": 160.3,
+      "ultimo_decimo": 81.4
+    },
+    "cuadros_descartados": 354
+  },
+  "entorno": {
+    "python": "3.12.16",
+    "plataforma": "Linux-6.18.54.1-microsoft-standard-WSL2-x86_64-with-glibc2.41",
+    "procesador": "",
+    "ultralytics": "8.4.203",
+    "torch": "2.15.0+cpu",
+    "opencv-python": "5.0.0.93",
+    "lap": "0.5.14"
+  }
+}

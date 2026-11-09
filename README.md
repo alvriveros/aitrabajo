@@ -103,11 +103,7 @@ docker compose up --build
 - **Arranque:** los dos servicios tienen comprobación de salud, y el panel espera a la API.
 - **Para cerrar:** `docker compose down`.
 
-**Comprobación pendiente:** en la máquina donde se escribió esta versión no se pudo construir la imagen, porque la red bloqueaba Docker Hub. Para comprobarla:
-
-1. Ejecutá `docker compose up --build`.
-2. Subí `prueba-bus.mp4` en «Video nuevo».
-3. Procesalo y confirmá que aparezcan cruces mientras corre y el video anotado al final.
+**Verificado en Windows** (8 nov., 23:24): los dos servicios quedaron `healthy`, y `prueba-bus` se subió y se procesó dentro del contenedor (`docs/relevo/2026-11-08-claude-cierre-final/resultados/docker-windows/`). OpenCV avisa `tag 'VP80' is not supported`, pero el `.webm` se genera bien.
 
 ## Pruebas
 

@@ -1,0 +1,92 @@
+{
+  "capacidad": 20,
+  "carga_inicial": 15,
+  "paradas": [
+    {
+      "nombre": "Puerta",
+      "inicio_s": 0
+    }
+  ],
+  "eventos": [
+    {
+      "tiempo_s": 8.28,
+      "track_id": 12,
+      "sentido": "bajada"
+    },
+    {
+      "tiempo_s": 8.28,
+      "track_id": 13,
+      "sentido": "bajada"
+    },
+    {
+      "tiempo_s": 10.24,
+      "track_id": 30,
+      "sentido": "bajada"
+    },
+    {
+      "tiempo_s": 10.4,
+      "track_id": 23,
+      "sentido": "bajada"
+    },
+    {
+      "tiempo_s": 10.4,
+      "track_id": 27,
+      "sentido": "bajada"
+    },
+    {
+      "tiempo_s": 11.8,
+      "track_id": 28,
+      "sentido": "bajada"
+    },
+    {
+      "tiempo_s": 14.6,
+      "track_id": 45,
+      "sentido": "bajada"
+    },
+    {
+      "tiempo_s": 15.12,
+      "track_id": 56,
+      "sentido": "subida"
+    },
+    {
+      "tiempo_s": 15.72,
+      "track_id": 64,
+      "sentido": "bajada"
+    },
+    {
+      "tiempo_s": 16.0,
+      "track_id": 46,
+      "sentido": "subida"
+    },
+    {
+      "tiempo_s": 17.64,
+      "track_id": 2,
+      "sentido": "subida"
+    },
+    {
+      "tiempo_s": 18.12,
+      "track_id": 2,
+      "sentido": "bajada"
+    },
+    {
+      "tiempo_s": 19.2,
+      "track_id": 5,
+      "sentido": "subida"
+    },
+    {
+      "tiempo_s": 19.56,
+      "track_id": 2,
+      "sentido": "subida"
+    },
+    {
+      "tiempo_s": 20.6,
+      "track_id": 53,
+      "sentido": "subida"
+    },
+    {
+      "tiempo_s": 21.16,
+      "track_id": 74,
+      "sentido": "subida"
+    }
+  ]
+}
