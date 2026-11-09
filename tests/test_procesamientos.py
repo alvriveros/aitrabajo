@@ -25,6 +25,17 @@ def raiz(tmp_path, monkeypatch):
     return tmp_path
 
 
+def iniciar(ruta="/procesamientos", **opciones):
+    """POST que inicia un procesamiento: responde enseguida y el pipeline corre en otro hilo. Devuelve el estado final."""
+    respuesta = cliente.post(ruta, **opciones)
+    assert respuesta.status_code == 202, respuesta.text
+    assert respuesta.json()["estado"] == "en_curso"
+    api._trabajo["hilo"].join(10)
+    estado = cliente.get(f"/procesamientos/{respuesta.json()['id']}/estado").json()
+    assert estado["estado"] != "en_curso"
+    return estado
+
+
 def pipeline_simulado(comandos, codigo=0):
     def correr(comando, **opciones):
         comandos.append(comando)
@@ -39,9 +50,9 @@ def pipeline_simulado(comandos, codigo=0):
 def test_usa_la_configuracion_guardada_con_destinos_propios(raiz, monkeypatch):
     comandos = []
     monkeypatch.setattr(api.subprocess, "run", pipeline_simulado(comandos))
-    respuesta = cliente.post("/procesamientos")
-    assert respuesta.status_code == 201, respuesta.text
-    cuerpo = respuesta.json()
+    estado = iniciar()
+    assert estado["estado"] == "completa"
+    cuerpo = cliente.get(f"/procesamientos/{estado['id']}").json()
     assert cuerpo["recorrido"] == PREDICCION
 
     comando = comandos[0]
@@ -50,11 +61,10 @@ def test_usa_la_configuracion_guardada_con_destinos_propios(raiz, monkeypatch):
     assert (opciones["--inicio"], opciones["--fin"]) == ("0", "6")
     assert opciones["--recorte"] == "228,2,222,176" and opciones["--linea"] == "0,90,221,90"
     assert opciones["--pesos"] == "yolo11n.pt" and opciones["--conf"] == "0.05"
-    assert comando.count("--salida") == 1 and comando.count("--video-anotado") == 1
+    assert comando.count("--salida") == 1 and comando.count("--video-anotado") == 1 and comando.count("--progreso") == 1
     assert opciones["--salida"].startswith(str(raiz / "runs/panel" / cuerpo["id"]))
 
     assert cliente.get("/procesamientos").json() == [cuerpo["id"]]
-    assert cliente.get(f"/procesamientos/{cuerpo['id']}").json() == cuerpo
     video = cliente.get(f"/procesamientos/{cuerpo['id']}/video")
     assert video.status_code == 200 and video.content == b"webm"
 
@@ -79,8 +89,8 @@ def sin_publicar(raiz):
 
 def test_un_fallo_despues_de_escribir_archivos_no_se_publica(raiz, monkeypatch):
     monkeypatch.setattr(api.subprocess, "run", pipeline_simulado([], codigo=1))
-    respuesta = cliente.post("/procesamientos")
-    assert respuesta.status_code == 500 and "falló" in respuesta.json()["detail"]
+    estado = iniciar()
+    assert estado["estado"] == "error" and "falló" in estado["detalle"]
     assert (next((raiz / "runs/panel").iterdir()) / "prediccion.json").is_file()
     assert "falló" in sin_publicar(raiz)
 
@@ -90,7 +100,8 @@ def test_un_timeout_no_se_publica_y_conserva_la_salida_parcial(raiz, monkeypatch
         pipeline_simulado([])(comando)
         raise subprocess.TimeoutExpired(comando, 600, output=b"cuadro 120", stderr=None)
     monkeypatch.setattr(api.subprocess, "run", cortar)
-    assert cliente.post("/procesamientos").status_code == 504
+    estado = iniciar()
+    assert estado["estado"] == "error" and "superó" in estado["detalle"]
     assert sin_publicar(raiz) == "cuadro 120"
 
 
@@ -100,8 +111,44 @@ def test_un_resultado_ilegible_no_se_publica(raiz, monkeypatch):
         Path(comando[comando.index("--salida") + 1]).write_text("{incompleto", encoding="utf-8")
         return resultado
     monkeypatch.setattr(api.subprocess, "run", ilegible)
+    estado = iniciar()
+    assert estado["estado"] == "error" and "legible" in estado["detalle"]
+    sin_publicar(raiz)
+
+
+def test_estado_progresivo_y_cancelacion(raiz, monkeypatch):
+    """Mientras corre, el estado muestra los cruces parciales; al cancelar, el resultado no se publica."""
+    import threading
+    leido, seguir = threading.Event(), threading.Event()
+
+    def lento(comando, **opciones):
+        progreso = Path(comando[comando.index("--progreso") + 1])
+        progreso.write_text(json.dumps({"cuadros": 10, "eventos": PREDICCION["eventos"]}), encoding="utf-8")
+        leido.wait(5)
+        assert (progreso.parent / "cancelar").is_file()  # el pipeline real lo revisa en cada cuadro
+        seguir.set()
+        return subprocess.CompletedProcess(comando, api.CODIGO_CANCELADO, "", "Cancelado")
+
+    monkeypatch.setattr(api.subprocess, "run", lento)
     respuesta = cliente.post("/procesamientos")
-    assert respuesta.status_code == 500 and "legible" in respuesta.json()["detail"]
+    assert respuesta.status_code == 202
+    id_ = respuesta.json()["id"]
+    estado = cliente.get(f"/procesamientos/{id_}/estado").json()
+    assert estado["estado"] == "en_curso"
+    assert cliente.post("/procesamientos").status_code == 409  # uno a la vez, también con el primero en curso
+    assert cliente.get("/procesamientos/actual").json() == {"id": id_}  # el panel lo retoma tras recargar
+    for _ in range(50):
+        if estado["progreso"]:
+            break
+        estado = cliente.get(f"/procesamientos/{id_}/estado").json()
+    assert estado["progreso"]["eventos"] == PREDICCION["eventos"]
+    assert cliente.post(f"/procesamientos/{id_}/cancelar").status_code == 202
+    leido.set()
+    api._trabajo["hilo"].join(5)
+    assert seguir.is_set()
+    assert cliente.get(f"/procesamientos/{id_}/estado").json()["estado"] == "cancelado"
+    assert cliente.post(f"/procesamientos/{id_}/cancelar").status_code == 409
+    assert cliente.get("/procesamientos/actual").json() == {"id": None}
     sin_publicar(raiz)
 
 
@@ -109,6 +156,7 @@ def test_un_resultado_ilegible_no_se_publica(raiz, monkeypatch):
     ("/procesamientos/20261107-120000-000000", 404),
     ("/procesamientos/..%2F..%2Fapi", 404),
     ("/procesamientos/abc/video", 422),
+    ("/procesamientos/20261107-120000-000000/estado", 404),
 ])
 def test_ids_desconocidos_o_invalidos(raiz, ruta, codigo):
     assert cliente.get(ruta).status_code == codigo

@@ -6,6 +6,9 @@ import pytest
 
 from vision.cruces import ContadorCruces, Evento, Linea
 from vision.pipeline import (
+    Cancelado,
+    Medicion,
+    Progreso,
     Recorte,
     VideoAnotado,
     construir_recorrido,
@@ -252,3 +255,68 @@ def test_video_anotado_dibuja_la_linea_y_no_altera_la_imagen_original(tmp_path):
     assert len(leidos) == 5
     assert leidos[0].shape == (120, 160, 3)
     assert leidos[0][60].mean() > leidos[0][110].mean() + 50  # La fila de la línea frente a una vacía.
+
+
+class Reloj:
+    """Reloj simulado: esperar lo adelanta, y cada cuadro procesado tarda `costo` segundos."""
+
+    def __init__(self):
+        self.ahora = 100.0
+
+    def __call__(self):
+        return self.ahora
+
+    def esperar(self, segundos):
+        self.ahora += segundos
+
+
+def test_ritmo_real_descarta_cuadros_viejos_y_no_acumula_retraso(tmp_path):
+    ruta = video_de_prueba(tmp_path / "clip.mp4", cuadros=30, fps=10)
+    reloj, medicion = Reloj(), Medicion()
+    tiempos = []
+    for tiempo, _ in leer_cuadros(ruta, medicion=medicion, reloj=reloj, esperar=reloj.esperar):
+        tiempos.append(round(tiempo, 3))
+        retraso = reloj() - medicion.llegada
+        assert 0 <= retraso < 0.1  # nunca se entrega un cuadro con más de un período de atraso
+        reloj.esperar(0.25)  # el modelo tarda 2,5 períodos por cuadro
+    # Al terminar cada cuadro se toma el último que llegó (como una cámara); los anteriores se descartan, no se encolan.
+    assert tiempos[:4] == [0.0, 0.2, 0.5, 0.7] and medicion.descartados == 30 - len(tiempos)
+    assert len(tiempos) == 12  # 3 s de video / 0,25 s por cuadro
+
+
+def test_ritmo_real_espera_si_el_modelo_es_mas_rapido(tmp_path):
+    ruta = video_de_prueba(tmp_path / "clip.mp4", cuadros=10, fps=10)
+    reloj, medicion = Reloj(), Medicion()
+    inicio = reloj()
+    assert len(list(leer_cuadros(ruta, medicion=medicion, reloj=reloj, esperar=reloj.esperar))) == 10
+    assert medicion.descartados == 0 and abs(reloj() - inicio - 0.9) < 1e-6  # tardó lo que dura el video
+
+
+def test_procesar_mide_etapas_y_latencia():
+    cuadros, rastrear = ensayo_simulado()
+    medicion = Medicion()
+    contador = ContadorCruces(Linea(0, 100, 200, 100, interior="arriba"), margen_px=5, confirmacion=3)
+    assert procesar(cuadros, rastrear, contador, medicion=medicion) == 180
+    resumen = medicion.resumen()
+    assert set(resumen["ms_por_cuadro"]) == {"lectura", "rastreo", "conteo", "entrega"}
+    assert len(medicion.latencias) == 180 and resumen["cuadros_descartados"] == 0
+    assert resumen["latencia_ms"]["maxima"] >= resumen["latencia_ms"]["p95"] >= 0
+
+
+def test_progreso_publica_cruces_parciales_y_se_cancela(tmp_path):
+    reloj = Reloj()
+    progreso = Progreso(tmp_path / "progreso.json", duracion_s=6, reloj=reloj)
+    progreso(0.0, None, [], [])
+    datos = json.loads((tmp_path / "progreso.json").read_text(encoding="utf-8"))
+    assert datos["cuadros"] == 1 and datos["eventos"] == [] and datos["duracion_s"] == 6
+
+    reloj.esperar(0.1)
+    progreso(0.1, None, [], [Evento(0.1, 4, "subida")])  # un cruce se publica enseguida
+    datos = json.loads((tmp_path / "progreso.json").read_text(encoding="utf-8"))
+    assert datos["eventos"] == [{"tiempo_s": 0.1, "track_id": 4, "sentido": "subida"}]
+    assert (datos["subidas"], datos["bajadas"], datos["cuadros"]) == (1, 0, 2)
+
+    (tmp_path / "cancelar").touch()
+    with pytest.raises(Cancelado):
+        progreso(0.2, None, [], [])
+    assert not (tmp_path / "progreso.tmp").exists()

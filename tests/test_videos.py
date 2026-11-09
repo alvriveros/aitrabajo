@@ -53,6 +53,16 @@ def pipeline_simulado(comandos):
     return correr
 
 
+def procesar(id_video, pedido):
+    """Inicia el procesamiento, espera el hilo y devuelve la ejecución publicada."""
+    respuesta = cliente.post(f"/videos/{id_video}/procesamientos", json=pedido)
+    assert respuesta.status_code == 202, respuesta.text
+    api._trabajo["hilo"].join(10)
+    id_ = respuesta.json()["id"]
+    assert cliente.get(f"/procesamientos/{id_}/estado").json()["estado"] == "completa"
+    return cliente.get(f"/procesamientos/{id_}").json()
+
+
 def test_subida_valida_guarda_por_hash_sin_duplicar(raiz, video):
     respuesta = subir(video)
     assert respuesta.status_code == 201, respuesta.text
@@ -102,9 +112,7 @@ def test_procesa_con_la_configuracion_de_la_api_y_no_repite(raiz, video, monkeyp
     comandos = []
     monkeypatch.setattr(api.subprocess, "run", pipeline_simulado(comandos))
     id_video = subir(video).json()["id"]
-    respuesta = cliente.post(f"/videos/{id_video}/procesamientos", json={**GEOMETRIA, "parada": "Mi puerta"})
-    assert respuesta.status_code == 201, respuesta.text
-    cuerpo = respuesta.json()
+    cuerpo = procesar(id_video, {**GEOMETRIA, "parada": "Mi puerta"})
     opciones = dict(zip(comandos[0][3::2], comandos[0][4::2]))
     assert opciones["--video"] == f"runs/videos/{id_video}/video.mp4"
     assert (opciones["--recorte"], opciones["--linea"], opciones["--interior"]) == ("10,0,100,60", "0,30,99,30", "arriba")
@@ -115,7 +123,8 @@ def test_procesa_con_la_configuracion_de_la_api_y_no_repite(raiz, video, monkeyp
     assert opciones["--pesos"] == "yolo11n.pt" and opciones["--conf"] == "0.05"
     entrada = cuerpo["entrada"]
     assert entrada["video_sha256"] == cliente.get(f"/videos/{id_video}").json()["sha256"]
-    assert entrada["geometria"] == GEOMETRIA and entrada["supresion_temporal"] is None
+    assert entrada["geometria"] == GEOMETRIA and entrada["supresion_temporal"] is None and not entrada["ritmo_real"]
+    assert "--ritmo-real" not in comandos[0]
 
     assert cliente.get(f"/procesamientos?video={id_video}").json() == [cuerpo["id"]]
     assert cliente.get("/procesamientos?origen=demo").json() == []
@@ -124,8 +133,10 @@ def test_procesa_con_la_configuracion_de_la_api_y_no_repite(raiz, video, monkeyp
 
     repetido = cliente.post(f"/videos/{id_video}/procesamientos", json=GEOMETRIA)
     assert repetido.status_code == 409 and cuerpo["id"] in repetido.json()["detail"] and len(comandos) == 1
-    otra = cliente.post(f"/videos/{id_video}/procesamientos", json={**GEOMETRIA, "linea": [0, 20, 99, 20]})
-    assert otra.status_code == 201 and len(comandos) == 2
+    procesar(id_video, {**GEOMETRIA, "linea": [0, 20, 99, 20]})
+    assert len(comandos) == 2
+    en_vivo = procesar(id_video, {**GEOMETRIA, "ritmo_real": True})  # otro ritmo es otra configuración
+    assert "--ritmo-real" in comandos[2] and en_vivo["entrada"]["ritmo_real"]
 
 
 def test_un_procesamiento_a_la_vez(raiz, video, monkeypatch):
@@ -152,14 +163,13 @@ def test_repetir_para_demostracion_guarda_aparte_y_no_toca_la_primera(raiz, vide
     comandos = []
     monkeypatch.setattr(api.subprocess, "run", pipeline_simulado(comandos))
     id_video = subir(video).json()["id"]
-    primera = cliente.post(f"/videos/{id_video}/procesamientos", json=GEOMETRIA).json()
+    primera = procesar(id_video, GEOMETRIA)
     carpeta = raiz / "runs/panel" / primera["id"]
     antes = {f.name: f.read_bytes() for f in carpeta.iterdir()}
 
     assert cliente.post(f"/videos/{id_video}/procesamientos", json=GEOMETRIA).status_code == 409  # sin pedirlo, no repite
-    repetida = cliente.post(f"/videos/{id_video}/procesamientos", json={**GEOMETRIA, "repetir_para_demostracion": True})
-    assert repetida.status_code == 201 and len(comandos) == 2
-    cuerpo = repetida.json()
+    cuerpo = procesar(id_video, {**GEOMETRIA, "repetir_para_demostracion": True})
+    assert len(comandos) == 2
     assert cuerpo["id"] != primera["id"]
     assert cuerpo["entrada"]["proposito"] == "repeticion para demostracion" and cuerpo["entrada"]["repite_a"] == [primera["id"]]
     assert cuerpo["entrada"]["geometria"] == primera["entrada"]["geometria"]

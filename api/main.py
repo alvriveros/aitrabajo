@@ -1,5 +1,6 @@
 import hashlib
 import json
+import os
 import shlex
 import subprocess
 import sys
@@ -38,6 +39,10 @@ ORIGEN_TEMPORAL = "tiempo_s = segundos desde el primer cuadro del video, según 
 OPCIONES_DE_ESCENA = {"--video", "--inicio", "--fin", "--recorte", "--linea", "--interior", "--parada",
                       "--salida", "--video-anotado", "--capacidad", "--carga-inicial"}
 _procesando = threading.Lock()  # un procesamiento a la vez: evita duplicados por reintentos o clics repetidos
+_trabajo = {}  # el procesamiento en curso: {"id", "hilo"}; las pruebas esperan el hilo
+CODIGO_CANCELADO = 3  # el mismo de vision.pipeline
+# Dispositivo del modelo para videos y demo (cpu, cuda:0…). Sin valor, el de la configuración guardada.
+DISPOSITIVO = os.getenv("VISION_DISPOSITIVO")
 
 
 class Evento(BaseModel):
@@ -114,40 +119,67 @@ def comprobar_insumos(opciones, archivos):
         raise HTTPException(503, "Faltan insumos para procesar el video: " + ", ".join(faltan) + ".")
 
 
+def escribir_estado(carpeta, estado, detalle=None):
+    temporal = carpeta / "estado.tmp"
+    temporal.write_text(json.dumps({"estado": estado, "detalle": detalle}, ensure_ascii=False), encoding="utf-8")
+    os.replace(temporal, carpeta / "estado.json")
+
+
 def correr_pipeline(argv, timeout, entrada=None):
-    """Ejecuta vision.pipeline en una carpeta nueva; solo la publica si terminó bien y su resultado se puede leer."""
+    """Inicia vision.pipeline en una carpeta nueva, fuera de la petición HTTP, y devuelve su id enseguida.
+
+    El estado y los cruces parciales se consultan en GET /procesamientos/{id}/estado. La ejecución solo se
+    publica en la lista si terminó bien y su resultado se puede leer.
+    """
     if not _procesando.acquire(blocking=False):
-        raise HTTPException(409, "Ya hay un procesamiento en curso. Esperá a que termine.")
+        raise HTTPException(409, "Ya hay un procesamiento en curso. Esperá a que termine o cancelalo.")
     try:
         carpeta = EJECUCIONES / datetime.now().strftime("%Y%m%d-%H%M%S-%f")
         carpeta.mkdir(parents=True)
         if entrada is not None:
             (carpeta / "entrada.json").write_text(json.dumps(entrada, ensure_ascii=False, indent=2), encoding="utf-8")
-        comando = [sys.executable, "-m", "vision.pipeline", *argv,
+        comando = [sys.executable, "-m", "vision.pipeline", *argv, "--progreso", str(carpeta / "progreso.json"),
                    "--salida", str(carpeta / "prediccion.json"), "--video-anotado", str(carpeta / "anotado.webm")]
+        escribir_estado(carpeta, "en_curso")
+        hilo = threading.Thread(target=_ejecutar, args=(carpeta, comando, timeout), daemon=True)
+        _trabajo.update(id=carpeta.name, hilo=hilo)
+        hilo.start()
+    except BaseException:
+        _procesando.release()
+        raise
+    return {"id": carpeta.name, "estado": "en_curso"}
+
+
+def _ejecutar(carpeta, comando, timeout):
+    try:
         try:
             proceso = subprocess.run(comando, cwd=RAIZ, capture_output=True, text=True, timeout=timeout)
         except subprocess.TimeoutExpired as error:
             guardar_registro(carpeta, error.stdout, error.stderr)
-            raise HTTPException(504, f"El procesamiento superó los {timeout // 60} minutos.")
+            return escribir_estado(carpeta, "error", f"El procesamiento superó los {timeout // 60} minutos.")
         guardar_registro(carpeta, proceso.stdout, proceso.stderr)
+        if proceso.returncode == CODIGO_CANCELADO:
+            return escribir_estado(carpeta, "cancelado", "Cancelado a pedido del usuario. No se publica.")
         if proceso.returncode:
-            raise HTTPException(500, f"El pipeline terminó con código {proceso.returncode}: {proceso.stderr[-800:]}")
+            return escribir_estado(carpeta, "error",
+                                   f"El pipeline terminó con código {proceso.returncode}: {proceso.stderr[-800:]}")
         try:
-            datos = leer_ejecucion(carpeta)
+            leer_ejecucion(carpeta)
             if (carpeta / "anotado.webm").stat().st_size == 0:
                 raise ValueError("video anotado vacío")
         except (OSError, ValueError, KeyError) as error:
-            raise HTTPException(500, f"El pipeline terminó sin un resultado legible: {error}")
+            return escribir_estado(carpeta, "error", f"El pipeline terminó sin un resultado legible: {error}")
         (carpeta / COMPLETA).touch()
-        return datos
+        escribir_estado(carpeta, "completa")
+    except Exception as error:  # que un fallo inesperado no deje la ejecución «en curso» para siempre
+        escribir_estado(carpeta, "error", f"Error inesperado al procesar: {error}")
     finally:
         _procesando.release()
 
 
-@app.post("/procesamientos", status_code=201)
+@app.post("/procesamientos", status_code=202)
 def procesar_demo():
-    """Ejecuta vision.pipeline sobre el clip de demo y guarda predicción, configuración y video anotado."""
+    """Inicia vision.pipeline sobre el clip de demo; guarda predicción, configuración y video anotado."""
     argv = argumentos_demo()
     comprobar_insumos(dict(zip(argv[::2], argv[1::2])), ("--video", "--pesos"))
     return correr_pipeline(argv, TIMEOUT_DEMO_S)
@@ -187,6 +219,43 @@ def carpeta_de(id_ejecucion):
     if not (carpeta / COMPLETA).is_file():
         raise HTTPException(404, f"No existe la ejecución {id_ejecucion}.")
     return carpeta
+
+
+@app.get("/procesamientos/actual")
+def procesamiento_actual():
+    """Id del procesamiento en curso, o null. El panel lo usa para retomarlo después de una recarga."""
+    hilo = _trabajo.get("hilo")
+    return {"id": _trabajo["id"] if hilo and hilo.is_alive() else None}
+
+
+def carpeta_iniciada(id_ejecucion):
+    carpeta = EJECUCIONES / id_ejecucion
+    if not (carpeta / "estado.json").is_file():
+        raise HTTPException(404, f"No existe la ejecución {id_ejecucion}.")
+    return carpeta
+
+
+@app.get("/procesamientos/{id_ejecucion}/estado")
+def estado_procesamiento(id_ejecucion: str = Ruta(pattern=ID_EJECUCION)):
+    """Estado (en_curso, completa, error, cancelado) y, mientras se procesa, los cruces y la medición parcial."""
+    carpeta = carpeta_iniciada(id_ejecucion)
+    estado = json.loads((carpeta / "estado.json").read_text(encoding="utf-8"))
+    try:
+        estado["progreso"] = json.loads((carpeta / "progreso.json").read_text(encoding="utf-8"))
+    except (OSError, ValueError):  # todavía no se procesó el primer cuadro
+        estado["progreso"] = None
+    return {"id": id_ejecucion, "video_id": video_de(carpeta), **estado}
+
+
+@app.post("/procesamientos/{id_ejecucion}/cancelar", status_code=202)
+def cancelar_procesamiento(id_ejecucion: str = Ruta(pattern=ID_EJECUCION)):
+    """Pide al pipeline que se detenga en el próximo cuadro. Lo cancelado no se publica."""
+    carpeta = carpeta_iniciada(id_ejecucion)
+    estado = json.loads((carpeta / "estado.json").read_text(encoding="utf-8"))["estado"]
+    if estado != "en_curso":
+        raise HTTPException(409, f"La ejecución {id_ejecucion} ya terminó ({estado}).")
+    (carpeta / "cancelar").touch()
+    return {"id": id_ejecucion, "estado": "cancelando"}
 
 
 @app.get("/procesamientos/{id_ejecucion}")
@@ -284,6 +353,8 @@ class PedidoVideo(Geometria):
     carga_inicial: int = Field(0, ge=0)
     # Solo con un pedido explícito: vuelve a ejecutar la misma configuración y la guarda como ejecución aparte.
     repetir_para_demostracion: bool = False
+    # Lee el video a velocidad original, como una cámara, y descarta cuadros si el modelo se atrasa.
+    ritmo_real: bool = False
 
 
 def validar_geometria(info, geometria):
@@ -337,11 +408,13 @@ def cuadro_con_geometria(id_video: str = Ruta(pattern=ID_VIDEO), t: float = Quer
 def opciones_del_modelo():
     """Detector, rastreador, umbrales y dispositivo efectivos de la API (los mismos de la demo de oficina)."""
     argv = argumentos_demo()
-    return [parte for clave, valor in zip(argv[::2], argv[1::2])
-            if clave not in OPCIONES_DE_ESCENA for parte in (clave, valor)]
+    opciones = dict((clave, valor) for clave, valor in zip(argv[::2], argv[1::2]) if clave not in OPCIONES_DE_ESCENA)
+    if DISPOSITIVO:
+        opciones["--dispositivo"] = DISPOSITIVO
+    return [parte for clave, valor in opciones.items() for parte in (clave, valor)]
 
 
-@app.post("/videos/{id_video}/procesamientos", status_code=201)
+@app.post("/videos/{id_video}/procesamientos", status_code=202)
 def procesar_video(pedido: PedidoVideo, id_video: str = Ruta(pattern=ID_VIDEO)):
     """Procesa el video completo con la geometría elegida y la configuración del modelo de la API, sin filtros extra."""
     info = info_de(id_video)
@@ -353,19 +426,21 @@ def procesar_video(pedido: PedidoVideo, id_video: str = Ruta(pattern=ID_VIDEO)):
     for carpeta in (EJECUCIONES.iterdir() if EJECUCIONES.is_dir() else []):
         if (carpeta / COMPLETA).is_file() and video_de(carpeta) == id_video:
             previa = json.loads((carpeta / "entrada.json").read_text(encoding="utf-8"))
-            if previa["geometria"] == geometria and previa["opciones_del_modelo"] == modelo:
+            if (previa["geometria"] == geometria and previa["opciones_del_modelo"] == modelo
+                    and previa.get("ritmo_real", False) == pedido.ritmo_real):
                 previas.append(carpeta.name)
     if previas and not pedido.repetir_para_demostracion:
-        raise HTTPException(409, f"Este video ya se procesó con la misma geometría y el mismo modelo "
+        raise HTTPException(409, f"Este video ya se procesó con la misma geometría, el mismo modelo y el mismo ritmo "
                                  f"(ejecución {min(previas)}). No se repite: se muestra el resultado guardado.")
     argv = ["--video", f"runs/videos/{id_video}/{info['archivo']}",  # con "/" en todo sistema: el comando guardado es portable
             "--recorte", ",".join(map(str, pedido.recorte)), "--linea", ",".join(f"{v:g}" for v in pedido.linea),
             "--interior", pedido.interior, "--parada", pedido.parada,
-            "--capacidad", str(pedido.capacidad), "--carga-inicial", str(pedido.carga_inicial), *modelo]
+            "--capacidad", str(pedido.capacidad), "--carga-inicial", str(pedido.carga_inicial), *modelo,
+            *(["--ritmo-real"] if pedido.ritmo_real else [])]
     entrada = {"tipo": "video", "video_id": id_video, "video_sha256": info["sha256"],
                "nombre_original": info["nombre_original"], "geometria": geometria, "opciones_del_modelo": modelo,
                "supresion_temporal": None, "sistema_de_coordenadas": SISTEMA_DE_COORDENADAS,
                "proposito": "repeticion para demostracion" if pedido.repetir_para_demostracion else "primera ejecucion",
                "repite_a": sorted(previas) if pedido.repetir_para_demostracion else [],
-               "origen_temporal": ORIGEN_TEMPORAL, "pedido": datetime.now().astimezone().isoformat(timespec="seconds")}
+               "ritmo_real": pedido.ritmo_real, "origen_temporal": ORIGEN_TEMPORAL, "pedido": datetime.now().astimezone().isoformat(timespec="seconds")}
     return correr_pipeline(argv, TIMEOUT_VIDEO_S, entrada)

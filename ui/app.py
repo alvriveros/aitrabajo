@@ -160,6 +160,59 @@ def mostrar_ejecucion(elegida, referencia_oficina):
     return recorrido, f"video-{elegida}", fin_tramo
 
 
+def seguir_en_vivo(clave, capacidad, carga_inicial, parada):
+    """Muestra el procesamiento en curso y lo consulta cada segundo sin volver a ejecutarlo.
+
+    Los cruces y la ocupación se actualizan mientras el modelo procesa. Al terminar bien, deja la ejecución
+    elegida y recarga el panel completo para mostrar el resultado.
+    """
+    @st.fragment(run_every=1)
+    def actualizar():
+        id_ = st.session_state.get(f"curso-{clave}")
+        if not id_:
+            return
+        estado = json.loads(pedir(f"/procesamientos/{id_}/estado"))
+        progreso = estado["progreso"] or {}
+        if estado["estado"] != "en_curso":
+            del st.session_state[f"curso-{clave}"]
+            if estado["estado"] == "completa":
+                st.session_state[f"ejecucion-{clave}"] = st.session_state[f"en-vivo-{clave}"] = id_
+                st.rerun(scope="app")
+            (st.warning if estado["estado"] == "cancelado" else st.error)(estado["detalle"])
+            return
+        st.markdown(f"**Procesando en vivo** · ejecución `{id_}`")
+        duracion = progreso.get("duracion_s") or st.session_state.get(f"duracion-{clave}")
+        avance = min(1.0, progreso.get("tiempo_video_s", 0) / duracion) if duracion else 0.0
+        st.progress(avance, text=f"{progreso.get('tiempo_video_s', 0):.1f} s de video procesados"
+                                 + (f" de {duracion:g} s" if duracion else ""))
+        eventos = sorted(progreso.get("eventos", []), key=lambda e: e["tiempo_s"])
+        ocupacion = consultar({"capacidad": capacidad, "carga_inicial": carga_inicial,
+                               "paradas": [{"nombre": parada, "inicio_s": 0}], "eventos": eventos})["paradas"][-1]
+        c1, c2, c3, c4 = st.columns(4)
+        c1.metric("Subidas", progreso.get("subidas", 0))
+        c2.metric("Bajadas", progreso.get("bajadas", 0))
+        c3.metric("Pasajeros a bordo", ocupacion["pasajeros"])
+        c4.metric("Ocupación", f"{ocupacion['ocupacion_pct']:g} %")
+        if progreso:
+            st.caption(f"{progreso['cuadros']} cuadros en {progreso['segundos']:g} s ({progreso['fps'] or 0:g} FPS) · "
+                       f"retraso respecto del video: {progreso['retraso_s']:+.1f} s · "
+                       f"cuadros descartados: {progreso['cuadros_descartados']}")
+        if eventos:
+            st.dataframe(eventos_en_tabla(eventos), hide_index=True)
+        if st.button("Cancelar procesamiento", key=f"cancelar-{id_}"):
+            pedir(f"/procesamientos/{id_}/cancelar", "POST", aviso_si=(409,))
+
+    actualizar()
+
+
+def retomar_en_curso(clave, video_id):
+    """Tras una recarga, vuelve a seguir el procesamiento que la API tiene en curso, si es de este origen."""
+    if f"curso-{clave}" not in st.session_state:
+        actual = json.loads(pedir("/procesamientos/actual"))["id"]
+        if actual and json.loads(pedir(f"/procesamientos/{actual}/estado"))["video_id"] == video_id:
+            st.session_state[f"curso-{clave}"] = actual
+
+
 def elegir_ejecucion(ejecuciones, clave):
     elegida = st.session_state.get(clave)
     return st.selectbox("Ejecución", ejecuciones, index=ejecuciones.index(elegida) if elegida in ejecuciones else 0,
@@ -207,14 +260,18 @@ if fuente == "Archivo JSON o demo":
 elif fuente == "Predicción automática del video de oficina":
     st.caption("Clip `data/raw/oficina.mp4`, tramo 0–6 s, cuadrante superior derecho y línea de "
                "`evaluation/results/oficina-00-06-prediccion.config.json`.")
-    if st.button("Procesar clip de oficina (0–6 s)"):
-        with st.spinner("Detectando y siguiendo personas…"):
-            st.session_state["ejecucion"] = json.loads(pedir("/procesamientos", "POST", timeout=660))["id"]
+    if st.button("Procesar clip de oficina (0–6 s)", disabled="curso-oficina" in st.session_state):
+        cuerpo = pedir("/procesamientos", "POST", aviso_si=(409,))
+        if cuerpo:
+            st.session_state["curso-oficina"] = json.loads(cuerpo)["id"]
+    retomar_en_curso("oficina", None)
+    st.session_state["duracion-oficina"] = 6
+    seguir_en_vivo("oficina", 20, 0, "Oficina")
     ejecuciones = json.loads(pedir("/procesamientos?origen=demo"))
     if not ejecuciones:
         st.info("Todavía no hay ejecuciones. Procesá el clip para ver el video anotado y su ocupación.")
         st.stop()
-    recorrido, origen, fin_tramo = mostrar_ejecucion(elegir_ejecucion(ejecuciones, "ejecucion"), True)
+    recorrido, origen, fin_tramo = mostrar_ejecucion(elegir_ejecucion(ejecuciones, "ejecucion-oficina"), True)
 else:
     st.markdown("**1. Subí el video.** Formatos mp4, avi, mov, mkv o webm; hasta 200 MB y 5 minutos. Se procesa "
                 "completo y el tiempo de cada cruce se cuenta en segundos **desde el primer cuadro del video**.")
@@ -249,20 +306,28 @@ else:
     capacidad = p2.number_input("Capacidad", 1, 500, 20, key=f"cap-{info['id']}")
     carga = p3.number_input("Pasajeros al inicio", 0, 500, 0, key=f"carga-{info['id']}")
     pedido = {**geometria, "parada": parada or "Puerta", "capacidad": capacidad, "carga_inicial": carga}
+    ritmo_real = st.checkbox(
+        "Simular cámara en vivo (ritmo real)", key=f"ritmo-{info['id']}",
+        help="Lee el video a su velocidad original. Si el modelo no alcanza, descarta cuadros en lugar de "
+             "acumular retraso, como haría con una cámara. Es otra configuración: se guarda aparte.")
+    pedido["ritmo_real"] = ritmo_real
     procesar, repetir = st.columns(2)
     accion = None
-    if procesar.button("Procesar video", type="primary"):
+    en_curso = f"curso-{info['id']}" in st.session_state
+    if procesar.button("Procesar video", type="primary", disabled=en_curso):
         accion = False
-    if repetir.button("Reprocesar en vivo para demostración"):
+    if repetir.button("Reprocesar en vivo para demostración", disabled=en_curso):
         accion = True
     repetir.caption("Vuelve a ejecutar el modelo con la misma configuración y lo guarda como ejecución aparte; "
                     "la primera evaluación no se modifica.")
     if accion is not None:  # solo con un clic: las actualizaciones del panel no vuelven a procesar
-        with st.spinner("Procesando en vivo: detectando y siguiendo personas… no cierres la página."):
-            cuerpo = pedir(f"/videos/{info['id']}/procesamientos", "POST", timeout=1860,
-                           json_={**pedido, "repetir_para_demostracion": accion}, aviso_si=(409,))
-            if cuerpo:
-                st.session_state[f"ejecucion-{info['id']}"] = st.session_state[f"en-vivo-{info['id']}"] = json.loads(cuerpo)["id"]
+        cuerpo = pedir(f"/videos/{info['id']}/procesamientos", "POST",
+                       json_={**pedido, "repetir_para_demostracion": accion}, aviso_si=(409,))
+        if cuerpo:
+            st.session_state[f"curso-{info['id']}"] = json.loads(cuerpo)["id"]
+    retomar_en_curso(info["id"], info["id"])
+    st.session_state[f"duracion-{info['id']}"] = info["duracion_s"]
+    seguir_en_vivo(info["id"], capacidad, carga, pedido["parada"])
     ejecuciones = json.loads(pedir(f"/procesamientos?video={info['id']}"))
     if not ejecuciones:
         st.info("Todavía no se procesó este video.")
