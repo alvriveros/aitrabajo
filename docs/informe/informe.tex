@@ -8,6 +8,7 @@
 \usepackage{graphicx}
 \usepackage{tikz}
 \usetikzlibrary{arrows.meta,positioning}
+\usepackage[hyphens]{url}
 \usepackage[hidelinks]{hyperref}
 \newcommand{\autores}{Alvaro Giovanni Maldonado Riveros y Ander Alejandro Porath Ramirez}
 \newcommand{\afiliacion}{Universidad Católica ``Nuestra Señora de la Asunción'', Campus Itapúa}
@@ -21,7 +22,7 @@
 \maketitle
 
 \begin{abstract}
-Auditar el hacinamiento de los buses del Gran Asunción requiere la carga de cada unidad por parada. Este trabajo presenta un sistema que detecta personas con YOLO11n, las sigue con ByteTrack y cuenta subidas y bajadas cuando cruzan una línea virtual. Una API REST convierte los cruces en ocupación por parada, y un panel web la muestra mientras se procesa el video. El sistema se despliega con Docker. En una evaluación ciega con 12 cruces en un bus, detectó todos, pero registró 12 eventos falsos (F1 de 0,67), en su mayoría por cajas duplicadas sobre una misma persona. En un bus real de YouTube contó 6 de 18 cruces. El ajuste del detector con un video de oficina no generalizó, por lo que se despliega el modelo preentrenado. En CPU no se alcanza el tiempo real sin perder cruces; con GPU, el detector procesa 66 cuadros por segundo.
+Auditar el hacinamiento de los buses del Gran Asunción requiere la carga de cada unidad por parada. Se presenta un sistema que detecta personas con YOLO11n, las sigue con ByteTrack y cuenta subidas y bajadas al cruzar una línea virtual. Una API REST convierte los cruces en ocupación por parada, un panel web la muestra mientras se procesa el video y se despliega con Docker. En una evaluación ciega en un bus, detectó los 12 cruces, pero registró 12 eventos falsos (F1 de 0,67), en su mayoría por cajas duplicadas. En dos grabaciones nuevas con subidas densas, el F1 fue de 0,36 y 0,45, y en un bus real se contaron 6 de 18 cruces. El ajuste del detector con un video de oficina no generalizó, así que se despliega el preentrenado. En CPU no hay tiempo real sin perder cruces; con GPU, el detector procesa 66 cuadros por segundo.
 \end{abstract}
 
 \begin{IEEEkeywords}
@@ -35,7 +36,7 @@ El conteo automático de pasajeros se estudia con distintos sensores. Hsu \emph{
 
 \section{Metodología y arquitectura del sistema}
 \subsection{Datos}
-La Tabla~\ref{tab:datos} resume las grabaciones. Ninguna es de Paraguay. Cada una pertenece a una sola partición, y la referencia de cada cruce (instante y sentido) la anotó o revisó una persona, salvo en oficina. Kaggle y PAMELA~A se usaron para elegir parámetros. El video de bus real se reservó para una prueba final única, y \emph{prueba-bus} para una evaluación ciega, también única. Después de esas evaluaciones, ninguno de los dos se usó para elegir parámetros. Los videos de terceros se usan solo localmente y no se redistribuyen.
+La Tabla~\ref{tab:datos} resume las grabaciones. Ninguna es de Paraguay. Cada una pertenece a una sola partición, y la referencia de cada cruce (instante y sentido) la anotó o revisó una persona, salvo en oficina. Kaggle y PAMELA~A se usaron para elegir parámetros. El video de bus real se reservó para una prueba final única, \emph{prueba-bus} para una evaluación ciega, y las muestras B de PAMELA, nunca procesadas, para una validación con prerregistro; las tres se ejecutaron una sola vez. Después de esas evaluaciones, ninguno de los dos se usó para elegir parámetros. Los videos de terceros se usan solo localmente y no se redistribuyen.
 
 \begin{table}[!t]
 \caption{Grabaciones, referencia y uso (25~FPS en todas)}
@@ -50,6 +51,7 @@ Kaggle, puerta de bus~\cite{kaggle} & 60~s, 1920$\times$1080 & 6 subidas, revisa
 PAMELA~A, tren~\cite{velastin2020} & 30~s, 352$\times$288 & 28 bajadas, revisadas & Selección\\
 Bus real, YouTube & 553~s, 586$\times$480 & 18 cruces, manual & Prueba final\\
 \emph{prueba-bus} (stock) & 27,4~s, 768$\times$432 & 12 cruces, manual & Prueba ciega\\
+PAMELA~B-No y B-Oy & 2$\times$30~s, 352$\times$288 & 41 subidas, manual & Validación\\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -112,9 +114,13 @@ PAMELA~A, ajustado & 0/0/0 & 1/0/27 & 0,07\\
 Bus real, YOLO11n (prueba final) & 5/0/10 & 1/1/2 & 0,48\\
 Bus real, YOLO11l (prueba final) & 11/7/4 & 1/5/2 & 0,57\\
 \emph{prueba-bus}, YOLO11n (ciega) & 4/4/0 & 8/8/0 & 0,67\\
+PAMELA~B-No, YOLO11n (validación) & 15/20/3 & 0/30/0 & 0,36\\
+PAMELA~B-Oy, YOLO11n (validación) & 19/13/4 & 0/30/0 & 0,45\\
 \bottomrule
 \end{tabular}
 \end{table}
+
+La validación con las muestras B de PAMELA, grabaciones nuevas de la misma puerta que PAMELA~A con subidas densas, confirma el problema. El sistema detectó 34 de 41 subidas, pero registró 33 subidas y 60 bajadas falsas, en videos sin bajadas. La ocupación neta predicha fue de $+5$ y $+2$, frente a $+18$ y $+23$. El 83~\% de los eventos proviene de identificadores con más de un cruce, que alternan subidas y bajadas: la misma identidad pasa la línea de ida y vuelta mientras la fila espera en la puerta. No se inspeccionó cada caso en el video anotado.
 
 Antes de modificar el sistema, se probó un cambio por vez sobre el conjunto de selección (oficina, Kaggle y PAMELA, con 37 errores de la línea base). Bajar el IoU de la supresión de no máximos de 0,7 a 0,5 eliminó cajas duplicadas en Kaggle, pero en PAMELA perdió una bajada y sumó dos falsos, y el total quedó en 37. Un filtro de cajas encimadas eliminaba pasajeros reales. Ninguno de los dos se adoptó. Elegir otra corrección mirando \emph{prueba-bus} exigiría una nueva prueba ciega.
 
@@ -139,7 +145,7 @@ GPU RTX~2050, bus real (586$\times$420), con video anotado & 65,9 FPS\\
 \end{table}
 
 \section{Conclusiones y trabajo futuro}
-El sistema funciona de extremo a extremo: recibe un video, cuenta los cruces, actualiza la ocupación mientras procesa y la reporta por parada a lo largo de un recorrido. Se despliega con Docker y está cubierto por pruebas automáticas. La calidad del conteo, en cambio, todavía no alcanza para auditar un servicio. Duplica eventos cuando hay varias cajas sobre una persona y los omite cuando la detección se pierde en la puerta. En CPU, además, no hay tiempo real sin perder cruces. Las lecciones son tres. Una métrica perfecta en la grabación de entrenamiento no prueba generalización. Cada video de prueba sirve una sola vez. Y una corrección que mejora un video puede empeorar otro.
+El sistema funciona de extremo a extremo: recibe un video, cuenta los cruces, actualiza la ocupación mientras procesa y la reporta por parada a lo largo de un recorrido. Se despliega con Docker y está cubierto por pruebas automáticas. La calidad del conteo, en cambio, todavía no alcanza para auditar un servicio. Duplica eventos cuando hay varias cajas sobre una persona o cuando una fila oscila sobre la línea, y los omite cuando la detección se pierde en la puerta. En CPU, además, no hay tiempo real sin perder cruces. Las lecciones son tres. Una métrica perfecta en la grabación de entrenamiento no prueba generalización. Cada video de prueba sirve una sola vez. Y una corrección que mejora un video puede empeorar otro.
 
 Las limitaciones son la falta de grabaciones paraguayas, pocas escenas anotadas y una sola puerta. El trabajo futuro es grabar puertas de colectivos locales con permiso y reservar una parte como prueba, entrenar con cabezas anotadas en vista cenital, como las de PAMELA~\cite{velastin2020}, y medir el tiempo real en GPU con una cámara.
 

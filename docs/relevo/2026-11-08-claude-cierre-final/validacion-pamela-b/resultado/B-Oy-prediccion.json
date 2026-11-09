@@ -1,0 +1,322 @@
+{
+  "capacidad": 20,
+  "carga_inicial": 0,
+  "paradas": [
+    {
+      "nombre": "puerta-tren-d800-B-Oy",
+      "inicio_s": 0
+    }
+  ],
+  "eventos": [
+    {
+      "tiempo_s": 1.76,
+      "track_id": 1,
+      "sentido": "subida"
+    },
+    {
+      "tiempo_s": 2.0,
+      "track_id": 3,
+      "sentido": "subida"
+    },
+    {
+      "tiempo_s": 2.52,
+      "track_id": 6,
+      "sentido": "subida"
+    },
+    {
+      "tiempo_s": 2.84,
+      "track_id": 3,
+      "sentido": "bajada"
+    },
+    {
+      "tiempo_s": 3.16,
+      "track_id": 3,
+      "sentido": "subida"
+    },
+    {
+      "tiempo_s": 4.96,
+      "track_id": 3,
+      "sentido": "bajada"
+    },
+    {
+      "tiempo_s": 5.04,
+      "track_id": 3,
+      "sentido": "subida"
+    },
+    {
+      "tiempo_s": 5.12,
+      "track_id": 15,
+      "sentido": "subida"
+    },
+    {
+      "tiempo_s": 5.28,
+      "track_id": 25,
+      "sentido": "subida"
+    },
+    {
+      "tiempo_s": 5.52,
+      "track_id": 24,
+      "sentido": "subida"
+    },
+    {
+      "tiempo_s": 6.76,
+      "track_id": 37,
+      "sentido": "subida"
+    },
+    {
+      "tiempo_s": 7.12,
+      "track_id": 3,
+      "sentido": "bajada"
+    },
+    {
+      "tiempo_s": 8.12,
+      "track_id": 32,
+      "sentido": "subida"
+    },
+    {
+      "tiempo_s": 8.16,
+      "track_id": 45,
+      "sentido": "bajada"
+    },
+    {
+      "tiempo_s": 8.48,
+      "track_id": 45,
+      "sentido": "subida"
+    },
+    {
+      "tiempo_s": 8.6,
+      "track_id": 40,
+      "sentido": "subida"
+    },
+    {
+      "tiempo_s": 9.0,
+      "track_id": 34,
+      "sentido": "subida"
+    },
+    {
+      "tiempo_s": 9.04,
+      "track_id": 3,
+      "sentido": "subida"
+    },
+    {
+      "tiempo_s": 9.28,
+      "track_id": 34,
+      "sentido": "bajada"
+    },
+    {
+      "tiempo_s": 9.4,
+      "track_id": 3,
+      "sentido": "bajada"
+    },
+    {
+      "tiempo_s": 9.84,
+      "track_id": 34,
+      "sentido": "subida"
+    },
+    {
+      "tiempo_s": 9.96,
+      "track_id": 32,
+      "sentido": "bajada"
+    },
+    {
+      "tiempo_s": 10.04,
+      "track_id": 40,
+      "sentido": "bajada"
+    },
+    {
+      "tiempo_s": 10.16,
+      "track_id": 32,
+      "sentido": "subida"
+    },
+    {
+      "tiempo_s": 10.84,
+      "track_id": 40,
+      "sentido": "subida"
+    },
+    {
+      "tiempo_s": 10.96,
+      "track_id": 34,
+      "sentido": "bajada"
+    },
+    {
+      "tiempo_s": 11.48,
+      "track_id": 58,
+      "sentido": "bajada"
+    },
+    {
+      "tiempo_s": 11.8,
+      "track_id": 56,
+      "sentido": "bajada"
+    },
+    {
+      "tiempo_s": 12.0,
+      "track_id": 34,
+      "sentido": "subida"
+    },
+    {
+      "tiempo_s": 12.12,
+      "track_id": 69,
+      "sentido": "bajada"
+    },
+    {
+      "tiempo_s": 12.68,
+      "track_id": 69,
+      "sentido": "subida"
+    },
+    {
+      "tiempo_s": 12.88,
+      "track_id": 40,
+      "sentido": "bajada"
+    },
+    {
+      "tiempo_s": 14.2,
+      "track_id": 34,
+      "sentido": "bajada"
+    },
+    {
+      "tiempo_s": 16.24,
+      "track_id": 81,
+      "sentido": "bajada"
+    },
+    {
+      "tiempo_s": 16.68,
+      "track_id": 34,
+      "sentido": "subida"
+    },
+    {
+      "tiempo_s": 17.12,
+      "track_id": 74,
+      "sentido": "bajada"
+    },
+    {
+      "tiempo_s": 17.2,
+      "track_id": 82,
+      "sentido": "bajada"
+    },
+    {
+      "tiempo_s": 17.32,
+      "track_id": 88,
+      "sentido": "bajada"
+    },
+    {
+      "tiempo_s": 17.44,
+      "track_id": 88,
+      "sentido": "subida"
+    },
+    {
+      "tiempo_s": 17.96,
+      "track_id": 91,
+      "sentido": "subida"
+    },
+    {
+      "tiempo_s": 18.08,
+      "track_id": 91,
+      "sentido": "bajada"
+    },
+    {
+      "tiempo_s": 18.2,
+      "track_id": 91,
+      "sentido": "subida"
+    },
+    {
+      "tiempo_s": 18.84,
+      "track_id": 34,
+      "sentido": "bajada"
+    },
+    {
+      "tiempo_s": 19.16,
+      "track_id": 81,
+      "sentido": "subida"
+    },
+    {
+      "tiempo_s": 19.4,
+      "track_id": 80,
+      "sentido": "bajada"
+    },
+    {
+      "tiempo_s": 21.04,
+      "track_id": 80,
+      "sentido": "subida"
+    },
+    {
+      "tiempo_s": 21.4,
+      "track_id": 98,
+      "sentido": "subida"
+    },
+    {
+      "tiempo_s": 21.96,
+      "track_id": 135,
+      "sentido": "bajada"
+    },
+    {
+      "tiempo_s": 22.92,
+      "track_id": 80,
+      "sentido": "bajada"
+    },
+    {
+      "tiempo_s": 23.0,
+      "track_id": 135,
+      "sentido": "subida"
+    },
+    {
+      "tiempo_s": 23.28,
+      "track_id": 120,
+      "sentido": "bajada"
+    },
+    {
+      "tiempo_s": 23.36,
+      "track_id": 93,
+      "sentido": "subida"
+    },
+    {
+      "tiempo_s": 23.4,
+      "track_id": 122,
+      "sentido": "subida"
+    },
+    {
+      "tiempo_s": 23.44,
+      "track_id": 135,
+      "sentido": "bajada"
+    },
+    {
+      "tiempo_s": 23.52,
+      "track_id": 122,
+      "sentido": "bajada"
+    },
+    {
+      "tiempo_s": 23.68,
+      "track_id": 93,
+      "sentido": "bajada"
+    },
+    {
+      "tiempo_s": 25.44,
+      "track_id": 98,
+      "sentido": "bajada"
+    },
+    {
+      "tiempo_s": 25.92,
+      "track_id": 98,
+      "sentido": "subida"
+    },
+    {
+      "tiempo_s": 27.12,
+      "track_id": 143,
+      "sentido": "bajada"
+    },
+    {
+      "tiempo_s": 27.68,
+      "track_id": 143,
+      "sentido": "subida"
+    },
+    {
+      "tiempo_s": 28.4,
+      "track_id": 93,
+      "sentido": "subida"
+    },
+    {
+      "tiempo_s": 29.28,
+      "track_id": 93,
+      "sentido": "bajada"
+    }
+  ]
+}

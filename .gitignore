@@ -5,3 +5,10 @@ data/raw/
 runs/
 *.mp4
 *.pt
+
+# Temporales de LaTeX (el PDF final sí se versiona)
+docs/informe/*.aux
+docs/informe/*.log
+docs/informe/*.bbl
+docs/informe/*.blg
+docs/informe/*.out

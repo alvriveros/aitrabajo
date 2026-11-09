@@ -64,6 +64,9 @@ Pantalla: Tabla II del informe.
   - al revisar el video, 8 de los falsos son una segunda caja sobre una persona ya contada.
   > "Es exactamente el problema de oclusiones de la consigna, y no lo resolvimos."
 - **Bus real de YouTube** (prueba final): se contaron 6 de 18 cruces. Predominan las omisiones.
+- **Validación prerregistrada con PAMELA B** (subidas densas, nunca procesadas antes): F1 de 0,36 y 0,45.
+  > "Detecta 34 de 41 subidas, pero en la fila que espera sobre la línea las identidades van y vienen: 93 eventos falsos. Este es el resultado más honesto que tenemos sobre oclusiones."
+
 - **Modelo ajustado:** 20 de 20 en su propia grabación, pero 0 de 6 en Kaggle y 1 de 28 en PAMELA.
   > "Por eso desplegamos el preentrenado: no vamos a usar un modelo peor solo porque lo entrenamos nosotros."
 - **Tiempo real** (Tabla III):

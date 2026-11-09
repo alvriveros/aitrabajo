@@ -11,6 +11,7 @@ Los videos van en `data/raw/`, que git ignora. Acá se documenta de dónde sale 
 | `puerta-tren-d800-A.mp4` | 28 bajadas (Claude) | **Sí**, Álvaro, sin cambios (8 nov., 18:46) | Selección (tareas 09–14) | No |
 | `youtube-bus-real-0y08Jtqtkys.mp4` | 15 subidas y 3 bajadas (Álvaro) | Es humana | Prueba final de la tarea 11: **consumida** | No |
 | `prueba-bus.mp4` | 4 subidas y 8 bajadas (Álvaro, antes de procesar) | Es humana | **Primera evaluación ciega (tarea 13)**; después, desarrollo | Solo su primera evaluación |
+| `puerta-tren-d800-B-No.mp4` y `…-B-Oy.mp4` | 18 y 23 subidas (Álvaro, antes de procesar: `pamela-B-*-cruces.json`) | Es humana | **Validación prerregistrada (9 nov.)**, ejecutada una vez: F1 de 0,36 y 0,45 | Ya no: quedan consumidos. Es la misma escena que PAMELA A |
 
 - **Dónde está la revisión:** [`revision-humana-referencias.md`](../docs/relevo/2026-11-08-claude-tarea12/revision-humana-referencias.md), con los hashes. Las anotaciones de Kaggle y PAMELA conservan, sin cambios, el campo `anotado_por` original, que dice «sin revisión humana»; la revisión posterior consta en ese archivo.
 - **Contexto local:** ninguna grabación es de Paraguay. Para la próxima prueba hace falta una grabación nueva, idealmente de un colectivo del Gran Asunción. Protocolo: [`protocolo-validacion-nueva.md`](../docs/relevo/2026-11-08-claude-tarea12/protocolo-validacion-nueva.md).

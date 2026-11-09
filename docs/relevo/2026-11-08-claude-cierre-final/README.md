@@ -101,6 +101,25 @@ Con la API en ese contenedor. El script es [`e2e_api.py`](e2e_api.py) y su salid
 - **Conteo:** 11/5/1, con subidas 4/3/0 y bajadas 7/2/1. **Es desarrollo:** `prueba-bus` ya se usó, así que no es una validación. Además, depende de qué cuadros se descarten.
 - **Aviso de OpenCV:** `tag 'VP80' is not supported with codec id 139`. El `anotado.webm` igual se genera: 10,9 MB, con cabecera WebM válida.
 
+## Validación con PAMELA B (Álvaro, 9 nov., 00:16–00:19)
+
+Se siguió [el prerregistro](validacion-pamela-b/prerregistro.md):
+
+1. Álvaro anotó las referencias antes de la ejecución: `pamela-B-No-cruces.json`, guardada a las 00:16, y `pamela-B-Oy-cruces.json`, a las 00:18.
+2. `prueba-pamela-b.ps1` se ejecutó una vez, a las 00:18–00:19, con el commit `1533328`, en la CPU de Windows y a unos 27 FPS.
+3. La salida quedó en [`validacion-pamela-b/resultado/`](validacion-pamela-b/resultado/).
+
+| Video | Referencia | Subidas TP/FP/FN | Bajadas TP/FP/FN | F1 | Saldo predicho / real |
+|---|---|---|---|---|---|
+| B-No | 18 subidas | 15/20/3 | 0/30/0 | 0,36 | +5 / +18 |
+| B-Oy | 23 subidas | 19/13/4 | 0/30/0 | 0,45 | +2 / +23 |
+
+**Lectura:**
+
+- **Causa principal: identidades que van y vienen.** De los 127 eventos, 105 (83 %) son de identificadores que cruzan más de una vez y alternan subida y bajada (13 de 24 ids en B-No y 15 de 26 en B-Oy). Concuerda con la fila que espera parada sobre el borde del andén. No se revisó cada caso en el video anotado (`runs/evaluacion/pamela-b/`).
+- **Detección:** la mayoría de las subidas reales se detecta (34 de 41). El problema son los eventos de más, no las omisiones.
+- **Uso posterior:** desde este resultado, B-No y B-Oy pasan a ser de desarrollo. Si se prueba una corrección mirándolos, se rotula así.
+
 ## Suite (Linux, contenedor de Claude)
 
 `pytest -q -rxs`: **138 aprobados, 1 fallido y 1 xfail.**
