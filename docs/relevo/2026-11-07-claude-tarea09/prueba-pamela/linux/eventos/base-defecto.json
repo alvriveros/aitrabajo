@@ -1,0 +1,22 @@
+{
+  "capacidad": 20,
+  "carga_inicial": 0,
+  "paradas": [
+    {
+      "nombre": "PAMELA-UANDES A_d800mm_sample · 0-30 s",
+      "inicio_s": 0
+    }
+  ],
+  "eventos": [
+    {
+      "tiempo_s": 25.96,
+      "track_id": 75,
+      "sentido": "bajada"
+    },
+    {
+      "tiempo_s": 26.16,
+      "track_id": 75,
+      "sentido": "subida"
+    }
+  ]
+}

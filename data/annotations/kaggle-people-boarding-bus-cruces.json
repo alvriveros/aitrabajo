@@ -1,0 +1,22 @@
+{
+  "capacidad": 60,
+  "carga_inicial": 0,
+  "paradas": [{"nombre": "Puerta de bus (Kaggle) · 0-60 s", "inicio_s": 0}],
+  "anotado_por": "Claude (inspección visual de cuadros cada 0,2 s y 0,4 s), a pedido de Álvaro. Sin revisión humana.",
+  "fecha": "2026-11-07T22:45-03:00, antes de ejecutar cualquier modelo sobre este video",
+  "criterio": "Cruce de la línea y = 480 del recorte 600,0,840,1080 por el centro del torso; tiempo = primer cuadro observado con el torso del otro lado, precisión aproximada de ±0,4 s.",
+  "notas": [
+    "6 personas suben; no se observan bajadas en 0-60 s. Fuera de 12-29 s no hay cruces.",
+    "Persona 1 (blusa roja y pañuelo celeste, con bolso naranja): el brazo con el bolso queda bajo la línea después de cruzar; tiempo incierto entre 12,8 y 13,4 s.",
+    "Personas 2 y 3 suben casi juntas detrás de la 1 (camisa a cuadros con mochila negra; camisa azul).",
+    "Control no independiente: el contador comercial sobreimpreso pasa de U:17 a U:22 (5 subidas) y D:4 sin cambios; difiere en una subida de esta anotación."
+  ],
+  "eventos": [
+    {"tiempo_s": 13.2, "track_id": 1, "sentido": "subida"},
+    {"tiempo_s": 14.4, "track_id": 2, "sentido": "subida"},
+    {"tiempo_s": 17.2, "track_id": 3, "sentido": "subida"},
+    {"tiempo_s": 21.4, "track_id": 4, "sentido": "subida"},
+    {"tiempo_s": 25.6, "track_id": 5, "sentido": "subida"},
+    {"tiempo_s": 28.4, "track_id": 6, "sentido": "subida"}
+  ]
+}

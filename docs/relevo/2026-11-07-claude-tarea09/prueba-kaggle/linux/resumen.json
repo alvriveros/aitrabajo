@@ -1,0 +1,191 @@
+{
+  "referencia": "data/annotations/kaggle-people-boarding-bus-cruces.json",
+  "referencia_sha256": "6ebd660e0ce0831f9d4e718e1a534f2ccd7cf7e1f10973c2f8eeafbc406aaf8e",
+  "tolerancia_s": 1.0,
+  "entorno": {
+    "python": "3.12.3",
+    "plataforma": "Linux-6.18.44-fc-v310-x86_64-with-glibc2.39",
+    "procesador": "x86_64",
+    "ultralytics": "8.4.203",
+    "torch": "2.15.0",
+    "opencv-python": "5.0.0.93",
+    "lap": "0.5.14"
+  },
+  "configuraciones": {
+    "base-defecto": {
+      "estado": "ejecutado",
+      "opciones": [
+        "--pesos",
+        "yolo11n.pt"
+      ],
+      "medicion": {
+        "cuadros": 1499,
+        "segundos": 109.07,
+        "fps_procesados": 13.74,
+        "con_video_anotado": true
+      },
+      "eventos": [
+        [
+          14.72,
+          46,
+          "bajada"
+        ],
+        [
+          25.76,
+          86,
+          "subida"
+        ]
+      ],
+      "por_sentido": {
+        "subida": {
+          "TP": 1,
+          "FP": 0,
+          "FN": 5,
+          "error_conteo_abs": 5,
+          "omitidos_s": [
+            13.2,
+            14.4,
+            17.2,
+            21.4,
+            28.4
+          ],
+          "extra_s": []
+        },
+        "bajada": {
+          "TP": 0,
+          "FP": 1,
+          "FN": 0,
+          "error_conteo_abs": 1,
+          "omitidos_s": [],
+          "extra_s": [
+            14.72
+          ]
+        }
+      }
+    },
+    "base-calibrado": {
+      "estado": "ejecutado",
+      "opciones": [
+        "--pesos",
+        "yolo11n.pt",
+        "--rastreador",
+        "vision/bytetrack-cenital.yaml",
+        "--conf",
+        "0.05",
+        "--confirmacion",
+        "2"
+      ],
+      "medicion": {
+        "cuadros": 1499,
+        "segundos": 111.361,
+        "fps_procesados": 13.46,
+        "con_video_anotado": true
+      },
+      "eventos": [
+        [
+          13.76,
+          7,
+          "subida"
+        ],
+        [
+          14.04,
+          37,
+          "subida"
+        ],
+        [
+          14.68,
+          7,
+          "bajada"
+        ],
+        [
+          14.92,
+          37,
+          "bajada"
+        ],
+        [
+          15.0,
+          37,
+          "subida"
+        ],
+        [
+          15.32,
+          7,
+          "subida"
+        ],
+        [
+          17.52,
+          42,
+          "subida"
+        ],
+        [
+          25.0,
+          58,
+          "subida"
+        ],
+        [
+          25.76,
+          57,
+          "subida"
+        ],
+        [
+          25.92,
+          63,
+          "subida"
+        ],
+        [
+          26.48,
+          63,
+          "bajada"
+        ],
+        [
+          27.44,
+          63,
+          "subida"
+        ],
+        [
+          27.72,
+          63,
+          "bajada"
+        ]
+      ],
+      "por_sentido": {
+        "subida": {
+          "TP": 5,
+          "FP": 4,
+          "FN": 1,
+          "error_conteo_abs": 3,
+          "omitidos_s": [
+            21.4
+          ],
+          "extra_s": [
+            15.0,
+            15.32,
+            25.76,
+            25.92
+          ]
+        },
+        "bajada": {
+          "TP": 0,
+          "FP": 4,
+          "FN": 0,
+          "error_conteo_abs": 4,
+          "omitidos_s": [],
+          "extra_s": [
+            14.68,
+            14.92,
+            26.48,
+            27.72
+          ]
+        }
+      }
+    },
+    "ajustado-defecto": {
+      "estado": "pendiente",
+      "motivo": "pesos ausentes o con otra huella: runs/oficina-ajuste/oficina-ajustado.pt"
+    },
+    "ajustado-calibrado": {
+      "estado": "pendiente",
+      "motivo": "pesos ausentes o con otra huella: runs/oficina-ajuste/oficina-ajustado.pt"
+    }
+  }
+}

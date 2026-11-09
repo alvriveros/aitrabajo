@@ -1,0 +1,22 @@
+{
+  "capacidad": 20,
+  "carga_inicial": 0,
+  "paradas": [
+    {
+      "nombre": "Puerta de bus (Kaggle) · 0-60 s",
+      "inicio_s": 0
+    }
+  ],
+  "eventos": [
+    {
+      "tiempo_s": 14.72,
+      "track_id": 46,
+      "sentido": "bajada"
+    },
+    {
+      "tiempo_s": 25.76,
+      "track_id": 86,
+      "sentido": "subida"
+    }
+  ]
+}

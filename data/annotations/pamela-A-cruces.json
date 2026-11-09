@@ -1,0 +1,161 @@
+{
+ "capacidad": 60,
+ "carga_inicial": 28,
+ "paradas": [
+  {
+   "nombre": "PAMELA-UANDES A_d800mm_sample · 0-30 s",
+   "inicio_s": 0
+  }
+ ],
+ "anotado_por": "Claude (inspección visual de cuadros cada 0,2 s), a pedido de Álvaro. Sin revisión humana; no es la referencia oficial de PAMELA-UANDES.",
+ "fecha": "2026-11-07T23:20-03:00, antes de ejecutar cualquier modelo sobre este video",
+ "criterio": "Cruce de la línea y = 96 del recorte 96,64,160,224 (umbral de la puerta) por el centro del torso; tiempo = primer cuadro observado con el torso del otro lado, precisión aproximada ±0,4 s.",
+ "notas": [
+  "28 bajadas; no se observan subidas. A = Alight según el dataset.",
+  "La primera persona ya está cruzando en el primer cuadro (0,0 s): un sistema que exige dos cuadros del lado de origen no puede contarla.",
+  "Cruces casi simultáneos: 12,8 y 13,2 s; dos a 19,8 s; 25,8 y 26,2 s.",
+  "Al final (30,2 s) una persona sigue adentro: no se cuenta."
+ ],
+ "eventos": [
+  {
+   "tiempo_s": 0.2,
+   "track_id": 1,
+   "sentido": "bajada"
+  },
+  {
+   "tiempo_s": 1.2,
+   "track_id": 2,
+   "sentido": "bajada"
+  },
+  {
+   "tiempo_s": 2.2,
+   "track_id": 3,
+   "sentido": "bajada"
+  },
+  {
+   "tiempo_s": 3.6,
+   "track_id": 4,
+   "sentido": "bajada"
+  },
+  {
+   "tiempo_s": 5.0,
+   "track_id": 5,
+   "sentido": "bajada"
+  },
+  {
+   "tiempo_s": 6.0,
+   "track_id": 6,
+   "sentido": "bajada"
+  },
+  {
+   "tiempo_s": 7.4,
+   "track_id": 7,
+   "sentido": "bajada"
+  },
+  {
+   "tiempo_s": 8.6,
+   "track_id": 8,
+   "sentido": "bajada"
+  },
+  {
+   "tiempo_s": 9.6,
+   "track_id": 9,
+   "sentido": "bajada"
+  },
+  {
+   "tiempo_s": 10.4,
+   "track_id": 10,
+   "sentido": "bajada"
+  },
+  {
+   "tiempo_s": 11.6,
+   "track_id": 11,
+   "sentido": "bajada"
+  },
+  {
+   "tiempo_s": 12.8,
+   "track_id": 12,
+   "sentido": "bajada"
+  },
+  {
+   "tiempo_s": 13.2,
+   "track_id": 13,
+   "sentido": "bajada"
+  },
+  {
+   "tiempo_s": 14.8,
+   "track_id": 14,
+   "sentido": "bajada"
+  },
+  {
+   "tiempo_s": 16.2,
+   "track_id": 15,
+   "sentido": "bajada"
+  },
+  {
+   "tiempo_s": 17.2,
+   "track_id": 16,
+   "sentido": "bajada"
+  },
+  {
+   "tiempo_s": 18.0,
+   "track_id": 17,
+   "sentido": "bajada"
+  },
+  {
+   "tiempo_s": 19.8,
+   "track_id": 18,
+   "sentido": "bajada"
+  },
+  {
+   "tiempo_s": 19.8,
+   "track_id": 19,
+   "sentido": "bajada"
+  },
+  {
+   "tiempo_s": 21.2,
+   "track_id": 20,
+   "sentido": "bajada"
+  },
+  {
+   "tiempo_s": 22.2,
+   "track_id": 21,
+   "sentido": "bajada"
+  },
+  {
+   "tiempo_s": 23.4,
+   "track_id": 22,
+   "sentido": "bajada"
+  },
+  {
+   "tiempo_s": 24.2,
+   "track_id": 23,
+   "sentido": "bajada"
+  },
+  {
+   "tiempo_s": 25.8,
+   "track_id": 24,
+   "sentido": "bajada"
+  },
+  {
+   "tiempo_s": 26.2,
+   "track_id": 25,
+   "sentido": "bajada"
+  },
+  {
+   "tiempo_s": 27.8,
+   "track_id": 26,
+   "sentido": "bajada"
+  },
+  {
+   "tiempo_s": 28.8,
+   "track_id": 27,
+   "sentido": "bajada"
+  },
+  {
+   "tiempo_s": 30.0,
+   "track_id": 28,
+   "sentido": "bajada"
+  }
+ ]
+}

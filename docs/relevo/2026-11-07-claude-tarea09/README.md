@@ -84,6 +84,38 @@ Este video **no es una evaluación independiente**.
 
 Sigue bloqueado. No se repitieron descargas ni se cambió de dataset; ver la [propuesta de la tarea 08](../2026-11-07-claude-tarea08/propuesta-evaluacion-pcds.md).
 
+## Prueba independiente con un video de Kaggle (agregada el 7 nov., 22:45)
+
+Álvaro encontró `kaggle-people-boarding-bus.mp4`: una puerta de bus real, 60 s y licencia desconocida, usado solo en local. Se siguió este orden:
+
+1. Se prerregistraron la geometría y las configuraciones: [`prueba-kaggle/preregistro.md`](prueba-kaggle/preregistro.md).
+2. Claude anotó 6 subidas mirando los cuadros, sin revisión humana.
+3. Se ejecutó una sola vez.
+
+| Configuración | Subidas TP / FP / FN | Bajadas TP / FP / FN |
+|---|---|---|
+| Base, ByteTrack por defecto | 1 / 0 / 5 | 0 / 1 / 0 |
+| Base calibrado (configuración de la API) | 5 / 4 / 1 | 0 / 4 / 0 |
+
+**En una escena nueva y concurrida, la configuración calibrada sobre la oficina cuenta 5 de 6 subidas, pero inventa 8 eventos.** Detalle y alcance en [`prueba-kaggle/resultados.md`](prueba-kaggle/resultados.md).
+
+## Prueba independiente con PAMELA-UANDES, muestra A de bajadas (agregada el 7 nov., 23:30)
+
+Álvaro bajó tres muestras públicas del dataset de investigación PAMELA-UANDES (Velastin et al., *Sensors* 2020): la puerta de un vagón de laboratorio. Se siguió el mismo orden que con Kaggle:
+
+1. Prerregistro: [`prueba-pamela/preregistro.md`](prueba-pamela/preregistro.md).
+2. Claude anotó 28 bajadas mirando los cuadros, sin revisión humana.
+3. Se ejecutó una sola vez.
+
+| Configuración | Bajadas TP / FP / FN | Subidas TP / FP / FN |
+|---|---|---|
+| Base, ByteTrack por defecto | 1 / 0 / 27 | 0 / 1 / 0 |
+| Base calibrado (configuración de la API) | 10 / 0 / 18 | 0 / 1 / 0 |
+
+**El base calibrado cuenta 10 de 28 bajadas.** Ver [`prueba-pamela/resultados.md`](prueba-pamela/resultados.md).
+
+Las muestras B, de subidas muy densas, no se anotaron. Álvaro pidió acceso a la referencia oficial: cabezas anotadas cuadro a cuadro y conteos.
+
 ## Pesos ajustados
 
 **No están en esta máquina.** `runs/` del worktree solo contiene `panel/`. No se descargaron pesos de origen desconocido ni se reentrenó. El pedido está en [`mensaje-companero.md`](mensaje-companero.md), listo para copiar.
@@ -110,5 +142,5 @@ Ninguna de estas cifras muestra generalización. Hace falta la comparación en W
 2. **Pesos ajustados:** que el compañero los entregue con hash y configuración, y repetir el comando con `--ajustado`.
 3. **Medición de confianza en macOS** del compañero, para confirmar o descartar la hipótesis de la plataforma.
 4. **Revisión humana** de `oficina-cruces.json`.
-5. **Grabación independiente** según la ficha; es la única forma de evaluar generalización.
+5. **Grabación independiente** según la ficha. Ya hay una primera prueba con el video de Kaggle, pero es un solo video, sin bajadas y con referencia de Claude: hace falta la revisión humana de esa anotación y más material.
 6. **La prueba `test_ensayo_de_oficina_…` sigue fallando:** es la omisión del modelo y se mantiene visible.
