@@ -13,6 +13,9 @@ RUN pip install --no-cache-dir torch==2.15.0 torchvision==0.29.2 --index-url "$T
     && pip install --no-cache-dir -r requirements.txt -r vision/requirements.txt \
     && python -c "import cv2, lap, torch, ultralytics"
 ENV YOLO_CONFIG_DIR=/tmp/Ultralytics
+# Pesos oficiales de Ultralytics (no se versionan): se descargan y se verifica su SHA-256; si no coincide, falla el build.
+COPY vision/pesos.py vision/pesos.py
+RUN python vision/pesos.py yolo11n.pt
 
 COPY api/ api/
 COPY ui/ ui/
@@ -20,5 +23,3 @@ COPY vision/ vision/
 COPY evaluation/ evaluation/
 COPY .streamlit/config.toml .streamlit/config.toml
 COPY docs/demo/ docs/demo/
-# Pesos oficiales de Ultralytics, que no se versionan: hay que descargarlos antes (ver README, «Docker»).
-COPY yolo11n.pt .
