@@ -23,9 +23,9 @@ Guion: [`guion.md`](guion.md). Rama: `cierre-final`.
 - [ ] Docker detenido (`docker compose down`), para que no compita por CPU.
 - [ ] API con GPU, en la ventana 1:
   ```powershell
-  cd C:\Users\Alvaro\Desktop\Facultad\4to\IA\TpFinal\.worktrees\integracion-video
+  cd <raíz del repositorio, rama main>
   $env:VISION_DISPOSITIVO = "cuda:0"
-  C:\Users\Alvaro\Desktop\Facultad\4to\IA\venv-gpu\Scripts\python.exe -m uvicorn api.main:app --port 8000
+  ..\venv-gpu\Scripts\python.exe -m uvicorn api.main:app --port 8000
   ```
 - [ ] Panel, en la ventana 2: `.\.venv\Scripts\python.exe -m streamlit run ui/app.py` → http://localhost:8501.
 - [ ] Abiertos: el informe (`docs/informe/informe.pdf`, Tablas II y III) y el guion.

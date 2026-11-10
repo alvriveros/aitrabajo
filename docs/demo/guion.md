@@ -4,12 +4,12 @@ Versión del cierre final (9 nov.; actualizada el 9 nov. a la noche con la Fig. 
 
 ## Preparación · 30 minutos antes
 
-1. **Rama y entorno.** En `TpFinal\.worktrees\integracion-video`, con la rama `cierre-final`.
+1. **Rama y entorno.** En la raíz del repositorio, con la rama `main`.
 2. **Insumos fuera de Git:** `data\raw\prueba-bus.mp4` y `data\raw\oficina.mp4` (no se redistribuyen). Los pesos se preparan y verifican con `.\.venv\Scripts\python.exe vision\pesos.py` (si `yolo11n.pt` ya está, solo comprueba su SHA-256).
 3. **Arranque con GPU** (recomendado: en CPU no hay tiempo real, ver más abajo). En una terminal:
    ```powershell
    $env:VISION_DISPOSITIVO = "cuda:0"
-   C:\Users\Alvaro\Desktop\Facultad\4to\IA\venv-gpu\Scripts\python.exe -m uvicorn api.main:app --port 8000
+   ..\venv-gpu\Scripts\python.exe -m uvicorn api.main:app --port 8000
    ```
    En otra:
    ```powershell
