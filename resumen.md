@@ -84,3 +84,14 @@ El ensayo detectó que, en tema oscuro, el rótulo de valor de las barras casi n
 Para el trabajo de Claude, consultá la [carpeta de tareas](docs/tareas/claude/README.md). La primera ficha prepara el panel mientras llega el clip y la segunda describe cómo contrastar los eventos reales.
 
 El compañero aporta el video, la orientación de la línea y los eventos reales con el mismo formato que el ejemplo. Álvaro conecta esa salida al panel y ambos contrastan el contador con una anotación manual. Las cifras de esta demo sintética sirven para probar la integración. Las métricas del informe se calculan con clips reservados para evaluación.
+
+## Prioridad vigente · 7 de noviembre
+
+Continuar con [tarea 08 · Cierre de integración en Windows](docs/tareas/claude/08-cierre-integracion-windows.md). La entrega 07 está en el worktree `.worktrees/integracion-video`; no está integrada en main. La revisión de código detectó que el selector de video termina en el último evento y no en el final del clip. También debe impedirse listar ejecuciones fallidas o incompletas. Reparar primero el vínculo Git del worktree, que aún apunta a Linux. La bajada omitida sigue siendo un problema de evaluación del detector; la explicación por diferencias entre plataformas no está confirmada. Los informes siguen aplazados.
+
+Comprobación de Codex: 13 pruebas de tests/test_ocupacion.py y tests/test_procesamientos.py aprobadas en la .venv Windows del worktree (un aviso de obsolescencia). No se repitió inferencia ni navegador en esta revisión; esos resultados siguen pendientes de la tarea 08.
+
+Análisis externo recibido: la tarea 08 incorpora conservación de evidencias del detector de cabezas y un intento acotado de acceso a PCDS. No se verificaron aquí los resultados experimentales de Claude. Se mantiene el cierre de integración como prioridad; evaluar primero los pesos ajustados existentes, sin migrar ahora a TensorFlow. Las etiquetas de persona requieren reanotación para entrenar cabezas. Informes aplazados.
+
+## Revisión tarea 08 · 7 de noviembre
+Windows verificado: 15 pruebas API y 84 de visión aprobadas; 1 omitida y 1 fallida por la bajada del modelo. Video reproducible y selector hasta 6 s; gráfico 45 estados sin fallos. Evidencias en docs/relevo/2026-11-07-claude-tarea08/revision-codex-windows.md dentro del worktree integracion-video. Siguiente tarea: docs/tareas/claude/09-evaluacion-windows.md. Informes aplazados; sin commit ni push.

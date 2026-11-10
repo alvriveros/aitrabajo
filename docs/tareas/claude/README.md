@@ -14,3 +14,7 @@ Leé [el resumen del proyecto](../../../resumen.md) antes de editar. Guardá tu 
 **Prioridad tras el ensayo del 6 de noviembre:** la tarea 02 verificó los eventos y la API, y detectó una discrepancia en el gráfico. Continuá con la [tarea 05 · Sincronizar las barras](05-actualizacion-grafico.md).
 
 **Prioridad vigente:** continuá con la [tarea 07 · Conectar el video con el conteo automático](07-demo-video.md). El informe académico se retoma al finalizar el proyecto.
+
+**Prioridad vigente · 7 de noviembre:** [Tarea 08 · Cierre de integración en Windows](08-cierre-integracion-windows.md). Reemplaza la prioridad 07: revisar el final temporal del clip, las ejecuciones incompletas y guardar evidencia Windows. Informes aplazados.
+
+**Siguiente tarea:** [09 · Evaluación en Windows](09-evaluacion-windows.md). Comparar primero el modelo base y los pesos ajustados disponibles; preparar datos independientes sin ampliar el panel.
