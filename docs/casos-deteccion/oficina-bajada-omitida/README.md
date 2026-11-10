@@ -26,9 +26,8 @@ Es la configuración guardada con la predicción de 0–6 s (`evaluation/results
 
 En Linux, dos ejecuciones desde el panel y una por terminal dieron el mismo JSON. La prueba `test_ensayo_de_oficina_sigue_dentro_de_la_tolerancia_de_la_referencia_manual` falla en Linux por esta omisión. Las predicciones y la configuración están en [`ejecuciones/`](ejecuciones/).
 
-![Cuadros del video anotado](cuadros.png)
 
-[`cuadros.png`](cuadros.png): video anotado por el sistema, un cuadro de cada tres. Las cajas son los tracks que entrega el rastreador.
+`cuadros.png` (no se publica: son cuadros de un video de terceros sin licencia abierta; copia local en `runs/cuadros-oficina-bajada-omitida.png`): un cuadro de cada tres. Las cajas son los tracks que entrega el rastreador.
 
 - **Arriba (subida):** el track 1 aparece debajo de la línea a 1,92 s, la cruza y a 2,28 s se marca en verde.
 - **Abajo (bajada):** entre 4,32 y 4,80 s la persona atraviesa la línea **sin ninguna caja**. Recién a 4,92 s aparece el ID 9, ya debajo.
@@ -74,7 +73,7 @@ No se cambió ningún parámetro: la decisión es del módulo de visión.
 
 1. **Detector ajustado** (`runs/oficina-ajuste/oficina-ajustado.pt`, con `python -m vision.train`), con el rastreador por defecto. Según [su documentación](../../../vision/ajuste-detector.md), cuenta los 20 cruces del video completo. Pero se entrenó con esa misma grabación, así que no prueba que generalice.
 2. **Bajar `new_track_thresh` o `conf`.** Recuperaría este cruce, pero aumenta los falsos positivos. Además, calibrarlo sobre el mismo clip sería ajustar el resultado a la prueba.
-3. **Mostrarlo en la defensa** como ejemplo de pérdida de detección y cambio de ID, con [`cuadros.png`](cuadros.png) y [`confianza.png`](confianza.png).
+3. **Mostrarlo en la defensa** como ejemplo de pérdida de detección y cambio de ID, con `cuadros.png` (local) y [`confianza.png`](confianza.png).
 
 ## Revisión del tramo corto (8 nov., noche, Claude)
 
