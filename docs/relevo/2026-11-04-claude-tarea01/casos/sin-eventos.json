@@ -1,9 +1,0 @@
-{
-  "capacidad": 30,
-  "carga_inicial": 6,
-  "paradas": [
-    {"nombre": "Parada 1", "inicio_s": 0},
-    {"nombre": "Parada 2", "inicio_s": 10}
-  ],
-  "eventos": []
-}

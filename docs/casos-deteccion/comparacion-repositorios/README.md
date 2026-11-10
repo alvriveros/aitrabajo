@@ -22,7 +22,7 @@ Se clonaron con `git clone --depth 1 <URL>` en una carpeta separada del proyecto
 
 ### Intento de obtener una muestra de PCDS
 
-Se probó el 7 nov., a las 23:20 UTC. Baidu Pan (`https://pan.baidu.com/s/10O2JJrTC3WJJvweW8XGWVA`) y la carpeta de Google Drive, que el README da por eliminada, no responden desde ninguno de los dos entornos disponibles: el contenedor de Claude y la máquina virtual del equipo de Álvaro. La red de ambos solo permite una lista de sitios. **Bloqueado.** No se obtuvo ningún video, así que no hay identificadores ni partición que registrar. La propuesta de evaluación está en [la devolución de la tarea 08](../../relevo/2026-11-07-claude-tarea08/propuesta-evaluacion-pcds.md).
+Se probó el 7 nov., a las 23:20 UTC. Baidu Pan (`https://pan.baidu.com/s/10O2JJrTC3WJJvweW8XGWVA`) y la carpeta de Google Drive, que el README da por eliminada, no responden desde ninguno de los dos entornos disponibles: el contenedor de Claude y la máquina virtual del equipo de Álvaro. La red de ambos solo permite una lista de sitios. **Bloqueado.** No se obtuvo ningún video, así que no hay identificadores ni partición que registrar. La propuesta de evaluación está en [la devolución de la tarea 08](propuesta-evaluacion-pcds.md).
 
 ## Lo medido por Claude
 

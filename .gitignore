@@ -17,3 +17,7 @@ docs/informe/*.out
 .pytest_cache/
 .pytest-*/
 pytest-cache-files-*/
+
+# Configuración local de herramientas y agentes
+.claude/
+.mcp.json

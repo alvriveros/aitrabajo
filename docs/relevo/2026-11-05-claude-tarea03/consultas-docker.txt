@@ -1,7 +1,0 @@
-$ curl POST http://127.0.0.1:8001/ocupacion (docs/demo/recorrido.json)
-{"paradas":[{"parada":"Parada 1","subidas":2,"bajadas":0,"pasajeros":5,"ocupacion_pct":25.0},{"parada":"Parada 2","subidas":0,"bajadas":1,"pasajeros":4,"ocupacion_pct":20.0}],"avisos":[]}
-HTTP 200
-$ curl -I http://127.0.0.1:8001/openapi.json
-HTTP 200
-$ curl http://127.0.0.1:8502/_stcore/health
-ok HTTP 200

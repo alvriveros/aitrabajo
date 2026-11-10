@@ -2,7 +2,7 @@
  "video": "prueba-bus.mp4",
  "video_sha256": "0b4b8c97940c5f753880cf370046e1930121bf30dde4182905735b11b7e90d63",
  "referencia": "data/annotations/prueba-bus-cruces.json (Álvaro, a mano con anotar_cruces.py)",
- "prediccion": "docs/relevo/2026-11-08-claude-tarea13/primera-evaluacion/prediccion.json, copia de runs/panel/20261108-200805-374934",
+ "prediccion": "evaluation/results/prueba-bus-cpu-ciega/prediccion.json, copia de runs/panel/20261108-200805-374934",
  "entorno": {
   "dispositivo": "cpu",
   "python": "3.12.10",

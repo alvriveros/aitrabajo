@@ -1,9 +1,0 @@
-{
-  "capacidad": 20,
-  "carga_inicial": 3,
-  "paradas": [{"nombre": "Parada 1", "inicio_s": 0}],
-  "eventos": [
-    {"tiempo_s": 5, "track_id": 1, "sentido": "subida"},
-    {"tiempo_s": 2, "track_id": 2, "sentido": "subida"}
-  ]
-}

@@ -2,7 +2,7 @@
 
 Se observó en el video de la tarea 13: a los 8,20, 8,24 y 8,36 s una sola persona baja con tres cajas
 (IDs distintos) y se registran tres bajadas. La corrección probada (filtro de cajas encimadas) bajó los falsos
-positivos pero borró cruces reales en PAMELA A, así que no se incorporó: ver docs/relevo/2026-11-08-claude-tarea14.
+positivos pero borró cruces reales en PAMELA A, así que no se incorporó: ver evaluation/results/filtro-cajas-encimadas/.
 Mientras el defecto exista, la prueba se informa como «xfail» (visible en el resumen de pytest); cuando se
 corrija, pasa sola.
 """

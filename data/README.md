@@ -4,7 +4,7 @@ Los videos van en `data/raw/`, que git ignora. Acá se documenta de dónde sale 
 
 ## Estado vigente (9 nov., cierre final)
 
-Uso real de cada grabación, según los registros de `docs/relevo/`. «IA» es Claude; ninguna anotación de IA se atribuye a una persona.
+Uso real de cada grabación, según los resultados de [`evaluation/results/`](../evaluation/results/README.md). «IA» es Claude; ninguna anotación de IA se atribuye a una persona.
 
 | Grabación | Referencia: quién la hizo | Revisión humana | Entrenamiento y calibración | Selección | Primera evaluación (ejecución, entorno) | Uso posterior |
 |---|---|---|---|---|---|---|
@@ -16,7 +16,7 @@ Uso real de cada grabación, según los registros de `docs/relevo/`. «IA» es C
 | `puerta-tren-d800-B-No.mp4` y `…-B-Oy.mp4` | Álvaro: 18 y 23 subidas, antes de procesar (`pamela-B-*-cruces.json`) | Es humana | No | No | **Validación prerregistrada** (9 nov.), una sola ejecución, CPU: F1 de 0,36 y 0,45 | Consumidas. **Misma puerta, cámara y laboratorio que PAMELA A**: no son una escena independiente |
 | `youtube-bus-demo-UYKQ1sQOIwo.mp4` | Sin referencia | — | No | No | — | Solo ejemplo cualitativo |
 
-- **Dónde está la revisión:** [`revision-humana-referencias.md`](../docs/relevo/2026-11-08-claude-tarea12/revision-humana-referencias.md), con los hashes. Las anotaciones de Kaggle y PAMELA conservan, sin cambios, el campo `anotado_por` original, que dice «sin revisión humana»; la revisión posterior consta en ese archivo.
+- **Dónde está la revisión:** [`revision-humana-referencias.md`](revision-humana-referencias.md), con los hashes. Las anotaciones de Kaggle y PAMELA conservan, sin cambios, el campo `anotado_por` original, que dice «sin revisión humana»; la revisión posterior consta en ese archivo.
 - **Disponibilidad de datos: limitación central.** La disponibilidad de videos accesibles y adecuados de cámaras de buses fue una limitación central del proyecto. No se consiguió suficiente material para construir un conjunto diverso y representativo, especialmente del contexto paraguayo. Por ello se incorporaron una grabación de oficina para entrenamiento y calibración, y grabaciones de puertas de tren (PAMELA-UANDES) para selección y evaluación, junto con los pocos videos de bus disponibles (Kaggle, YouTube e iStock). Estos materiales permitieron desarrollar y probar el sistema, pero sus diferencias respecto de las condiciones reales de un bus limitan la generalización de los resultados.
 
 ## Estado anterior (8 nov., tarea 12) · histórico
@@ -29,7 +29,7 @@ Uso real de cada grabación, según los registros de `docs/relevo/`. «IA» es C
   - No se usa para elegir parámetros ni como prueba ciega.
   - Fuente: [YouTube 0y08Jtqtkys](https://www.youtube.com/watch?v=0y08Jtqtkys), de terceros, sin licencia abierta; no se versiona.
 - **`youtube-bus-demo-UYKQ1sQOIwo.mp4`** solo sirve como ejemplo cualitativo: hay una multitud que no se puede anotar. Fuente: [YouTube UYKQ1sQOIwo](https://www.youtube.com/watch?v=UYKQ1sQOIwo).
-- **La próxima validación** necesita una grabación nueva (ver `docs/relevo/2026-11-08-claude-tarea12/protocolo-validacion-nueva.md`).
+- **La próxima validación** necesita una grabación nueva (el protocolo de entonces quedó en el historial de Git).
 
 Las particiones de la tabla siguiente son las **originales, planificadas al 7 nov.** El uso real que tuvo cada grabación está en «Estado vigente».
 
@@ -45,8 +45,8 @@ Las particiones de la tabla siguiente son las **originales, planificadas al 7 no
 `kaggle-people-boarding-bus.mp4`:
 - **Archivo:** H.264, 1920×1080, 25 FPS, 43.857.248 bytes, SHA-256 `5084d4b11484282f1a81368f453dfccad9860c714f1e3c9704f65b32058ffe45`. Lo descargó Álvaro el 7 nov. 2026.
 - **Uso:** licencia «Unknown» en Kaggle. Solo uso local para evaluar, citando la fuente: no se versiona, no se redistribuye y no se suben capturas. Muestra personas identificables y coordenadas GPS sobreimpresas.
-- **Prerregistro:** recorte, línea y configuraciones fijados antes de ejecutar, en [`docs/relevo/2026-11-07-claude-tarea09/prueba-kaggle/preregistro.md`](../docs/relevo/2026-11-07-claude-tarea09/prueba-kaggle/preregistro.md).
-- **Anotación:** [`annotations/kaggle-people-boarding-bus-cruces.json`](annotations/kaggle-people-boarding-bus-cruces.json), con 6 subidas y 0 bajadas. La hizo **Claude** a pedido de Álvaro, mirando los cuadros antes de ejecutar ningún modelo. Álvaro la revisó después sin cambios (8 nov.); el campo `anotado_por` original no se modificó. Resultados en [`prueba-kaggle/resultados.md`](../docs/relevo/2026-11-07-claude-tarea09/prueba-kaggle/resultados.md).
+- **Prerregistro:** recorte, línea y configuraciones fijados antes de ejecutar, en [`evaluation/results/primera-prueba-kaggle/preregistro.md`](../evaluation/results/primera-prueba-kaggle/preregistro.md).
+- **Anotación:** [`annotations/kaggle-people-boarding-bus-cruces.json`](annotations/kaggle-people-boarding-bus-cruces.json), con 6 subidas y 0 bajadas. La hizo **Claude** a pedido de Álvaro, mirando los cuadros antes de ejecutar ningún modelo. Álvaro la revisó después sin cambios (8 nov.); el campo `anotado_por` original no se modificó. Resultados en [`primera-prueba-kaggle/resultados.md`](../evaluation/results/primera-prueba-kaggle/resultados.md).
 
 `prueba-bus.mp4` (agregado el 9 nov., cierre final):
 - **Fuente:** iStock (Getty Images), video de stock **ID 1457518529**, «LD Bus stopping at the station and passengers getting off it», del colaborador `simonkr`, publicado el 28 feb. 2023: https://www.istockphoto.com/video/ld-bus-stopping-at-the-station-and-passengers-getting-off-it-gm1457518529-492183151. Según la página, es una toma alta y fija de un bus que se detiene, con gente que baja y sube, grabada en Eslovenia (no es de Paraguay).
@@ -58,7 +58,7 @@ Las particiones de la tabla siguiente son las **originales, planificadas al 7 no
 Muestras de PAMELA-UANDES (`puerta-tren-d800-*`):
 - **Archivos:** 352×288, 25 FPS, unos 30 s cada uno. SHA-256: A `cf18411cda0d7b9de9a1c649599185b4d469c20fa2f9fc4f057d537aeb0868ab`; B-No `58d945ab2a876d563dcbdfe07b9cf9697aa842c9999458e061b5d8a3530ec650`; B-Oy `00151d75110b95fe4d1d8aff61dc5bfadaf10b83b6808acd2251c7d3802d43ea`. Los descargó Álvaro el 7 nov. 2026.
 - **Condiciones:** **uso solo para investigación**, no comercial, y citando el trabajo: Velastin, Fernández, Espinosa y Bay (2020), *Sensors* 20(21): 6251, https://doi.org/10.3390/s20216251. No se redistribuye.
-- **Referencia:** el dataset ofrece, con usuario y contraseña que entrega el Prof. Sergio A. Velastin, cabezas anotadas cuadro a cuadro con ID por persona para 15 videos completos (R1 a R8 de bajada, R1 a R7 de subida; R1 a R4 se usan normalmente para entrenar) y conteos manuales por video. Las muestras de 30 s no traen referencia propia, y en `B` la densidad hace poco fiable una anotación a ojo. Para la muestra `A` hay una referencia de Claude, hecha mirando los cuadros antes de ejecutar ningún modelo: [`annotations/pamela-A-cruces.json`](annotations/pamela-A-cruces.json), con 28 bajadas. Álvaro la revisó después sin cambios (8 nov.); resultados en [`prueba-pamela/resultados.md`](../docs/relevo/2026-11-07-claude-tarea09/prueba-pamela/resultados.md).
+- **Referencia:** el dataset ofrece, con usuario y contraseña que entrega el Prof. Sergio A. Velastin, cabezas anotadas cuadro a cuadro con ID por persona para 15 videos completos (R1 a R8 de bajada, R1 a R7 de subida; R1 a R4 se usan normalmente para entrenar) y conteos manuales por video. Las muestras de 30 s no traen referencia propia, y en `B` la densidad hace poco fiable una anotación a ojo. Para la muestra `A` hay una referencia de Claude, hecha mirando los cuadros antes de ejecutar ningún modelo: [`annotations/pamela-A-cruces.json`](annotations/pamela-A-cruces.json), con 28 bajadas. Álvaro la revisó después sin cambios (8 nov.); resultados en [`primera-prueba-pamela-a/resultados.md`](../evaluation/results/primera-prueba-pamela-a/resultados.md).
 
 Faltan grabaciones independientes para validación y más material de prueba, sobre todo con bajadas.
 
@@ -67,7 +67,7 @@ Faltan grabaciones independientes para validación y más material de prueba, so
 - [`annotations/oficina-cajas.json`](annotations/oficina-cajas.json): cajas de personas para ajustar el detector. Dentro de la grabación separa `entrenamiento` (6–43 s) y `reserva` (desde 43 s), y deja fuera el ensayo de 0 a 6 s. Esa separación solo orienta el trabajo, porque todo viene de la misma grabación.
 - [`annotations/oficina-cruces.json`](annotations/oficina-cruces.json): los 20 cruces del video, con el esquema de `POST /ocupacion`. Salen del centro de las cajas revisadas. Sus totales coinciden con el contador comercial del video.
 
-**Las revisó Claude; no tienen revisión humana.** Cómo revisarlas y qué se corrigió está en [el relevo del ajuste](../docs/relevo/vision-ajuste-detector/README.md).
+**Las revisó Claude; no tienen revisión humana.** Cómo revisarlas y qué se corrigió está en [la documentación del ajuste](../vision/ajuste-detector.md).
 
 ## `oficina.mp4`
 

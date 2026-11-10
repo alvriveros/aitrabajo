@@ -14,7 +14,7 @@ from pathlib import Path
 
 REFERENCIA = Path("data/annotations/prueba-bus-cruces.json")
 # Copia versionada de la primera evaluación ciega (CPU de Windows, runs/panel/20261108-200805-374934).
-EJECUCION = Path("docs/relevo/2026-11-08-claude-tarea13/primera-evaluacion")
+EJECUCION = Path("evaluation/results/prueba-bus-cpu-ciega")
 DESTINO_JSON = Path("docs/informe/ocupacion-prueba-bus.json")
 DESTINO_PNG = Path("docs/informe/fig-ocupacion.png")
 PASO_CS = 10  # 0,1 s en centésimas: enteros para no depender del redondeo de punto flotante

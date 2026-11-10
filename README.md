@@ -1,39 +1,62 @@
 # aitrabajo · Conteo de pasajeros y ocupación del bus
 
-TP final de Inteligencia Artificial (proyecto 10 de [`contexto.md`](contexto.md)). El sistema cuenta subidas y bajadas en la puerta de un bus a partir de video, con YOLO11n, ByteTrack y una línea virtual. Con esos eventos calcula la carga y el porcentaje de ocupación por parada, también mientras el video se procesa.
+Trabajo final de Inteligencia Artificial (4.º año, Ingeniería Informática; proyecto 10 de la [consigna](contexto.md)). El sistema cuenta subidas y bajadas en la puerta de un bus a partir de video, con **YOLO11n** (detección de personas), **ByteTrack** (seguimiento) y una **línea virtual** (regla de cruce). Con esos eventos calcula la carga y el porcentaje de ocupación por parada, también mientras el video se procesa.
 
-**Estado al 9 nov.: prototipo funcional con limitaciones medidas.** El conteo en escenas densas no está resuelto (F1 de 0,36 y 0,45), no se consiguieron grabaciones de buses de Paraguay accesibles y el tiempo real se demostró solo con GPU nativa, emulando la cámara con un archivo de video.
+**Estado: prototipo funcional con limitaciones medidas.** El conteo en escenas densas no está resuelto (F1 de 0,36 y 0,45), no se consiguieron grabaciones de buses de Paraguay accesibles y el tiempo real se demostró solo con GPU nativa, emulando la cámara con un archivo de video. Informe IEEE: [`docs/informe/informe.pdf`](docs/informe/informe.pdf).
 
-**Versión que se entrega:** la punta de la rama `cierre-final` en `TpFinal\.worktrees\integracion-video` (no la raíz `TpFinal`, que tiene una versión antigua). El informe es `docs/informe/informe.pdf`. qué cumple y qué falta de la consigna, con evidencia, en [la matriz de requisitos](docs/relevo/2026-11-08-claude-cierre-final/matriz.md). Las cifras de calidad, en [data/README.md](data/README.md) y en el informe ([`docs/informe/`](docs/informe/)).
+## Entregables (punto 1 de la consigna)
 
-## Componentes
+| Entregable | Dónde | Estado |
+|---|---|---|
+| Dataset limpio y documentado | [`data/README.md`](data/README.md) y [`data/annotations/`](data/annotations/) | Origen, licencia, hash, partición y uso real de cada grabación; anotaciones de cruces y cajas, con quién las hizo (persona o IA) y su revisión. Los videos no se redistribuyen. **No hay datos de Paraguay.** |
+| Modelo entrenado con métricas formales | [`vision/train.py`](vision/train.py), [`vision/ajuste-detector.md`](vision/ajuste-detector.md), [`evaluation/`](evaluation/) | Detector ajustado por el equipo (mAP50 0,995 y mAP50-95 0,753 en la reserva de su misma grabación) que **no generaliza**; se despliega YOLO11n preentrenado con el seguimiento calibrado. TP, FP, FN, precisión, exhaustividad y F1 por grabación; MAE y RMSE de la carga en un clip. |
+| API REST | [`api/main.py`](api/main.py) (FastAPI) | Ocupación por parada, subida y validación de videos, procesamiento en segundo plano con estado, cancelación y resultados. |
+| UI interactiva | [`ui/app.py`](ui/app.py) (Streamlit) | Recorridos JSON, demo de oficina y video nuevo con resultados en vivo. |
+| Dockerfile y docker-compose.yml | [`Dockerfile`](Dockerfile), [`docker-compose.yml`](docker-compose.yml) | `docker compose up --build` levanta API y panel (visión en CPU) y prepara los pesos oficiales verificando su SHA-256. |
+
+### Modelo entrenado y modelo desplegado
+
+| | Modelo entrenado por el equipo | Modelo desplegado |
+|---|---|---|
+| Pesos | `oficina-ajustado.pt` (YOLO11n ajustado 40 épocas con 131 cuadros de oficina), SHA-256 `69958946…` (reproducción en Windows; la original del compañero, en macOS, tiene SHA-256 `783d16c0…`); no se versiona | `yolo11n.pt` oficial (COCO), SHA-256 `0ebbc80d…`; lo prepara `vision/pesos.py` |
+| Métricas de detección | mAP50 0,995 y mAP50-95 0,753 en 34 cuadros de reserva **de la misma grabación** | — (preentrenado) |
+| Conteo (F1, ±1 s) | Oficina 1,00 (su grabación); Kaggle 0,00; PAMELA A 0,07 | Oficina 0,71; Kaggle 0,53; PAMELA A 0,51; bus real 0,48; `prueba-bus` 0,67 (ciega, CPU); PAMELA B 0,36 y 0,45 |
+
+Detalle, reproducción y procedencia de cada cifra: [`evaluation/results/README.md`](evaluation/results/README.md).
+
+## Estructura
 
 ```text
-vision/pipeline.py     Lectura del video, YOLO11n + ByteTrack, regla de cruce, video anotado, progreso en vivo
-vision/cruces.py       Regla de conteo (margen y confirmación), probada con trayectorias escritas a mano
-vision/train.py        Ajuste reproducible del detector (se evaluó y no se despliega: ver data/README.md)
-evaluation/evaluate.py Aciertos, omisiones, falsos positivos, precisión, exhaustividad y F1 por sentido (±1 s)
 api/main.py            FastAPI: /ocupacion, videos, procesamientos en segundo plano, estado, cancelación
 ui/app.py              Streamlit: recorridos JSON, demo de oficina y video nuevo con resultados en vivo
-data/                  Origen, permisos, hashes, particiones y anotaciones (los videos no se versionan)
-docs/demo/             Recorridos simulados y guion de la defensa
-docs/informe/          Informe IEEE (fuente y PDF)
-Dockerfile, docker-compose.yml   API y panel con visión en CPU
+vision/pipeline.py     Lectura del video, YOLO11n + ByteTrack, regla de cruce, video anotado, progreso en vivo
+vision/cruces.py       Regla de conteo (margen y confirmación)
+vision/train.py        Ajuste reproducible del detector
+vision/pesos.py        Descarga y verificación de los pesos oficiales
+evaluation/            Evaluador (evaluate.py), curva de ocupación y resultados que respaldan el informe
+data/                  Procedencia, permisos, hashes, particiones y anotaciones (los videos no se versionan)
+tests/                 Pruebas automáticas (pytest)
+docs/informe/          Informe IEEE: PDF, fuente, bibliografía y figuras
+docs/demo/             Recorridos simulados, guion y preparación de la defensa
+docs/casos-deteccion/  Casos de error documentados
+Dockerfile, docker-compose.yml
 ```
 
 ## Insumos que Git no versiona
 
 - **Pesos `yolo11n.pt`** en la raíz: los oficiales de Ultralytics (release `v8.4.0` de `ultralytics/assets`, 5.613.764 bytes, SHA-256 `0ebbc80d4a7680d14987a577cd21342b65ecfd94632bd9a8da63ae6417644ee1`). `python vision/pesos.py` los descarga y verifica; si ya están, solo comprueba el hash y falla con un mensaje claro si no coincide. La imagen de Docker hace lo mismo al construirse.
-- **Videos en `data/raw/`:** origen y hash de cada uno en [data/README.md](data/README.md). Para la demo alcanzan `prueba-bus.mp4` (se sube desde el panel) y `oficina.mp4` (demo de oficina). **No se versionan ni se redistribuyen**: `prueba-bus` es una vista previa de iStock sin licencia verificada; oficina y el bus real son de YouTube sin licencia abierta; Kaggle tiene licencia desconocida; PAMELA es solo para investigación. Cada equipo tiene que conseguirlos por su cuenta.
-- **Entorno con GPU** (`venv-gpu`, torch 2.14.1+cu130): fuera del repositorio; es el único donde se demostró tiempo real.
+- **Videos en `data/raw/`:** origen, hash e instrucciones de obtención de cada uno en [data/README.md](data/README.md). Para la demo alcanzan `prueba-bus.mp4` (se sube desde el panel) y `oficina.mp4` (demo de oficina). **No se versionan ni se redistribuyen**: `prueba-bus` es una vista previa de iStock sin licencia verificada; oficina y el bus real son de YouTube sin licencia abierta; Kaggle tiene licencia desconocida; PAMELA es solo para investigación.
+- **Pesos ajustados** (`runs/oficina-ajuste-windows/oficina-ajustado.pt`): se reproducen con `vision/train.py` (comando en [`evaluation/results/README.md`](evaluation/results/README.md)).
+- **Ejecuciones** (`runs/`): las genera la API. La primera evaluación de `prueba-bus` está copiada, sin cambios, en `evaluation/results/prueba-bus-cpu-ciega/`.
 
-## Ejecutar en Windows (PowerShell, Python 3.12)
+## Instalar y ejecutar (Python 3.12)
 
-Desde la raíz del repo:
+Windows (PowerShell), desde la raíz del repositorio:
 
 ```powershell
 py -3.12 -m venv .venv
 .\.venv\Scripts\python.exe -m pip install -r requirements.txt -r vision\requirements.txt
+.\.venv\Scripts\python.exe vision\pesos.py
 .\.venv\Scripts\python.exe -m uvicorn api.main:app --port 8000
 ```
 
@@ -43,19 +66,10 @@ En otra terminal, en la misma carpeta:
 .\.venv\Scripts\python.exe -m streamlit run ui/app.py
 ```
 
-Después:
+En Linux o macOS, los mismos comandos con `python3 -m venv .venv` y `.venv/bin/python`.
 
-- El **panel** queda en http://localhost:8501.
-- El **contrato de la API** queda en http://localhost:8000/docs.
-
-**Con GPU NVIDIA:** usá un entorno con torch para CUDA, por ejemplo `..\..\venv-gpu` (torch 2.14.1+cu130), el de la prueba final de la tarea 11. La primera vez, instalale también `requirements.txt`. Después arrancá la API con la GPU:
-
-```powershell
-$env:VISION_DISPOSITIVO = "cuda:0"
-C:\Users\Alvaro\Desktop\Facultad\4to\IA\venv-gpu\Scripts\python.exe -m uvicorn api.main:app --port 8000
-```
-
-Sin esa variable, se usa la CPU de la configuración guardada.
+- **Panel:** http://localhost:8501. **Contrato de la API:** http://localhost:8000/docs.
+- **Con GPU NVIDIA:** instalá en otro entorno torch para CUDA (se midió con torch 2.14.1+cu130) y las dependencias, y arrancá la API con `VISION_DISPOSITIVO=cuda:0`. Sin esa variable se usa la CPU.
 
 ## Usar el panel
 
@@ -92,46 +106,55 @@ Sin esa variable, se usa la CPU de la configuración guardada.
 
 ## Ejecutar con Docker
 
-**Antes:** con Docker Desktop iniciado, el motor Linux disponible y acceso a internet (el build descarga paquetes y los pesos oficiales de GitHub, y verifica su SHA-256; si el hash no coincide, el build falla). Ya no hace falta dejar `yolo11n.pt` en la raíz. Opcional: `data/raw/oficina.mp4`, para la demo de oficina.
+Con Docker Desktop (motor Linux) y acceso a internet, desde la raíz:
 
-Desde la raíz:
-
-```powershell
+```sh
 docker compose up --build
 ```
 
-- **Panel** en http://127.0.0.1:8502; **API** en http://127.0.0.1:8001/docs.
-- **Imagen:** trae visión para CPU (torch 2.15.0+cpu, OpenCV y Ultralytics) y los pesos verificados.
-- **GPU en Docker:** `docker-compose.gpu.yml` existe en la copia local de Álvaro, **sin versionar ni validar**. No es parte de la entrega.
-- **Volúmenes:** `runs/` guarda ejecuciones y videos subidos; `data/raw/` se monta de solo lectura.
-- **Arranque:** los dos servicios tienen comprobación de salud, y el panel espera a la API.
-- **Para cerrar:** `docker compose down`.
+- **Panel** en http://127.0.0.1:8502; **API** en http://127.0.0.1:8001/docs. Para cerrar: `docker compose down`.
+- **Imagen:** visión para CPU (torch 2.15.0+cpu, OpenCV y Ultralytics). El build descarga los pesos oficiales y verifica su SHA-256: si no coincide, falla. No hace falta `yolo11n.pt` local.
+- **Volúmenes:** `runs/` guarda ejecuciones y videos subidos; `data/raw/` se monta de solo lectura (opcional, para la demo de oficina).
+- **Docker usa CPU:** empaqueta y prueba el flujo, pero no alcanza el tiempo real.
 
-**Docker usa CPU:** sirve para empaquetar y probar el flujo, pero no alcanza el tiempo real. Para eso, usá la ejecución nativa con GPU de la sección anterior.
+**Verificaciones:**
+- Windows, 8 nov.: los dos servicios `healthy` y `prueba-bus` procesado dentro del contenedor ([`evaluation/results/docker-windows/`](evaluation/results/docker-windows/)), con la versión anterior del Dockerfile, que copiaba `yolo11n.pt`.
+- Copia limpia en Linux, 10 nov.: build sin `yolo11n.pt` local, pesos descargados y verificados, servicios `healthy` y `prueba-bus` procesado (24 eventos, 12/12/0). **No valida el Dockerfile tal como se entrega:** Docker Hub respondió 429 y el índice de PyTorch estaba bloqueado, así que se usaron una base Ubuntu 24.04 con Python 3.12 y torch de PyPI.
 
-**Verificado en Windows** (8 nov., 23:24, con la versión anterior que copiaba `yolo11n.pt`): los dos servicios quedaron `healthy`, y `prueba-bus` se subió y se procesó dentro del contenedor (`docs/relevo/2026-11-08-claude-cierre-final/resultados/docker-windows/`). OpenCV avisa `tag 'VP80' is not supported`, pero el `.webm` se genera bien.
+## Evaluar
 
-**Verificado desde una copia limpia** (10 nov., Claude, contenedor Linux sin GPU): se extrajeron solo los archivos versionados, sin `yolo11n.pt` ni `runs/`. El build descargó los pesos y verificó su SHA-256; los dos servicios quedaron `healthy`; `prueba-bus` se subió y procesó por la API (24 eventos, 12/12/0, F1 0,67; el doble pedido y la repetición respondieron 409, y la cancelación no se publicó). **Dos desvíos del entorno, no del proyecto:** Docker Hub respondió 429, así que `python:3.12-slim` se sustituyó por una base Ubuntu 24.04 con Python 3.12.3; y `download.pytorch.org` estaba bloqueado, así que se usó `--build-arg TORCH_INDEX=https://pypi.org/simple` (torch 2.15.0 de PyPI, ejecutado en CPU). Falta repetir `docker compose up --build` en Windows con la base y el índice oficiales.
+```sh
+python -m evaluation.evaluate --referencia data/annotations/prueba-bus-cruces.json --prediccion evaluation/results/prueba-bus-cpu-ciega/prediccion.json
+python -m evaluation.curva_ocupacion
+```
+
+El primero compara cruces (±1 s por sentido); el segundo recalcula la Fig. 2 del informe (cambio acumulado de pasajeros, MAE 2,68 y RMSE 3,31 para ese clip) sin ejecutar el modelo. No se informa accuracy ni matriz de confusión: la evaluación por eventos no define verdaderos negativos.
 
 ## Pruebas
 
-```powershell
-.\.venv\Scripts\python.exe -m pytest -q -rxs
+```sh
+python -m pytest -q -rxs
 ```
 
-**Resultado histórico** (Windows, 9 nov., commit `b60b615`): 139 aprobados, **1 fallido** y **1 xfail**, ningún omitido. Es el registro de esa fecha, no una ejecución nueva.
+Con `oficina.mp4` y `prueba-bus.mp4` en `data/raw/` y los pesos ajustados en `runs/`, el resultado esperado es **1 fallido y 1 xfail**, que se dejan visibles a propósito:
 
-**Ejecución del cierre** (10 nov., Claude, copia limpia en Linux, Python 3.12.3, torch 2.15.0 en CPU, con `prueba-bus.mp4` y `oficina.mp4`): **142 aprobados, 1 fallido, 1 omitido y 1 xfail**. Hay 4 pruebas nuevas (curva de ocupación y pesos) y aprueban. El omitido necesita los pesos ajustados de oficina, que no se versionan; en Windows existen y esa prueba aprobaba. **La suite no está completamente verde.**
-
-**Fallos que quedan, a propósito:**
-
-- `test_ensayo_de_oficina_…` **falla**: es la bajada omitida en oficina, un defecto conocido de detección que se dejó visible ([caso](docs/casos-deteccion/oficina-bajada-omitida/README.md)).
+- `test_ensayo_de_oficina_…` **falla**: la bajada omitida en oficina, un defecto conocido de detección ([caso](docs/casos-deteccion/oficina-bajada-omitida/README.md)).
 - `test_una_persona_con_tres_cajas_…` es **xfail**: varias cajas sobre una persona cuentan varios cruces.
+
+Sin los videos o los pesos ajustados, las pruebas que los necesitan se omiten.
+
+## Limitaciones conocidas
+
+- **Calidad del conteo:** duplica eventos con cajas encimadas o filas que oscilan sobre la línea, y omite cruces cuando la detección se pierde en la puerta. No alcanza para auditar un servicio.
+- **Datos:** no hay grabaciones de Paraguay; se usaron oficina, puertas de tren y pocos videos de bus. Las pruebas independientes se consumieron; PAMELA B es la misma escena que PAMELA A.
+- **Plataforma:** la evaluación ciega en CPU dio 24 eventos; las ejecuciones en GPU, 25. El resultado depende de la plataforma.
+- **Tiempo real:** solo en GPU nativa, con la cámara emulada por un archivo. En CPU y en Docker se descartan cuadros y se pierden cruces.
 
 ## Más documentación
 
+- [data/README.md](data/README.md): grabaciones, permisos, revisiones y particiones.
 - [vision/README.md](vision/README.md): regla de conteo, parámetros y comandos de visión.
-- [data/README.md](data/README.md): grabaciones, permisos, revisiones y qué sigue reservado.
-- [docs/demo/guion.md](docs/demo/guion.md): defensa de 10 + 2 minutos, con la demo en vivo y el respaldo.
-- [docs/README.md](docs/README.md): índice de la documentación, que separa lo vigente de lo histórico.
-- [`docs/relevo/`](docs/relevo/): registro fechado de cada tarea. Los registros antiguos describen el estado de su fecha.
+- [evaluation/results/README.md](evaluation/results/README.md): fuente de cada cifra del informe.
+- [docs/README.md](docs/README.md): índice de la documentación; [docs/demo/guion.md](docs/demo/guion.md): defensa con demo en vivo.
+
+El historial de desarrollo (consignas para agentes, relevos por tarea y borradores) se retiró de esta versión y se conserva en el historial de Git.

@@ -1,13 +1,13 @@
 # Módulo de visión
 
-Convierte un tramo de video de una puerta en eventos de subida y bajada con el formato de [`POST /ocupacion`](../api/main.py). La entrega completa está descrita en [el relevo de visión](../docs/tareas/vision/README.md).
+Convierte un tramo de video de una puerta en eventos de subida y bajada con el formato de [`POST /ocupacion`](../api/main.py). El entrenamiento está documentado en [ajuste-detector.md](ajuste-detector.md) y la primera entrega en [primer-clip.md](primer-clip.md).
 
 ## Estado vigente (9 nov., cierre final)
 
 - **Lo que usa la API:** `yolo11n.pt` preentrenado con [`bytetrack-cenital.yaml`](bytetrack-cenital.yaml), `--conf 0.05`, `--confirmacion 2` y margen de 5 px. El ajustado de oficina **no se despliega**: en Kaggle y PAMELA rinde peor que el base (tarea 10).
 - **Resultados en vivo:** `--progreso RUTA.json` reescribe, durante la ejecución, los cruces confirmados y la medición parcial. Si aparece un archivo `cancelar` en la misma carpeta, el pipeline se detiene con código 3. La API usa esto para su estado y su cancelación.
 - **Ritmo real:** `--ritmo-real` lee el video a su velocidad original, como una cámara. Si el modelo se atrasa, toma el cuadro más reciente y descarta los viejos, así el retraso queda acotado.
-  - **Costo en calidad:** en CPU se pierden cruces (ver [la medición](../docs/relevo/2026-11-08-claude-cierre-final/README.md)).
+  - **Costo en calidad:** en CPU se pierden cruces (ver [las mediciones](../evaluation/results/README.md)).
 - **Medición:** el `.config.json` incluye, en `medicion`, ms por cuadro de cada etapa (`lectura`, `rastreo`, `conteo`, `entrega`), la latencia por cuadro (media, p95, máxima, primer y último décimo) y los cuadros descartados.
 - **Calidad y limitaciones:** en [`data/README.md`](../data/README.md) y en el informe.
 
@@ -17,11 +17,11 @@ Convierte un tramo de video de una puerta en eventos de subida y bajada con el f
 |---|---|
 | Regla de cruces (`cruces.py`) | Probada con trayectorias de ejemplo. |
 | Pipeline (`pipeline.py`) | Ejecutado sobre un clip sintético y sobre el clip real. |
-| Primer clip | Entregado con el detector base. Ver [su relevo](../docs/relevo/vision-primer-clip/README.md). |
+| Primer clip | Entregado con el detector base. Ver [primer-clip.md](primer-clip.md). |
 | API y panel | Primer clip probado por HTTP y en el panel: 0 → 1 pasajero (5 %) → 0. Las demás predicciones pasan el contrato de la API en las pruebas. |
-| Ajuste del detector (`train.py`) | **Hecho sobre el video de oficina: 20 de 20 cruces, sin falsos positivos, pero en una sola grabación.** Ver [su relevo](../docs/relevo/vision-ajuste-detector/README.md). |
+| Ajuste del detector (`train.py`) | **Hecho sobre el video de oficina: 20 de 20 cruces, sin falsos positivos, pero en una sola grabación.** Ver [ajuste-detector.md](ajuste-detector.md). |
 | Evaluador (`evaluation/evaluate.py`) | Probado. |
-| Material para el informe | Redactado para Álvaro en [`aportes-vision.md`](../docs/informe/aportes-vision.md): metodología, tabla, caso de pérdida de ID, limitaciones y referencias. Falta compilarlo. |
+| Material para el informe | Incorporado al informe final ([`docs/informe/`](../docs/informe/)). El borrador de fragmentos (`aportes-vision.md`) se archivó fuera del repositorio y sigue en el historial de Git. |
 | Métricas para el informe | **Pendientes.** Faltan grabaciones independientes y casos con varias personas a la vez. |
 | Revisión humana de las cajas y los cruces | **Pendiente.** |
 
@@ -58,7 +58,7 @@ py -3.12 -m venv .venv
 
 - **Versiones.** Python 3.12.16 y las fijadas en [`vision/requirements.txt`](requirements.txt). El entorno ocupa cerca de 1,5 GB en macOS.
 - **Pesos base.** `yolo11n.pt` (5.613.764 bytes, SHA-256 `0ebbc80d4a7680d14987a577cd21342b65ecfd94632bd9a8da63ae6417644ee1`), preentrenado con COCO. Ultralytics lo descarga en la carpeta actual la primera vez, desde `https://github.com/ultralytics/assets/releases/download/v8.4.0/yolo11n.pt`. Para la defensa dejalo en la raíz, porque git lo ignora y debe estar disponible sin internet.
-- **Pesos ajustados.** Se obtienen con `train.py`. Tamaño y huella en [el relevo del ajuste](../docs/relevo/vision-ajuste-detector/README.md).
+- **Pesos ajustados.** Se obtienen con `train.py`. Tamaño y huella en [ajuste-detector.md](ajuste-detector.md).
 - **Clip.** Cómo obtenerlo y sus condiciones de uso están en [`data/README.md`](../data/README.md).
 - **Telemetría.** Ultralytics envía analíticas anónimas por defecto. Se desactivan con `yolo settings sync=False`.
 - **Licencia.** Ultralytics se distribuye con AGPL-3.0.
@@ -90,7 +90,7 @@ python -m vision.pipeline \
 3. **Entrenar:** `python -m vision.train` arma el dataset, entrena y guarda parámetros, versiones y métricas.
 4. **Comparar:** `python -m evaluation.evaluate` compara una predicción con los cruces de referencia. `python -m evaluation.comparar_oficina` repite la comparación completa de este video.
 
-Los comandos exactos están en [el relevo del ajuste](../docs/relevo/vision-ajuste-detector/README.md).
+Los comandos exactos están en [ajuste-detector.md](ajuste-detector.md).
 
 ## Pruebas
 

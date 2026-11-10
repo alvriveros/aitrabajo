@@ -24,7 +24,7 @@ Es la configuración guardada con la predicción de 0–6 s (`evaluation/results
 | Linux x86, Intel Xeon (Claude, 7 nov.) | 2,16 s, ID 1 | **omitida** | 1 pasajero (5 %) |
 | Windows 11, AMD (Álvaro, 7 nov., ejecución `20261107-194239-470039`) | 2,16 s, ID 1 | **omitida** | 1 pasajero (5 %) |
 
-En Linux, dos ejecuciones desde el panel y una por terminal dieron el mismo JSON. La prueba `test_ensayo_de_oficina_sigue_dentro_de_la_tolerancia_de_la_referencia_manual` falla en Linux por esta omisión. Las predicciones y la configuración están en [`../../relevo/2026-11-07-claude-tarea07/ejecuciones/`](../../relevo/2026-11-07-claude-tarea07/ejecuciones/).
+En Linux, dos ejecuciones desde el panel y una por terminal dieron el mismo JSON. La prueba `test_ensayo_de_oficina_sigue_dentro_de_la_tolerancia_de_la_referencia_manual` falla en Linux por esta omisión. Las predicciones y la configuración están en [`ejecuciones/`](ejecuciones/).
 
 ![Cuadros del video anotado](cuadros.png)
 
@@ -53,7 +53,7 @@ Lo medido es el mecanismo de los tres pasos: la confianza del detector cae justo
 
 ## Efecto en la ocupación
 
-Con capacidad 20 y carga inicial 0, `POST /ocupacion` sobre la predicción da 1 subida, 0 bajadas, 1 pasajero y 5 %, sin avisos. Ver [`ocupacion-api.json`](../../relevo/2026-11-07-claude-tarea07/ocupacion-api.json). El error no genera ningún aviso porque una bajada omitida nunca deja el conteo en negativo: el pasajero "fantasma" queda a bordo hasta el final del recorrido. En un bus real estos errores se acumulan parada tras parada.
+Con capacidad 20 y carga inicial 0, `POST /ocupacion` sobre la predicción da 1 subida, 0 bajadas, 1 pasajero y 5 %, sin avisos. Ver [`ocupacion-api.json`](ocupacion-api.json). El error no genera ningún aviso porque una bajada omitida nunca deja el conteo en negativo: el pasajero "fantasma" queda a bordo hasta el final del recorrido. En un bus real estos errores se acumulan parada tras parada.
 
 ## Cómo reproducirlo
 
@@ -72,7 +72,7 @@ También se puede reproducir desde el panel: **Predicción automática del video
 
 No se cambió ningún parámetro: la decisión es del módulo de visión.
 
-1. **Detector ajustado** (`runs/oficina-ajuste/oficina-ajustado.pt`, con `python -m vision.train`), con el rastreador por defecto. Según [su relevo](../../relevo/vision-ajuste-detector/README.md), cuenta los 20 cruces del video completo. Pero se entrenó con esa misma grabación, así que no prueba que generalice.
+1. **Detector ajustado** (`runs/oficina-ajuste/oficina-ajustado.pt`, con `python -m vision.train`), con el rastreador por defecto. Según [su documentación](../../../vision/ajuste-detector.md), cuenta los 20 cruces del video completo. Pero se entrenó con esa misma grabación, así que no prueba que generalice.
 2. **Bajar `new_track_thresh` o `conf`.** Recuperaría este cruce, pero aumenta los falsos positivos. Además, calibrarlo sobre el mismo clip sería ajustar el resultado a la prueba.
 3. **Mostrarlo en la defensa** como ejemplo de pérdida de detección y cambio de ID, con [`cuadros.png`](cuadros.png) y [`confianza.png`](confianza.png).
 
